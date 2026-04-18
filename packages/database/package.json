@@ -1,0 +1,9 @@
+{
+  "name": "@windtribe/database",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Supabase schema, SQL migrations, and generated TypeScript types for WindTribe.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts"
+}
