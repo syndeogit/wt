@@ -36,7 +36,16 @@
     "globals": "^17.5.0",
     "happy-dom": "^20.9.0",
     "prettier": "^3.8.3",
+    "supabase": "^2.92.1",
     "typescript": "^5.7.2",
     "vitest": "^4.1.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "supabase",
+      "unrs-resolver"
+    ]
   }
 }
