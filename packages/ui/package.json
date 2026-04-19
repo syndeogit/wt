@@ -5,5 +5,8 @@
   "description": "Shared Vue components and design-system primitives for WindTribe apps.",
   "type": "module",
   "main": "./src/index.ts",
-  "types": "./src/index.ts"
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
 }
