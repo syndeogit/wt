@@ -12,6 +12,10 @@
     "dev:guest": "pnpm --filter guest-site dev",
     "dev:centre": "pnpm --filter centre-admin dev",
     "dev:hotel": "pnpm --filter hotel-admin dev",
-    "build": "pnpm -r --parallel build"
+    "build": "pnpm -r --parallel build",
+    "typecheck": "pnpm -r --parallel typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
   }
 }
