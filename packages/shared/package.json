@@ -5,5 +5,8 @@
   "description": "Shared composables, types, and utilities used across WindTribe apps.",
   "type": "module",
   "main": "./src/index.ts",
-  "types": "./src/index.ts"
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
 }
