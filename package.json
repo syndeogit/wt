@@ -1,0 +1,17 @@
+{
+  "name": "windtribe",
+  "version": "0.0.0",
+  "private": true,
+  "description": "WindTribe monorepo — guest site, centre admin, hotel admin, and shared packages.",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "dev:guest": "pnpm --filter guest-site dev",
+    "dev:centre": "pnpm --filter centre-admin dev",
+    "dev:hotel": "pnpm --filter hotel-admin dev",
+    "build": "pnpm -r --parallel build"
+  }
+}
