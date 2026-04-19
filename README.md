@@ -142,6 +142,10 @@ Enable "Format on save" with Prettier as the default formatter so the codebase s
 - **Shared packages** are TypeScript-first, buildless at the source level for dev ergonomics. Packages export from `src/index.ts`; consumers resolve via the workspace path aliases in `tsconfig.base.json`.
 - **Backend** lives in Supabase (managed Postgres + auth + storage). Schema and migrations live in `packages/database` once Story 1.2 lands.
 
+## Deployment
+
+See [`docs/deployment.md`](./docs/deployment.md) for the preview / staging / production flow, Vercel project wiring, release workflow, and rollback procedures.
+
 ## Status
 
 Bootstrap phase — Epic 1 (Project foundations and infrastructure). Story 1.1 (Repository and monorepo structure) closes with this README. Next up: Story 1.2 (Supabase), Story 1.3 (Deployment), Story 1.4 (CI/CD), Story 1.5 (Observability).
