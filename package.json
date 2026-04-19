@@ -13,9 +13,19 @@
     "dev:centre": "pnpm --filter centre-admin dev",
     "dev:hotel": "pnpm --filter hotel-admin dev",
     "build": "pnpm -r --parallel build",
-    "typecheck": "pnpm -r --parallel typecheck"
+    "typecheck": "pnpm -r --parallel typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
+    "@nuxt/eslint-config": "^1.15.2",
+    "@vue/eslint-config-typescript": "^14.7.0",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.5.0",
+    "prettier": "^3.8.3",
     "typescript": "^5.7.2"
   }
 }
