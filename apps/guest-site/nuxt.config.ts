@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@sentry/nuxt/module'],
+  modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@sentry/nuxt/module'],
+  css: ['~/assets/css/main.css'],
   sentry: {
     sourceMapsUploadOptions: {
       org: 'syndeo-wh',
