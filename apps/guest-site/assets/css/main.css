@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme static {
+  /* Brand colour — placeholder teal. Swap for real brand when Andy provides. */
+  --color-primary-50: #effcfb;
+  --color-primary-100: #d6f6f4;
+  --color-primary-200: #b0edea;
+  --color-primary-300: #7ddbd7;
+  --color-primary-400: #4ac3c0;
+  --color-primary-500: #2ba6a3;
+  --color-primary-600: #1d8987;
+  --color-primary-700: #176b6a;
+  --color-primary-800: #14565a;
+  --color-primary-900: #134a4d;
+  --color-primary-950: #072a2c;
+
+  /* Typography — Inter as placeholder. */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}

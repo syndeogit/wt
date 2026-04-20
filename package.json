@@ -45,8 +45,10 @@
       "@parcel/watcher",
       "@sentry/cli",
       "esbuild",
+      "sharp",
       "supabase",
-      "unrs-resolver"
+      "unrs-resolver",
+      "vue-demi"
     ]
   },
   "dependencies": {
