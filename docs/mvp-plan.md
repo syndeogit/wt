@@ -2,7 +2,8 @@
 
 > Living document. Updated as slices ship and decisions are made.
 > Last updated: 2026-04-20.
-> Mirrors to Confluence at (TBC — to be filled in after first push).
+> Stakeholder mirror: [WindTribe MVP Plan on Confluence (SD space)](https://syndeo-test.atlassian.net/wiki/spaces/SD/pages/234455041/WindTribe+MVP+Plan).
+> This repo doc is the authoritative source — if the two disagree, this wins.
 
 ## Purpose
 
