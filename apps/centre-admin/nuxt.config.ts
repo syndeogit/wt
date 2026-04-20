@@ -2,6 +2,15 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  modules: ['@sentry/nuxt/module'],
+  sentry: {
+    sourceMapsUploadOptions: {
+      org: 'syndeo-wh',
+      project: 'windtribe-centre',
+      url: 'https://de.sentry.io/',
+    },
+  },
+  sourcemap: { client: 'hidden' },
   typescript: {
     strict: true,
     typeCheck: false,
@@ -18,6 +27,8 @@ export default defineNuxtConfig({
     public: {
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
+      sentryDsn: process.env.SENTRY_DSN,
+      sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? 'development',
     },
   },
 })
