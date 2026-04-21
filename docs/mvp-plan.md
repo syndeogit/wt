@@ -162,7 +162,7 @@ Headline product is **wing for beginners**. Wingfoiling is the fastest-growing w
 ## Current state
 
 - **Epic 1 Done.** Monorepo, Nuxt 4, TS strict, lint + Prettier, Vitest, Playwright, GitHub Actions CI, Supabase live (project `windtribe` / ref `wrasfpjetwewvmjawqxs`), Vercel live (3 projects deploying from main), Sentry live (3 projects, EU region, default email alerts).
-- **Slice 0** in progress. Style direction (Open Sea — navy + coral, Fraunces + Inter), Pinia + checkout store, fixtures, mock `/api`, `/styleguide` page all in. UI contrast fixes + wingfoil positioning landing now. Directus collection setup pending — first sub-task of Slice A.
+- **Slice 0** in progress. Style direction (Aegean — Mediterranean turquoise + coral on white, Outfit + Inter), Pinia + checkout store, fixtures, mock `/api`, `/styleguide` page all in. Directus collection setup pending — first sub-task of Slice A.
 - **Next action:** Claude finishes Slice 0 cleanup, then starts Slice A (Browse) with Directus content.
 
 ## Credentials and environments
@@ -176,3 +176,4 @@ Current services wired: Jira (Syndeo), GitHub (syndeogit/wt), Supabase (windtrib
 - **2026-04-20** — Initial plan. All epics in, MVP-disciplined (smallest lovable version per story). Vertical slicing A–M with activity feed (K) deferred post-launch. Slice 0 scaffolding list includes Pinia + checkout state store.
 - **2026-04-21** — Added Directus + Supabase split (Path A — share existing Syndeo Directus, `wt_` collection prefix). Added wingfoil positioning — wing leads, windsurf + kitesurf supporting. UI contrast fixes triggered by review (dark-mode CSS was inverting body to navy and breaking every navy text class).
 - **2026-04-21** — Repaletted from "Open Sea" (navy + sand) to **"Aegean"** (white background + Mediterranean sky-blue + coral). Andy: "the blues are like the English Channel not the Mediterranean." New primary uses Tailwind sky family (#0ea5e9 → #0c4a6e); background is pure white with a barely-tinted elevated tone. Coral accent kept (classic Greek hotel signage combination).
+- **2026-04-21** — Shifted primary to true turquoise (Tailwind cyan family — #06b6d4 → #164e63) after sky still read as English Channel. Committed primary-900 (#164e63) as single font-primary ink. Swapped display font from Fraunces (too compact at 7xl) to **Outfit** — geometric humanist sans with generous counters, confident at display sizes.
