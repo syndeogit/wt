@@ -1,21 +1,67 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
 
-@theme static {
-  /* Brand colour — placeholder teal. Swap for real brand when Andy provides. */
-  --color-primary-50: #effcfb;
-  --color-primary-100: #d6f6f4;
-  --color-primary-200: #b0edea;
-  --color-primary-300: #7ddbd7;
-  --color-primary-400: #4ac3c0;
-  --color-primary-500: #2ba6a3;
-  --color-primary-600: #1d8987;
-  --color-primary-700: #176b6a;
-  --color-primary-800: #14565a;
-  --color-primary-900: #134a4d;
-  --color-primary-950: #072a2c;
+/*
+ * WindTribe — "Open sea" style direction.
+ * Premium, editorial, aspirational. For the city-dweller imagining themselves
+ * on the water. Deep navy for gravitas, coral accent for warmth, sand paper
+ * background for invitation.
+ */
 
-  /* Typography — Inter as placeholder. */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+@theme static {
+  /* Primary — deep navy. Carries text, primary buttons, and most ink. */
+  --color-primary-50: #f1f4f8;
+  --color-primary-100: #d9e0ec;
+  --color-primary-200: #b4c1d8;
+  --color-primary-300: #8499ba;
+  --color-primary-400: #546f94;
+  --color-primary-500: #345075;
+  --color-primary-600: #20385a;
+  --color-primary-700: #162a46;
+  --color-primary-800: #102038;
+  --color-primary-900: #0b2740;
+  --color-primary-950: #06182a;
+
+  /* Accent — coral. Used sparingly for emphasis and warm CTAs. */
+  --color-accent-50: #fdf4f0;
+  --color-accent-100: #fbe5dc;
+  --color-accent-200: #f6c8b4;
+  --color-accent-300: #efa484;
+  --color-accent-400: #e88367;
+  --color-accent-500: #e07a5f;
+  --color-accent-600: #c75a3d;
+  --color-accent-700: #a3462e;
+  --color-accent-800: #823929;
+  --color-accent-900: #6b2f23;
+
+  /* Paper — warm sand-toned background, distinct from pure white. */
+  --color-paper: #f7f3ee;
+  --color-paper-elevated: #fbf7f1;
+  --color-ink: #0b2740;
+  --color-ink-muted: #546f94;
+
+  /* Typography */
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* Paper/sand body background + navy ink — global default. */
+html,
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.dark html,
+.dark body {
+  background-color: var(--color-primary-950);
+  color: var(--color-paper);
+}
+
+/* Display utility for Fraunces on hero / editorial headings. */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.025em;
 }

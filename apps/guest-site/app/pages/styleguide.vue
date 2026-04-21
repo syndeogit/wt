@@ -4,132 +4,257 @@ useHead({
   meta: [{ name: 'robots', content: 'noindex,nofollow' }],
 })
 
-const swatches = [
-  { name: 'primary-50', hex: '#effcfb' },
-  { name: 'primary-200', hex: '#b0edea' },
-  { name: 'primary-400', hex: '#4ac3c0' },
-  { name: 'primary-500', hex: '#2ba6a3' },
-  { name: 'primary-600', hex: '#1d8987' },
-  { name: 'primary-800', hex: '#14565a' },
-  { name: 'primary-950', hex: '#072a2c' },
+const primarySwatches = [
+  { name: 'primary-50', hex: '#f1f4f8' },
+  { name: 'primary-200', hex: '#b4c1d8' },
+  { name: 'primary-400', hex: '#546f94' },
+  { name: 'primary-500', hex: '#345075' },
+  { name: 'primary-600', hex: '#20385a' },
+  { name: 'primary-800', hex: '#102038' },
+  { name: 'primary-900', hex: '#0b2740' },
+]
+
+const accentSwatches = [
+  { name: 'accent-50', hex: '#fdf4f0' },
+  { name: 'accent-200', hex: '#f6c8b4' },
+  { name: 'accent-400', hex: '#e88367' },
+  { name: 'accent-500', hex: '#e07a5f' },
+  { name: 'accent-600', hex: '#c75a3d' },
+  { name: 'accent-800', hex: '#823929' },
+]
+
+const neutralSwatches = [
+  { name: 'paper', hex: '#f7f3ee' },
+  { name: 'paper-elevated', hex: '#fbf7f1' },
+  { name: 'ink-muted', hex: '#546f94' },
+  { name: 'ink', hex: '#0b2740' },
 ]
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-16 space-y-16">
+  <div class="max-w-5xl mx-auto px-6 py-20 space-y-20">
     <header>
-      <p
-        class="text-sm font-medium text-primary-600 dark:text-primary-400 uppercase tracking-wider mb-2"
-      >
-        Internal — not for production use
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-4">
+        Internal · not for production
       </p>
-      <h1 class="text-4xl font-semibold tracking-tight">Styleguide</h1>
-      <p class="mt-4 text-zinc-600 dark:text-zinc-400">
-        Reference for every reusable component and token. Kept in sync as we add to the design
-        system. If a component has variants, all variants are shown here.
+      <h1 class="font-display text-5xl text-primary-900 leading-[1.05]">Styleguide</h1>
+      <p class="mt-6 text-lg text-primary-700 max-w-2xl leading-relaxed">
+        The Open Sea direction. Every reusable token + component variant we commit to lives here. If
+        it isn't on this page, it isn't part of the system yet.
       </p>
     </header>
 
+    <!-- Direction -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6">Colour — primary</h2>
-      <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
-        Placeholder teal. Swappable in <code class="text-xs">assets/css/main.css</code> once Andy
-        provides the real brand colour.
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Direction</p>
+      <h2 class="font-display text-3xl text-primary-900 mb-4">Open Sea</h2>
+      <p class="text-primary-700 max-w-3xl leading-relaxed">
+        Premium, editorial, aspirational. Built for the city-dweller imagining themselves on the
+        water at 2pm on a Thursday. Deep navy carries gravity; coral brings warmth; sand paper
+        background says "come in." Photography does the heavy emotional lift; type and colour stay
+        out of its way.
       </p>
-      <div class="grid grid-cols-3 sm:grid-cols-7 gap-3">
-        <div v-for="s in swatches" :key="s.name" class="text-xs">
-          <div
-            class="h-14 rounded-md border border-zinc-200 dark:border-zinc-800"
-            :style="{ background: s.hex }"
-          />
-          <div class="mt-1 font-mono">{{ s.name }}</div>
-          <div class="font-mono text-zinc-500">{{ s.hex }}</div>
-        </div>
-      </div>
     </section>
 
+    <!-- Typography -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6">Typography</h2>
-      <div class="space-y-2">
-        <p class="text-5xl font-semibold tracking-tight">Display 5xl — the hero</p>
-        <p class="text-4xl font-semibold tracking-tight">Heading 4xl — page title</p>
-        <p class="text-2xl font-semibold">Heading 2xl — section title</p>
-        <p class="text-xl font-semibold">Heading xl — subsection</p>
-        <p class="text-base">Body base — the default paragraph size for content and prose.</p>
-        <p class="text-sm text-zinc-600 dark:text-zinc-400">
-          Body sm — captions, helper text, meta.
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Typography</p>
+      <h2 class="font-display text-3xl text-primary-900 mb-6">Fraunces + Inter</h2>
+      <p class="text-primary-700 mb-10 max-w-3xl leading-relaxed">
+        <span class="font-display">Fraunces</span> on display — taglines, section titles, hero
+        moments. Variable serif with optical sizing that feels editorial without being stuffy. Inter
+        for body, UI, navigation — the workhorse that stays invisible.
+      </p>
+      <div class="space-y-3 border-t border-primary-900/10 pt-8">
+        <p class="font-display text-6xl text-primary-900 leading-[1.02] tracking-tight">
+          The wind belongs to everyone.
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+          Display / 6xl / font-display
+        </p>
+      </div>
+      <div class="space-y-3 border-t border-primary-900/10 pt-8 mt-8">
+        <p class="font-display text-4xl text-primary-900 leading-tight">
+          Three reasons to book with us.
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+          Display / 4xl / section heading
+        </p>
+      </div>
+      <div class="space-y-3 border-t border-primary-900/10 pt-8 mt-8">
+        <p class="text-2xl text-primary-900 leading-snug">
+          Body large — for intro paragraphs, featured quotes, occasional emphasis inside editorial
+          sections.
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+          Inter / 2xl / lead paragraph
+        </p>
+      </div>
+      <div class="space-y-3 border-t border-primary-900/10 pt-8 mt-8">
+        <p class="text-base text-primary-700 leading-relaxed max-w-3xl">
+          Body base — the default. Used for almost every paragraph on the site. Line length caps at
+          ~70 characters for comfortable reading; line height sits around 1.65 so the eye can rest
+          between lines even on longer blocks.
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+          Inter / base / default paragraph
+        </p>
+      </div>
+      <div class="space-y-3 border-t border-primary-900/10 pt-8 mt-8">
+        <p class="text-sm text-primary-700">
+          Body small — captions, helper text, metadata under product cards.
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">Inter / sm / caption</p>
+      </div>
+      <div class="space-y-3 border-t border-primary-900/10 pt-8 mt-8">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-600">
+          Eyebrow · categorisation · prefixes a heading
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+          Inter / xs uppercase / accent coloured · pre-heading label
         </p>
       </div>
     </section>
 
+    <!-- Primary palette -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6">Buttons</h2>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Palette</p>
+      <h2 class="font-display text-3xl text-primary-900 mb-2">Primary — deep navy</h2>
+      <p class="text-primary-700 mb-6 max-w-2xl">
+        Carries text, primary surfaces, most ink on the page. 700–900 for headings and strong text,
+        500–600 for primary buttons, 200–400 for borders and quiet surfaces.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+        <div v-for="s in primarySwatches" :key="s.name" class="text-xs">
+          <div
+            class="h-16 rounded-lg border border-primary-900/10"
+            :style="{ background: s.hex }"
+          />
+          <div class="mt-2 font-mono text-primary-900">{{ s.name }}</div>
+          <div class="font-mono text-primary-500">{{ s.hex }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accent palette -->
+    <section>
+      <h2 class="font-display text-3xl text-primary-900 mb-2">Accent — coral</h2>
+      <p class="text-primary-700 mb-6 max-w-2xl">
+        Used sparingly. Eyebrow labels, single CTA moments, focus states. If everything is coral,
+        nothing is. Rule: one coral thing per viewport is usually right.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        <div v-for="s in accentSwatches" :key="s.name" class="text-xs">
+          <div
+            class="h-16 rounded-lg border border-primary-900/10"
+            :style="{ background: s.hex }"
+          />
+          <div class="mt-2 font-mono text-primary-900">{{ s.name }}</div>
+          <div class="font-mono text-primary-500">{{ s.hex }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Neutrals -->
+    <section>
+      <h2 class="font-display text-3xl text-primary-900 mb-2">Paper + ink</h2>
+      <p class="text-primary-700 mb-6 max-w-2xl">
+        Background is warm sand (paper), not pure white — so the brand always feels inviting. Ink is
+        deep navy, so text reads confidently against it.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div v-for="s in neutralSwatches" :key="s.name" class="text-xs">
+          <div
+            class="h-16 rounded-lg border border-primary-900/10"
+            :style="{ background: s.hex }"
+          />
+          <div class="mt-2 font-mono text-primary-900">{{ s.name }}</div>
+          <div class="font-mono text-primary-500">{{ s.hex }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Components</p>
+      <h2 class="font-display text-3xl text-primary-900 mb-6">Buttons</h2>
       <div class="space-y-4">
         <div class="flex flex-wrap gap-3">
-          <UButton color="primary" variant="solid">Solid primary</UButton>
-          <UButton color="primary" variant="outline">Outline primary</UButton>
-          <UButton color="primary" variant="soft">Soft primary</UButton>
-          <UButton color="primary" variant="subtle">Subtle primary</UButton>
-          <UButton color="primary" variant="ghost">Ghost primary</UButton>
+          <UButton color="primary" variant="solid" class="rounded-full">Solid primary</UButton>
+          <UButton color="primary" variant="outline" class="rounded-full">Outline primary</UButton>
+          <UButton color="primary" variant="soft" class="rounded-full">Soft primary</UButton>
+          <UButton color="primary" variant="ghost" class="rounded-full">Ghost primary</UButton>
           <UButton color="primary" variant="link">Link primary</UButton>
         </div>
-        <div class="flex flex-wrap gap-3">
-          <UButton color="neutral" variant="solid">Solid neutral</UButton>
-          <UButton color="neutral" variant="outline">Outline neutral</UButton>
-        </div>
         <div class="flex flex-wrap items-center gap-3">
-          <UButton size="xs">Extra small</UButton>
-          <UButton size="sm">Small</UButton>
-          <UButton size="md">Medium</UButton>
-          <UButton size="lg">Large</UButton>
-          <UButton size="xl">Extra large</UButton>
+          <UButton size="xs" color="primary" class="rounded-full">Extra small</UButton>
+          <UButton size="sm" color="primary" class="rounded-full">Small</UButton>
+          <UButton size="md" color="primary" class="rounded-full">Medium</UButton>
+          <UButton size="lg" color="primary" class="rounded-full">Large</UButton>
+          <UButton size="xl" color="primary" class="rounded-full">Extra large</UButton>
         </div>
         <div class="flex flex-wrap gap-3">
-          <UButton disabled>Disabled</UButton>
-          <UButton loading>Loading</UButton>
-          <UButton trailing-icon="i-lucide-arrow-right">With icon</UButton>
+          <UButton disabled color="primary" class="rounded-full">Disabled</UButton>
+          <UButton loading color="primary" class="rounded-full">Loading</UButton>
+          <UButton
+            color="primary"
+            class="rounded-full bg-accent-500 hover:bg-accent-600 border-accent-500 hover:border-accent-600 text-white"
+          >
+            Warm CTA
+          </UButton>
         </div>
       </div>
     </section>
 
+    <!-- Inputs -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6">Inputs</h2>
-      <div class="grid gap-4 sm:grid-cols-2">
-        <UInput placeholder="Email address" icon="i-lucide-mail" />
-        <UInput placeholder="Name" />
-        <UInput placeholder="Disabled" disabled />
-        <UInput placeholder="Error state" color="error" />
+      <h2 class="font-display text-3xl text-primary-900 mb-6">Inputs</h2>
+      <div class="grid gap-4 sm:grid-cols-2 max-w-2xl">
+        <UInput placeholder="Email address" icon="i-lucide-mail" size="lg" />
+        <UInput placeholder="Your name" size="lg" />
+        <UInput placeholder="Disabled" disabled size="lg" />
+        <UInput placeholder="Error state" color="error" size="lg" />
       </div>
     </section>
 
+    <!-- Cards -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6">Cards</h2>
-      <div class="grid gap-4 sm:grid-cols-2">
+      <h2 class="font-display text-3xl text-primary-900 mb-6">Cards</h2>
+      <div class="grid gap-4 sm:grid-cols-2 max-w-3xl">
         <UCard>
           <template #header>
-            <p class="font-semibold">Card title</p>
+            <p class="font-display text-xl text-primary-900">Beginner windsurfing — 3 days</p>
+            <p class="text-sm text-primary-500 mt-1">3 afternoons · 3 hrs each</p>
           </template>
-          <p class="text-sm text-zinc-600 dark:text-zinc-400">
-            Default card with header + body. Used for product tiles, accommodation tiles.
+          <p class="text-primary-700 leading-relaxed">
+            Three consecutive afternoons on the flats, small groups, all gear included. You will
+            rig, balance, turn, and ride upwind by day three.
           </p>
+          <template #footer>
+            <div class="flex items-center justify-between">
+              <span class="font-display text-2xl text-primary-900">€285</span>
+              <UButton size="sm" color="primary" class="rounded-full">Choose</UButton>
+            </div>
+          </template>
         </UCard>
         <UCard>
-          <p class="text-sm text-zinc-600 dark:text-zinc-400">
-            Body-only card — no header, just content.
+          <p class="text-primary-700 leading-relaxed">
+            Body-only card — for side content, quote blocks, or quieter surfaces.
           </p>
         </UCard>
       </div>
     </section>
 
+    <!-- Badges -->
     <section>
-      <h2 class="text-2xl font-semibold mb-6">Badges</h2>
+      <h2 class="font-display text-3xl text-primary-900 mb-6">Badges</h2>
       <div class="flex flex-wrap gap-2">
-        <UBadge color="primary">Primary</UBadge>
-        <UBadge color="neutral">Neutral</UBadge>
-        <UBadge color="success">Success</UBadge>
-        <UBadge color="warning">Warning</UBadge>
-        <UBadge color="error">Error</UBadge>
-        <UBadge variant="outline">Outline</UBadge>
+        <UBadge color="primary">Curated</UBadge>
+        <UBadge color="neutral">Standard</UBadge>
+        <UBadge color="success">Available</UBadge>
+        <UBadge color="warning">Limited spots</UBadge>
+        <UBadge color="error">Sold out</UBadge>
+        <UBadge variant="outline" color="primary">Outlined</UBadge>
       </div>
     </section>
   </div>
