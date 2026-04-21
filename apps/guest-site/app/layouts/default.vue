@@ -47,7 +47,7 @@ const footerCompany = [
             v-for="item in nav"
             :key="item.to"
             :to="item.to"
-            class="text-primary-800 hover:text-accent-600 transition-colors"
+            class="text-primary-900 hover:text-accent-600 transition-colors"
           >
             {{ item.label }}
           </NuxtLink>
@@ -58,7 +58,7 @@ const footerCompany = [
             variant="ghost"
             color="primary"
             size="sm"
-            class="hidden sm:inline-flex text-primary-800 hover:text-primary-950 hover:bg-primary-100"
+            class="hidden sm:inline-flex text-primary-900 hover:text-primary-950 hover:bg-primary-100"
           >
             Sign in
           </UButton>
@@ -86,7 +86,7 @@ const footerCompany = [
             <span class="inline-block w-2 h-2 rounded-full bg-accent-500" aria-hidden="true" />
             {{ appConfig.site.name }}
           </div>
-          <p class="mt-4 text-sm text-primary-800 max-w-sm leading-relaxed">
+          <p class="mt-4 text-sm text-primary-900 max-w-sm leading-relaxed">
             {{ appConfig.site.description }}
           </p>
         </div>
@@ -98,7 +98,7 @@ const footerCompany = [
             <li v-for="item in footerExplore" :key="item.to">
               <NuxtLink
                 :to="item.to"
-                class="text-primary-800 hover:text-accent-600 transition-colors"
+                class="text-primary-900 hover:text-accent-600 transition-colors"
               >
                 {{ item.label }}
               </NuxtLink>
@@ -113,7 +113,7 @@ const footerCompany = [
             <li v-for="item in footerCompany" :key="item.to">
               <NuxtLink
                 :to="item.to"
-                class="text-primary-800 hover:text-accent-600 transition-colors"
+                class="text-primary-900 hover:text-accent-600 transition-colors"
               >
                 {{ item.label }}
               </NuxtLink>

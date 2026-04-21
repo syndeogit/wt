@@ -27,7 +27,7 @@ const neutralSwatches = [
   { name: 'bg', hex: '#ffffff' },
   { name: 'bg-elevated', hex: '#f0fbff' },
   { name: 'ink-muted', hex: '#0e7490' },
-  { name: 'ink', hex: '#155e75' },
+  { name: 'ink (primary-900)', hex: '#164e63' },
 ]
 </script>
 
@@ -38,7 +38,7 @@ const neutralSwatches = [
         Internal · not for production
       </p>
       <h1 class="font-display text-5xl text-primary-900 leading-[1.05]">Styleguide</h1>
-      <p class="mt-6 text-lg text-primary-800 max-w-2xl leading-relaxed">
+      <p class="mt-6 text-lg text-primary-900 max-w-2xl leading-relaxed">
         The Aegean direction. Every reusable token + component variant we commit to lives here. If
         it isn't on this page, it isn't part of the system yet.
       </p>
@@ -48,7 +48,7 @@ const neutralSwatches = [
     <section>
       <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">Direction</p>
       <h2 class="font-display text-3xl text-primary-900 mb-4">Aegean</h2>
-      <p class="text-primary-800 max-w-3xl leading-relaxed">
+      <p class="text-primary-900 max-w-3xl leading-relaxed">
         Mediterranean summer, not Atlantic winter. Clean white ground, turquoise primary that reads
         as Greek-island sea, deep teal ink for confident text, coral accent for warmth — the classic
         Greek hotel signage combination. Photography of turquoise water and white-washed walls does
@@ -56,7 +56,103 @@ const neutralSwatches = [
       </p>
     </section>
 
-    <!-- Typography -->
+    <!-- Typography treatments — same content, four variations -->
+    <section>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+        Typography treatments
+      </p>
+      <h2 class="font-display text-3xl text-primary-900 mb-4">
+        Same text, four treatments — pick one.
+      </h2>
+      <p class="text-primary-900 max-w-3xl leading-relaxed mb-10">
+        Each variation renders the same block of content so the only variable is the type treatment
+        itself. Ink colour, font family, weight, scale, and eyebrow styling differ. All WCAG AA+ on
+        white. Say "Option N" and we commit.
+      </p>
+
+      <!-- Option 1 — Editorial (current baseline) -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <p class="text-xs font-mono text-primary-600 mb-6">
+          Option 1 · Editorial — Fraunces display + Inter body, all primary-900, coral eyebrow
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-4 font-semibold">
+          Internal · not for production
+        </p>
+        <h3
+          class="font-display text-5xl text-primary-900 leading-[1.05] mb-6"
+          style="font-weight: 600"
+        >
+          Styleguide
+        </h3>
+        <p class="text-lg text-primary-900 max-w-2xl leading-relaxed">
+          The Aegean direction. Every reusable token + component variant we commit to lives here. If
+          it isn't on this page, it isn't part of the system yet.
+        </p>
+      </div>
+
+      <!-- Option 2 — Magazine (heavier display, larger scale) -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <p class="text-xs font-mono text-primary-600 mb-6">
+          Option 2 · Magazine — Fraunces 7xl bold, tighter tracking, body bumped to xl
+        </p>
+        <p class="text-[11px] uppercase tracking-[0.28em] text-accent-600 mb-5 font-bold">
+          Internal · not for production
+        </p>
+        <h3
+          class="font-display text-6xl sm:text-7xl text-primary-900 leading-[0.95] mb-7"
+          style="font-weight: 700; letter-spacing: -0.035em"
+        >
+          Styleguide
+        </h3>
+        <p class="text-xl text-primary-900 max-w-2xl leading-relaxed">
+          The Aegean direction. Every reusable token + component variant we commit to lives here. If
+          it isn't on this page, it isn't part of the system yet.
+        </p>
+      </div>
+
+      <!-- Option 3 — Contemporary (Inter throughout, no serif) -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <p class="text-xs font-mono text-primary-600 mb-6">
+          Option 3 · Contemporary — Inter display (no serif), bold, tight tracking
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-4 font-semibold">
+          Internal · not for production
+        </p>
+        <h3
+          class="text-5xl text-primary-900 leading-[1.05] mb-6"
+          style="font-weight: 700; letter-spacing: -0.035em"
+        >
+          Styleguide
+        </h3>
+        <p class="text-lg text-primary-900 max-w-2xl leading-relaxed">
+          The Aegean direction. Every reusable token + component variant we commit to lives here. If
+          it isn't on this page, it isn't part of the system yet.
+        </p>
+      </div>
+
+      <!-- Option 4 — Minimal (lighter weight, no coral eyebrow) -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <p class="text-xs font-mono text-primary-600 mb-6">
+          Option 4 · Minimal — Fraunces regular weight, body in muted ink (primary-700), teal
+          eyebrow (no coral)
+        </p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700 mb-4 font-medium">
+          Internal · not for production
+        </p>
+        <h3
+          class="font-display text-5xl text-primary-900 leading-[1.05] mb-6"
+          style="font-weight: 400; letter-spacing: -0.02em"
+        >
+          Styleguide
+        </h3>
+        <p class="text-lg text-primary-700 max-w-2xl leading-relaxed">
+          The Aegean direction. Every reusable token + component variant we commit to lives here. If
+          it isn't on this page, it isn't part of the system yet.
+        </p>
+      </div>
+    </section>
+
+    <!-- Typography scale reference (kept for internal sizing reference) -->
     <section>
       <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Typography</p>
       <h2 class="font-display text-3xl text-primary-900 mb-6">Fraunces + Inter</h2>
@@ -158,7 +254,7 @@ const neutralSwatches = [
     <!-- Neutrals -->
     <section>
       <h2 class="font-display text-3xl text-primary-900 mb-2">Background + ink</h2>
-      <p class="text-primary-800 mb-6 max-w-2xl">
+      <p class="text-primary-900 mb-6 max-w-2xl">
         Pure white background — clean Mediterranean light. Elevated surfaces use a barely-tinted
         turquoise shade. Text uses deep teal ink (cyan-800); muted text uses a slightly lighter teal
         (cyan-700). All combinations meet WCAG AA contrast on white.
