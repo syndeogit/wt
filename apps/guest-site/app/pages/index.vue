@@ -12,19 +12,19 @@ useHead({
 
 const pillars = [
   {
-    eyebrow: 'Chosen, not listed',
-    title: 'Destinations we would go back to',
-    body: 'Every centre we feature is somewhere we would book for ourselves. One week at ION Karpathos, not a directory of a hundred places you have never heard of.',
+    eyebrow: 'For first-timers',
+    title: 'Wing for beginners, taught by people who taught themselves',
+    body: 'Wingfoiling is the fastest-growing wind sport in the world — and the most beginner-friendly. Our coaches got into wing the same way you will: as a complete beginner. They know what felt impossible at hour one, and what clicks by hour six.',
   },
   {
-    eyebrow: 'Priced in full',
-    title: 'The price is the price',
-    body: 'Boards, coaching, transfers, accommodation — all shown upfront. No "from €X" tricks, no surprise add-ons at checkout.',
+    eyebrow: 'Chosen, not listed',
+    title: 'Destinations we would book ourselves',
+    body: 'Every centre we feature is somewhere we would go back to. One week at ION Karpathos, not a directory of a hundred places you have never heard of.',
   },
   {
     eyebrow: 'One trip, one confirmation',
     title: 'Stay and surf, bundled',
-    body: 'Partner hotels with live availability. Book the week, the lesson, and the bed in the same session. Arrive to everything ready.',
+    body: 'Partner hotels with live availability. Book the week, the lessons, and the bed in the same session. Arrive to everything ready.',
   },
 ]
 </script>
@@ -33,83 +33,110 @@ const pillars = [
   <div>
     <!-- Hero -->
     <section class="relative overflow-hidden">
-      <div
-        class="absolute inset-0 bg-gradient-to-b from-[color:var(--color-paper)] via-[color:var(--color-paper)] to-[color:var(--color-paper-elevated)]"
-      />
       <div class="relative max-w-6xl mx-auto px-6 pt-24 pb-28 sm:pt-36 sm:pb-40">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-6">
-          Karpathos · Greek Aegean · Meltemi season
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-6 font-semibold">
+          Wingfoil · Windsurf · Kitesurf · Karpathos, Greece
         </p>
-        <h1 class="font-display text-5xl sm:text-7xl leading-[1.02] text-primary-900 max-w-4xl">
+        <h1
+          class="font-display text-5xl sm:text-7xl leading-[1.02] text-primary-900 max-w-4xl text-pretty"
+        >
           {{ appConfig.site.tagline }}
         </h1>
-        <p class="mt-8 text-lg sm:text-xl text-primary-700 max-w-2xl leading-relaxed">
+        <p class="mt-8 text-lg sm:text-xl text-primary-800 max-w-2xl leading-relaxed">
           {{ appConfig.site.description }}
         </p>
         <div class="mt-10 flex flex-col sm:flex-row gap-3">
-          <UButton to="/karpathos" size="xl" color="primary" variant="solid" class="rounded-full">
-            Plan a week in Karpathos
+          <UButton
+            to="/wing"
+            size="xl"
+            class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8"
+          >
+            Try wing in Karpathos →
           </UButton>
           <UButton
-            to="/destinations"
+            to="/karpathos"
             size="xl"
             color="primary"
-            variant="ghost"
-            class="rounded-full"
+            variant="outline"
+            class="rounded-full border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-[color:var(--color-paper)]"
           >
-            See all destinations →
+            See the week
           </UButton>
         </div>
       </div>
     </section>
 
     <!-- Pillars -->
-    <section class="border-y border-primary-900/10 bg-[color:var(--color-paper-elevated)]">
+    <section class="border-y border-primary-200/60 bg-[color:var(--color-paper-elevated)]">
       <div class="max-w-6xl mx-auto px-6 py-20 grid gap-12 md:grid-cols-3">
         <div v-for="p in pillars" :key="p.title">
-          <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">{{ p.eyebrow }}</p>
-          <h2 class="font-display text-2xl text-primary-900 mb-3 leading-tight">{{ p.title }}</h2>
-          <p class="text-primary-700 leading-relaxed">{{ p.body }}</p>
+          <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+            {{ p.eyebrow }}
+          </p>
+          <h2 class="font-display text-2xl text-primary-900 mb-3 leading-tight text-pretty">
+            {{ p.title }}
+          </h2>
+          <p class="text-primary-800 leading-relaxed">{{ p.body }}</p>
         </div>
       </div>
     </section>
 
-    <!-- Featured destination tease -->
+    <!-- Featured destination — split: text on paper-elevated card, image to the right -->
     <section class="max-w-6xl mx-auto px-6 py-24">
-      <div class="grid gap-10 md:grid-cols-5 md:gap-16 items-end">
-        <div class="md:col-span-2">
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3">
-            Featured destination
-          </p>
-          <h2 class="font-display text-4xl sm:text-5xl text-primary-900 leading-[1.05]">
-            ION Karpathos, when the Meltemi wakes up.
-          </h2>
-          <p class="mt-6 text-primary-700 leading-relaxed">
-            Thermal wind from morning, turquoise water you can stand in, instructors who grew up on
-            this bay. Beginner to intermediate in a week — if the wind cooperates, and it usually
-            does.
-          </p>
-          <UButton
-            to="/karpathos"
-            color="primary"
-            variant="outline"
-            size="lg"
-            class="mt-8 rounded-full"
-          >
-            See the week →
-          </UButton>
-        </div>
+      <div class="grid gap-8 md:grid-cols-5 md:gap-12 items-stretch">
+        <article
+          class="md:col-span-2 bg-[color:var(--color-paper-elevated)] rounded-2xl p-8 sm:p-10 border border-primary-200/60 flex flex-col justify-between"
+        >
+          <div>
+            <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+              Featured destination
+            </p>
+            <h2
+              class="font-display text-3xl sm:text-4xl text-primary-900 leading-[1.05] text-pretty"
+            >
+              ION Karpathos, when the Meltemi wakes up.
+            </h2>
+            <p class="mt-6 text-primary-800 leading-relaxed">
+              Thermal wind from morning, turquoise water you can stand in, instructors who grew up
+              on this bay. Wing-curious to first-foiling in a week — if the wind cooperates, and on
+              Karpathos in summer it usually does.
+            </p>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <UButton
+              to="/karpathos"
+              size="lg"
+              class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-paper)] border-0"
+            >
+              Plan a week
+            </UButton>
+            <UButton
+              to="/wing"
+              variant="link"
+              class="text-accent-700 hover:text-accent-800 underline-offset-4"
+            >
+              Wing-beginner programme →
+            </UButton>
+          </div>
+        </article>
         <div class="md:col-span-3">
           <div
-            class="aspect-[4/5] rounded-2xl bg-gradient-to-br from-primary-500 via-primary-700 to-primary-950 overflow-hidden relative"
+            role="img"
+            aria-label="Placeholder for ION Karpathos hero photography. Real photo coming."
+            class="aspect-[4/5] md:aspect-auto md:h-full rounded-2xl bg-gradient-to-br from-primary-400 via-primary-700 to-primary-950 overflow-hidden relative"
           >
             <div
-              class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.2),transparent_50%)]"
+              class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.18),transparent_50%)]"
+              aria-hidden="true"
             />
             <div class="absolute bottom-6 left-6 right-6 text-[color:var(--color-paper)]">
-              <p class="text-xs uppercase tracking-[0.2em] opacity-80 mb-2">Photography</p>
-              <p class="font-display text-xl leading-tight">
-                Swap this gradient for a real Karpathos hero image when photography lands.
+              <p
+                class="text-[10px] uppercase tracking-[0.25em] mb-2 text-[color:var(--color-paper)]/80"
+              >
+                Photography placeholder
+              </p>
+              <p class="text-sm leading-snug text-[color:var(--color-paper)]/90">
+                Real Karpathos hero image lands here. Until then, navy stand-in.
               </p>
             </div>
           </div>
@@ -117,23 +144,25 @@ const pillars = [
       </div>
     </section>
 
-    <!-- Footer CTA strip -->
-    <section class="bg-primary-900 text-[color:var(--color-paper)]">
+    <!-- Closing CTA strip -->
+    <section class="bg-primary-900">
       <div
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >
         <div>
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-400 mb-3">Start here</p>
-          <h2 class="font-display text-3xl sm:text-4xl leading-tight">
-            Your next wind holiday, booked by Sunday.
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
+            Start here
+          </p>
+          <h2
+            class="font-display text-3xl sm:text-4xl leading-tight text-[color:var(--color-paper)] text-pretty"
+          >
+            Your first wing week, booked by Sunday.
           </h2>
         </div>
         <UButton
-          to="/karpathos"
+          to="/wing"
           size="xl"
-          color="primary"
-          variant="solid"
-          class="rounded-full bg-accent-500 hover:bg-accent-600 border-accent-500 hover:border-accent-600 text-white"
+          class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8 shrink-0"
         >
           Plan a week →
         </UButton>

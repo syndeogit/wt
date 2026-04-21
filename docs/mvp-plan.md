@@ -139,18 +139,39 @@ Claude proceeds with the default if Andy is unavailable. Defaults are swappable;
 | Booking confirmation calendar format     | G      | iCal attachment                               |
 | ION integration direction (pull vs push) | L      | Push bookings from WT to ION; ION-to-WT later |
 
+## Data architecture — Directus + Supabase split
+
+WindTribe uses two backends. Each owns the kinds of data it is built for.
+
+**Directus** — content, editable by non-developers via the admin UI. Hosted on the existing Syndeo instance (`directus-production-1e38.up.railway.app`). WindTribe collections use the `wt_` prefix to coexist with Syndeo's marketing site collections. A dedicated WindTribe role + API token scopes access.
+
+Owns: centres (descriptions, imagery, opening seasons), products (lessons, rentals, packages, prices, photos), hotels (descriptive content, photography), destinations (long-form marketing copy, SEO), journal posts.
+
+**Supabase** — transactional, auth-gated, app-logic data. Project `windtribe` (ref `wrasfpjetwewvmjawqxs`, EU region).
+
+Owns: user accounts, rider profiles, sessions, bookings, booking status transitions, availability + allocation tables, payments, refunds, real-time reservation locks.
+
+Apps fetch from both: public content from Directus (no auth needed), user-specific state + booking writes from Supabase. Shared keys (e.g. `centre_id`, `product_id`) reference the same identifiers across both systems; Directus is source-of-truth for descriptive content, Supabase for transactional state.
+
+Implication for Epic 4 (Centre admin) and Epic 5 (Hotel admin): centre/hotel staff use Directus directly to manage their content. WindTribe's admin portals (Slices I, J) only need to handle the operational bits — view bookings, edit availability — which Directus is not built for. This shrinks Epic 4 + 5 scope substantially.
+
+## Wingfoil positioning
+
+Headline product is **wing for beginners**. Wingfoiling is the fastest-growing wind sport globally and the most beginner-accessible — the MVP leans on this to bring city-dwellers ("I have always wanted to try") onto the water for the first time. Windsurf and kitesurf remain offered (and matter to existing audiences), but wing leads on the homepage, hero, and primary CTA.
+
 ## Current state
 
 - **Epic 1 Done.** Monorepo, Nuxt 4, TS strict, lint + Prettier, Vitest, Playwright, GitHub Actions CI, Supabase live (project `windtribe` / ref `wrasfpjetwewvmjawqxs`), Vercel live (3 projects deploying from main), Sentry live (3 projects, EU region, default email alerts).
-- **Slice 0 not started.**
-- **Next action:** Claude starts Slice 0 per this plan.
+- **Slice 0** in progress. Style direction (Open Sea — navy + coral, Fraunces + Inter), Pinia + checkout store, fixtures, mock `/api`, `/styleguide` page all in. UI contrast fixes + wingfoil positioning landing now. Directus collection setup pending — first sub-task of Slice A.
+- **Next action:** Claude finishes Slice 0 cleanup, then starts Slice A (Browse) with Directus content.
 
 ## Credentials and environments
 
 All runtime credentials live in `C:\dev\dev\WT\.env.local` (gitignored). `windtribe-env-template.env` (tracked, values empty) documents which vars exist. Vercel holds production/preview/dev copies per project. Never commit real values.
 
-Current services wired: Jira (Syndeo), GitHub (syndeogit/wt), Supabase (windtribe, EU), Vercel (team `syndeogits-projects`, 3 projects), Sentry (org `syndeo-wh`, EU region, 3 projects).
+Current services wired: Jira (Syndeo), GitHub (syndeogit/wt), Supabase (windtribe, EU), Vercel (team `syndeogits-projects`, 3 projects), Sentry (org `syndeo-wh`, EU region, 3 projects), Directus (shared Syndeo instance, `wt_` prefix — token TBC).
 
 ## Changelog
 
 - **2026-04-20** — Initial plan. All epics in, MVP-disciplined (smallest lovable version per story). Vertical slicing A–M with activity feed (K) deferred post-launch. Slice 0 scaffolding list includes Pinia + checkout state store.
+- **2026-04-21** — Added Directus + Supabase split (Path A — share existing Syndeo Directus, `wt_` collection prefix). Added wingfoil positioning — wing leads, windsurf + kitesurf supporting. UI contrast fixes triggered by review (dark-mode CSS was inverting body to navy and breaking every navy text class).

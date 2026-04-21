@@ -19,12 +19,15 @@ export interface Centre {
 
 export type ProductKind = 'lesson' | 'rental' | 'package'
 
+export type Discipline = 'wingfoil' | 'windsurf' | 'kitesurf'
+
 export type DisciplineLevel = 'beginner' | 'intermediate' | 'advanced'
 
 export interface Product {
   id: UUID
   centreId: UUID
   kind: ProductKind
+  discipline: Discipline
   name: string
   summary: string
   description: string
