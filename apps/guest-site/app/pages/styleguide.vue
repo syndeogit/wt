@@ -152,6 +152,161 @@ const neutralSwatches = [
       </div>
     </section>
 
+    <!-- Font alternatives — swap Fraunces for something more breathable -->
+    <section>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+        Display font alternatives
+      </p>
+      <h2 class="font-display text-3xl text-primary-900 mb-4">
+        Fraunces feels compact. Pick a replacement.
+      </h2>
+      <p class="text-primary-900 max-w-3xl leading-relaxed mb-10">
+        Same hero text rendered in six display-font candidates. Each has more open counters or more
+        generous letter-spacing than Fraunces at 7xl. All free (Google Fonts). All WCAG AA+ on
+        white. Say "Option N" and we commit.
+      </p>
+
+      <!-- Option A — Fraunces (current, for reference) -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option A · Fraunces (current baseline)</p>
+          <p class="text-xs font-mono text-primary-600">
+            Variable serif · optical sizing · condensed feel at large sizes
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.02]"
+          style="
+            font-family: 'Fraunces', ui-serif, serif;
+            font-weight: 600;
+            font-optical-sizing: auto;
+            font-variation-settings: 'opsz' 96;
+            letter-spacing: -0.025em;
+          "
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <!-- Option B — Newsreader -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option B · Newsreader</p>
+          <p class="text-xs font-mono text-primary-600">
+            Editorial serif · designed for news display · generous apertures
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.05]"
+          style="
+            font-family: 'Newsreader', ui-serif, serif;
+            font-weight: 600;
+            font-optical-sizing: auto;
+            font-variation-settings: 'opsz' 72;
+            letter-spacing: -0.01em;
+          "
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <!-- Option C — Cormorant -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option C · Cormorant</p>
+          <p class="text-xs font-mono text-primary-600">
+            Classical serif · elegant, Mediterranean-feel · very open
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.05]"
+          style="font-family: 'Cormorant', ui-serif, serif; font-weight: 500; letter-spacing: 0"
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <!-- Option D — DM Serif Display -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option D · DM Serif Display</p>
+          <p class="text-xs font-mono text-primary-600">
+            Bold display serif · strong character · works well at large sizes only
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.02]"
+          style="font-family: 'DM Serif Display', ui-serif, serif; letter-spacing: -0.01em"
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <!-- Option E — Source Serif 4 -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option E · Source Serif 4</p>
+          <p class="text-xs font-mono text-primary-600">
+            Adobe's open serif · very breathable · transitional (not quite modern, not quite
+            old-style)
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.05]"
+          style="
+            font-family: 'Source Serif 4', ui-serif, serif;
+            font-weight: 600;
+            font-optical-sizing: auto;
+            font-variation-settings: 'opsz' 60;
+            letter-spacing: -0.015em;
+          "
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <!-- Option F — Lora -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option F · Lora</p>
+          <p class="text-xs font-mono text-primary-600">
+            Bookish serif · warm, readable · calmer than Fraunces
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.05]"
+          style="font-family: 'Lora', ui-serif, serif; font-weight: 600; letter-spacing: -0.01em"
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <!-- Option G — Outfit (sans pivot) -->
+      <div class="border border-primary-200 rounded-2xl p-8 sm:p-10 mb-6 bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+          <p class="text-xs font-mono text-primary-600">Option G · Outfit (sans pivot)</p>
+          <p class="text-xs font-mono text-primary-600">
+            Elegant geometric sans · abandons the serif · more contemporary
+          </p>
+        </div>
+        <p
+          class="text-5xl sm:text-6xl text-primary-900 leading-[1.02]"
+          style="
+            font-family: 'Outfit', ui-sans-serif, sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+          "
+        >
+          Try wing. Try wind. Live a week.
+        </p>
+      </div>
+
+      <p class="text-sm text-primary-700 mt-6 max-w-3xl leading-relaxed">
+        Tell me which letter (A–G) and I'll swap the brand display font, update the hero + all
+        pages, and regenerate this section to remove the rejected options.
+      </p>
+    </section>
+
     <!-- Typography scale reference (kept for internal sizing reference) -->
     <section>
       <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Typography</p>
