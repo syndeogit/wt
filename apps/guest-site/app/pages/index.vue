@@ -42,7 +42,7 @@ const pillars = [
         >
           {{ appConfig.site.tagline }}
         </h1>
-        <p class="mt-8 text-lg sm:text-xl text-primary-800 max-w-2xl leading-relaxed">
+        <p class="mt-8 text-lg sm:text-xl text-primary-900 max-w-2xl leading-relaxed">
           {{ appConfig.site.description }}
         </p>
         <div class="mt-10 flex flex-col sm:flex-row gap-3">
@@ -76,7 +76,7 @@ const pillars = [
           <h2 class="font-display text-2xl text-primary-900 mb-3 leading-tight text-pretty">
             {{ p.title }}
           </h2>
-          <p class="text-primary-800 leading-relaxed">{{ p.body }}</p>
+          <p class="text-primary-900 leading-relaxed">{{ p.body }}</p>
         </div>
       </div>
     </section>
@@ -96,7 +96,7 @@ const pillars = [
             >
               ION Karpathos, when the Meltemi wakes up.
             </h2>
-            <p class="mt-6 text-primary-800 leading-relaxed">
+            <p class="mt-6 text-primary-900 leading-relaxed">
               Thermal wind from morning, turquoise water you can stand in, instructors who grew up
               on this bay. Wing-curious to first-foiling in a week — if the wind cooperates, and on
               Karpathos in summer it usually does.

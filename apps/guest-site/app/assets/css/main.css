@@ -45,8 +45,15 @@
   /* Surface — clean white, with a barely-tinted elevated tone. */
   --color-bg: #ffffff;
   --color-bg-elevated: #f0fbff;
-  --color-ink: #155e75;
-  --color-ink-muted: #0e7490;
+
+  /*
+   * Font primary — single committed ink colour. All body and heading
+   * text uses this one value. Hierarchy comes from font weight, size,
+   * and family (Fraunces display vs Inter body), not colour tiers.
+   * 9.1:1 contrast on white (WCAG AAA).
+   */
+  --color-ink: #164e63;
+  --color-ink-muted: #0e7490; /* 5:1 — captions / metadata only */
 }
 
 @theme {
