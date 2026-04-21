@@ -2,10 +2,12 @@
 @import '@nuxt/ui';
 
 /*
- * WindTribe — "Open sea" style direction.
+ * WindTribe — "Open Sea" style direction.
  * Premium, editorial, aspirational. For the city-dweller imagining themselves
  * on the water. Deep navy for gravitas, coral accent for warmth, sand paper
- * background for invitation.
+ * background for invitation. LIGHT MODE ONLY for MVP — dark theme is a
+ * separate design exercise and was producing invisible text on every
+ * navy-on-navy combination.
  */
 
 @theme static {
@@ -38,7 +40,7 @@
   --color-paper: #f7f3ee;
   --color-paper-elevated: #fbf7f1;
   --color-ink: #0b2740;
-  --color-ink-muted: #546f94;
+  --color-ink-muted: #20385a;
 
   /* Typography */
   --font-sans:
@@ -46,22 +48,34 @@
   --font-display: 'Fraunces', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
 }
 
-/* Paper/sand body background + navy ink — global default. */
-html,
+/* Force light theme. Paper background, navy ink. */
+html {
+  color-scheme: light;
+  background-color: var(--color-paper);
+}
+
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);
 }
 
-.dark html,
-.dark body {
-  background-color: var(--color-primary-950);
-  color: var(--color-paper);
-}
-
-/* Display utility for Fraunces on hero / editorial headings. */
+/* Display utility — Fraunces with optical sizing tuned for editorial weight. */
 .font-display {
   font-family: var(--font-display);
   font-optical-sizing: auto;
+  font-variation-settings: 'opsz' 96;
   letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+/* Reduced-motion respect for any future animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

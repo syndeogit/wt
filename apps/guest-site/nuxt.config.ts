@@ -4,6 +4,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@sentry/nuxt/module'],
   css: ['~/assets/css/main.css'],
+  // Force light theme for MVP — dark theme is a separate design task.
+  colorMode: { preference: 'light', fallback: 'light' },
   sentry: {
     sourceMapsUploadOptions: {
       org: 'syndeo-wh',
