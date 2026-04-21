@@ -1,12 +1,12 @@
-import { centres } from '~/fixtures/centres'
-import { products } from '~/fixtures/products'
-
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug')
-  const centre = centres.find((c) => c.slug === slug)
+  if (!slug) {
+    throw createError({ statusCode: 400, statusMessage: 'slug is required' })
+  }
+  const centre = await fetchCentreBySlug(event, slug)
   if (!centre) {
     throw createError({ statusCode: 404, statusMessage: 'Centre not found' })
   }
-  const items = products.filter((p) => p.centreId === centre.id)
-  return { data: items }
+  const data = await fetchProductsByCentreId(event, centre.id)
+  return { data }
 })

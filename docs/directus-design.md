@@ -119,9 +119,12 @@ Any schema change (new field, rename, enum addition) goes through **both** the D
 
 For destructive changes (field removal, collection rename), export existing data first via Directus's export, apply the change, re-import.
 
-## What's next (outside Chunk A1)
+## What's next (outside Chunk A2)
 
-- **Chunk A2:** wire guest-site's mock `/api/*` routes to fetch from Directus instead of fixtures.
-- **Chunk A3:** build the `/karpathos` destination page consuming `wt_centres` + `wt_products` + `wt_hotels`.
+- **Chunk A3:** build the `/karpathos` destination page consuming `wt_centres` + `wt_products` + `wt_hotels` via the now-wired `/api/centres/*` routes.
 - **Later:** swap `hero_image` / `image` string URLs for proper Directus file relationships once real photography lands.
 - **Later:** add `wt_journal_posts` collection when journal/blog content is needed (post-launch).
+
+## Implementation notes — guest-site server routes
+
+`apps/guest-site/server/utils/directus.ts` is the single place that talks to Directus. It reads the base URL from `runtimeConfig.public.directusUrl` (env: `NUXT_PUBLIC_DIRECTUS_URL`), appends `/items/wt_*?filter[status][_eq]=published`, and maps snake_case fields to the camelCase TypeScript types in `apps/guest-site/app/fixtures/types.ts`. The four route files (`centres/index.get.ts`, `centres/[slug].get.ts`, `centres/[slug]/products.get.ts`, `centres/[slug]/hotels.get.ts`) stay thin — slug validation, 404 on unknown centre, pass-through `{ data }`. Add new consumers by calling the exported `fetchCentres` / `fetchCentreBySlug` / `fetchProductsByCentreId` / `fetchHotelsByCentreId` helpers rather than building ad-hoc Directus URLs.

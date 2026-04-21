@@ -1,5 +1,4 @@
-import { centres } from '~/fixtures/centres'
-
-export default defineEventHandler(() => {
-  return { data: centres }
+export default defineEventHandler(async (event) => {
+  const data = await fetchCentres(event)
+  return { data }
 })
