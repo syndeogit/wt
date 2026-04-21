@@ -5,19 +5,19 @@ useHead({
 })
 
 const primarySwatches = [
-  { name: 'primary-50', hex: '#f0f9ff' },
-  { name: 'primary-200', hex: '#bae6fd' },
-  { name: 'primary-400', hex: '#38bdf8' },
-  { name: 'primary-500', hex: '#0ea5e9' },
-  { name: 'primary-600', hex: '#0284c7' },
-  { name: 'primary-800', hex: '#075985' },
-  { name: 'primary-900', hex: '#0c4a6e' },
+  { name: 'primary-50', hex: '#ecfeff' },
+  { name: 'primary-200', hex: '#a5f3fc' },
+  { name: 'primary-400', hex: '#22d3ee' },
+  { name: 'primary-500', hex: '#06b6d4' },
+  { name: 'primary-600', hex: '#0891b2' },
+  { name: 'primary-800', hex: '#155e75' },
+  { name: 'primary-900', hex: '#164e63' },
 ]
 
 const accentSwatches = [
-  { name: 'accent-50', hex: '#fef2f2' },
-  { name: 'accent-200', hex: '#fecaca' },
-  { name: 'accent-400', hex: '#f87171' },
+  { name: 'accent-50', hex: '#fff1ef' },
+  { name: 'accent-200', hex: '#ffc4ba' },
+  { name: 'accent-400', hex: '#f7755e' },
   { name: 'accent-500', hex: '#ef5a3e' },
   { name: 'accent-600', hex: '#d4452f' },
   { name: 'accent-800', hex: '#882a1d' },
@@ -25,9 +25,9 @@ const accentSwatches = [
 
 const neutralSwatches = [
   { name: 'bg', hex: '#ffffff' },
-  { name: 'bg-elevated', hex: '#f4f9fc' },
-  { name: 'ink-muted', hex: '#075985' },
-  { name: 'ink', hex: '#0c4a6e' },
+  { name: 'bg-elevated', hex: '#f0fbff' },
+  { name: 'ink-muted', hex: '#0e7490' },
+  { name: 'ink', hex: '#155e75' },
 ]
 </script>
 
@@ -49,10 +49,10 @@ const neutralSwatches = [
       <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">Direction</p>
       <h2 class="font-display text-3xl text-primary-900 mb-4">Aegean</h2>
       <p class="text-primary-800 max-w-3xl leading-relaxed">
-        Mediterranean summer, not Atlantic winter. Clean white ground, sky-blue primary, deep ocean
-        ink for confident text, coral accent for warmth. The classic Greek hotel signage combination
-        — bright, bright, bright. Photography of turquoise water and white-washed walls does the
-        emotional lift; type and colour stay out of its way.
+        Mediterranean summer, not Atlantic winter. Clean white ground, turquoise primary that reads
+        as Greek-island sea, deep teal ink for confident text, coral accent for warmth — the classic
+        Greek hotel signage combination. Photography of turquoise water and white-washed walls does
+        the emotional lift; type and colour stay out of its way.
       </p>
     </section>
 
@@ -119,7 +119,7 @@ const neutralSwatches = [
     <!-- Primary palette -->
     <section>
       <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Palette</p>
-      <h2 class="font-display text-3xl text-primary-900 mb-2">Primary — Mediterranean sky</h2>
+      <h2 class="font-display text-3xl text-primary-900 mb-2">Primary — Mediterranean turquoise</h2>
       <p class="text-primary-700 mb-6 max-w-2xl">
         Carries text, primary surfaces, most ink on the page. 700–900 for headings and strong text,
         500–600 for primary buttons, 200–400 for borders and quiet surfaces.
@@ -159,9 +159,9 @@ const neutralSwatches = [
     <section>
       <h2 class="font-display text-3xl text-primary-900 mb-2">Background + ink</h2>
       <p class="text-primary-800 mb-6 max-w-2xl">
-        Pure white background — clean Mediterranean light. Elevated surfaces use a barely-tinted sky
-        shade. Text uses deep ocean ink (sky-900); muted text uses a slightly lighter ocean
-        (sky-700). All combinations meet WCAG AA contrast on white.
+        Pure white background — clean Mediterranean light. Elevated surfaces use a barely-tinted
+        turquoise shade. Text uses deep teal ink (cyan-800); muted text uses a slightly lighter teal
+        (cyan-700). All combinations meet WCAG AA contrast on white.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div v-for="s in neutralSwatches" :key="s.name" class="text-xs">
@@ -259,4 +259,124 @@ const neutralSwatches = [
       </div>
     </section>
   </div>
+
+  <!-- Dark variant preview — full-bleed below the styleguide. Static
+       sample showing how an inverted theme would feel. Doesn't toggle
+       theme site-wide; lives only on this page so we can audit dark
+       direction without breaking auto-theming elsewhere. -->
+  <section class="bg-primary-950 mt-24">
+    <div class="max-w-5xl mx-auto px-6 py-20 space-y-16 text-primary-100">
+      <header>
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-4 font-semibold">
+          Dark variant · preview only
+        </p>
+        <h2 class="font-display text-4xl text-primary-50 leading-tight">
+          The Aegean after sunset.
+        </h2>
+        <p class="mt-6 text-lg text-primary-200 max-w-2xl leading-relaxed">
+          Same brand, inverted surface. Deepest teal as the ground, near-white text, primary actions
+          in the brighter cyan, coral CTAs unchanged. Not live across the site yet — this block is a
+          static preview so we can see whether the direction is worth committing to.
+        </p>
+      </header>
+
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
+          Hero on dark
+        </p>
+        <div class="bg-primary-900 rounded-2xl p-10 sm:p-14">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-4 font-semibold">
+            Wingfoil · Karpathos
+          </p>
+          <h3
+            class="font-display text-4xl sm:text-5xl text-primary-50 leading-[1.05] max-w-2xl text-pretty"
+          >
+            Try wing. Try wind. Live a week.
+          </h3>
+          <p class="mt-6 text-primary-200 leading-relaxed max-w-xl">
+            Curated wingfoil escapes for the city-dweller who has been meaning to try.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a
+              href="#"
+              class="inline-flex items-center rounded-full bg-accent-500 hover:bg-accent-600 text-white px-7 py-3 text-base font-medium transition-colors"
+            >
+              Try wing in Karpathos →
+            </a>
+            <a
+              href="#"
+              class="inline-flex items-center rounded-full bg-primary-700/60 hover:bg-primary-700 text-primary-50 px-7 py-3 text-base font-medium border border-primary-600/40 transition-colors"
+            >
+              See the week
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
+          Card on dark
+        </p>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <article class="bg-primary-900 rounded-2xl p-7 border border-primary-800">
+            <p class="font-display text-xl text-primary-50 mb-1">Wing for beginners — 5 days</p>
+            <p class="text-xs uppercase tracking-[0.18em] text-primary-300 mb-4">
+              5 mornings · coaching + kit
+            </p>
+            <p class="text-primary-200 leading-relaxed text-sm">
+              Five days from "never tried it" to first independent flights. Coach in the water with
+              you. Group cap of three.
+            </p>
+            <div class="mt-6 flex items-center justify-between">
+              <span class="font-display text-2xl text-primary-50">€890</span>
+              <a
+                href="#"
+                class="inline-flex items-center rounded-full bg-accent-500 hover:bg-accent-600 text-white px-5 py-2 text-sm font-medium transition-colors"
+              >
+                Choose
+              </a>
+            </div>
+          </article>
+          <article class="bg-primary-900 rounded-2xl p-7 border border-primary-800">
+            <p class="font-display text-xl text-primary-50 mb-1">Body-only card</p>
+            <p class="text-primary-200 leading-relaxed text-sm mt-3">
+              Quieter surfaces — quotes, side notes, secondary content. No header, no footer, just
+              prose that reads as comfortably on dark as on light.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
+          Tokens used (dark)
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 text-xs">
+          <div
+            v-for="tok in [
+              { name: 'primary-950', hex: '#083344' },
+              { name: 'primary-900', hex: '#164e63' },
+              { name: 'primary-800', hex: '#155e75' },
+              { name: 'primary-700', hex: '#0e7490' },
+              { name: 'primary-200', hex: '#a5f3fc' },
+              { name: 'primary-100', hex: '#cffafe' },
+              { name: 'primary-50', hex: '#ecfeff' },
+            ]"
+            :key="tok.name"
+          >
+            <div
+              class="h-14 rounded-lg border border-primary-800"
+              :style="{ background: tok.hex }"
+            />
+            <div class="mt-2 font-mono text-primary-100">{{ tok.name }}</div>
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-primary-300 max-w-2xl leading-relaxed">
+          Background = primary-950 (deepest teal). Surfaces = primary-900. Text = primary-50 for
+          headings, primary-200 for body, primary-300 for muted. Accent CTAs unchanged. Borders use
+          primary-800 with low opacity to stay quiet.
+        </p>
+      </div>
+    </div>
+  </section>
 </template>
