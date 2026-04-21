@@ -24,15 +24,15 @@ const footerCompany = [
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col bg-[color:var(--color-paper)]">
+  <div class="min-h-screen flex flex-col bg-[color:var(--color-bg)]">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:rounded-full focus:bg-primary-900 focus:text-[color:var(--color-paper)]"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:rounded-full focus:bg-primary-900 focus:text-[color:var(--color-bg)]"
     >
       Skip to content
     </a>
 
-    <header class="sticky top-0 z-40 border-b border-primary-200/60 bg-[color:var(--color-paper)]">
+    <header class="sticky top-0 z-40 border-b border-primary-200/60 bg-[color:var(--color-bg)]">
       <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <NuxtLink
           to="/"
@@ -67,7 +67,7 @@ const footerCompany = [
             color="primary"
             variant="solid"
             size="sm"
-            class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-paper)]"
+            class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-bg)]"
           >
             Book a week
           </UButton>
@@ -79,7 +79,7 @@ const footerCompany = [
       <slot />
     </main>
 
-    <footer class="border-t border-primary-200/60 mt-24 bg-[color:var(--color-paper-elevated)]">
+    <footer class="border-t border-primary-200/60 mt-24 bg-[color:var(--color-bg-elevated)]">
       <div class="max-w-6xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-4">
         <div class="md:col-span-2">
           <div translate="no" class="flex items-center gap-3 font-display text-lg text-primary-900">

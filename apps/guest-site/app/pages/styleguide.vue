@@ -5,29 +5,29 @@ useHead({
 })
 
 const primarySwatches = [
-  { name: 'primary-50', hex: '#f1f4f8' },
-  { name: 'primary-200', hex: '#b4c1d8' },
-  { name: 'primary-400', hex: '#546f94' },
-  { name: 'primary-500', hex: '#345075' },
-  { name: 'primary-600', hex: '#20385a' },
-  { name: 'primary-800', hex: '#102038' },
-  { name: 'primary-900', hex: '#0b2740' },
+  { name: 'primary-50', hex: '#f0f9ff' },
+  { name: 'primary-200', hex: '#bae6fd' },
+  { name: 'primary-400', hex: '#38bdf8' },
+  { name: 'primary-500', hex: '#0ea5e9' },
+  { name: 'primary-600', hex: '#0284c7' },
+  { name: 'primary-800', hex: '#075985' },
+  { name: 'primary-900', hex: '#0c4a6e' },
 ]
 
 const accentSwatches = [
-  { name: 'accent-50', hex: '#fdf4f0' },
-  { name: 'accent-200', hex: '#f6c8b4' },
-  { name: 'accent-400', hex: '#e88367' },
-  { name: 'accent-500', hex: '#e07a5f' },
-  { name: 'accent-600', hex: '#c75a3d' },
-  { name: 'accent-800', hex: '#823929' },
+  { name: 'accent-50', hex: '#fef2f2' },
+  { name: 'accent-200', hex: '#fecaca' },
+  { name: 'accent-400', hex: '#f87171' },
+  { name: 'accent-500', hex: '#ef5a3e' },
+  { name: 'accent-600', hex: '#d4452f' },
+  { name: 'accent-800', hex: '#882a1d' },
 ]
 
 const neutralSwatches = [
-  { name: 'paper', hex: '#f7f3ee' },
-  { name: 'paper-elevated', hex: '#fbf7f1' },
-  { name: 'ink-muted', hex: '#546f94' },
-  { name: 'ink', hex: '#0b2740' },
+  { name: 'bg', hex: '#ffffff' },
+  { name: 'bg-elevated', hex: '#f4f9fc' },
+  { name: 'ink-muted', hex: '#075985' },
+  { name: 'ink', hex: '#0c4a6e' },
 ]
 </script>
 
@@ -38,21 +38,21 @@ const neutralSwatches = [
         Internal · not for production
       </p>
       <h1 class="font-display text-5xl text-primary-900 leading-[1.05]">Styleguide</h1>
-      <p class="mt-6 text-lg text-primary-700 max-w-2xl leading-relaxed">
-        The Open Sea direction. Every reusable token + component variant we commit to lives here. If
+      <p class="mt-6 text-lg text-primary-800 max-w-2xl leading-relaxed">
+        The Aegean direction. Every reusable token + component variant we commit to lives here. If
         it isn't on this page, it isn't part of the system yet.
       </p>
     </header>
 
     <!-- Direction -->
     <section>
-      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Direction</p>
-      <h2 class="font-display text-3xl text-primary-900 mb-4">Open Sea</h2>
-      <p class="text-primary-700 max-w-3xl leading-relaxed">
-        Premium, editorial, aspirational. Built for the city-dweller imagining themselves on the
-        water at 2pm on a Thursday. Deep navy carries gravity; coral brings warmth; sand paper
-        background says "come in." Photography does the heavy emotional lift; type and colour stay
-        out of its way.
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">Direction</p>
+      <h2 class="font-display text-3xl text-primary-900 mb-4">Aegean</h2>
+      <p class="text-primary-800 max-w-3xl leading-relaxed">
+        Mediterranean summer, not Atlantic winter. Clean white ground, sky-blue primary, deep ocean
+        ink for confident text, coral accent for warmth. The classic Greek hotel signage combination
+        — bright, bright, bright. Photography of turquoise water and white-washed walls does the
+        emotional lift; type and colour stay out of its way.
       </p>
     </section>
 
@@ -119,7 +119,7 @@ const neutralSwatches = [
     <!-- Primary palette -->
     <section>
       <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Palette</p>
-      <h2 class="font-display text-3xl text-primary-900 mb-2">Primary — deep navy</h2>
+      <h2 class="font-display text-3xl text-primary-900 mb-2">Primary — Mediterranean sky</h2>
       <p class="text-primary-700 mb-6 max-w-2xl">
         Carries text, primary surfaces, most ink on the page. 700–900 for headings and strong text,
         500–600 for primary buttons, 200–400 for borders and quiet surfaces.
@@ -157,10 +157,11 @@ const neutralSwatches = [
 
     <!-- Neutrals -->
     <section>
-      <h2 class="font-display text-3xl text-primary-900 mb-2">Paper + ink</h2>
-      <p class="text-primary-700 mb-6 max-w-2xl">
-        Background is warm sand (paper), not pure white — so the brand always feels inviting. Ink is
-        deep navy, so text reads confidently against it.
+      <h2 class="font-display text-3xl text-primary-900 mb-2">Background + ink</h2>
+      <p class="text-primary-800 mb-6 max-w-2xl">
+        Pure white background — clean Mediterranean light. Elevated surfaces use a barely-tinted sky
+        shade. Text uses deep ocean ink (sky-900); muted text uses a slightly lighter ocean
+        (sky-700). All combinations meet WCAG AA contrast on white.
       </p>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div v-for="s in neutralSwatches" :key="s.name" class="text-xs">

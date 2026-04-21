@@ -58,7 +58,7 @@ const pillars = [
             size="xl"
             color="primary"
             variant="outline"
-            class="rounded-full border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-[color:var(--color-paper)]"
+            class="rounded-full border-primary-900 text-primary-900 hover:bg-primary-900 hover:text-[color:var(--color-bg)]"
           >
             See the week
           </UButton>
@@ -67,7 +67,7 @@ const pillars = [
     </section>
 
     <!-- Pillars -->
-    <section class="border-y border-primary-200/60 bg-[color:var(--color-paper-elevated)]">
+    <section class="border-y border-primary-200/60 bg-[color:var(--color-bg-elevated)]">
       <div class="max-w-6xl mx-auto px-6 py-20 grid gap-12 md:grid-cols-3">
         <div v-for="p in pillars" :key="p.title">
           <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
@@ -85,7 +85,7 @@ const pillars = [
     <section class="max-w-6xl mx-auto px-6 py-24">
       <div class="grid gap-8 md:grid-cols-5 md:gap-12 items-stretch">
         <article
-          class="md:col-span-2 bg-[color:var(--color-paper-elevated)] rounded-2xl p-8 sm:p-10 border border-primary-200/60 flex flex-col justify-between"
+          class="md:col-span-2 bg-[color:var(--color-bg-elevated)] rounded-2xl p-8 sm:p-10 border border-primary-200/60 flex flex-col justify-between"
         >
           <div>
             <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
@@ -106,7 +106,7 @@ const pillars = [
             <UButton
               to="/karpathos"
               size="lg"
-              class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-paper)] border-0"
+              class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-bg)] border-0"
             >
               Plan a week
             </UButton>
@@ -129,13 +129,13 @@ const pillars = [
               class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.18),transparent_50%)]"
               aria-hidden="true"
             />
-            <div class="absolute bottom-6 left-6 right-6 text-[color:var(--color-paper)]">
+            <div class="absolute bottom-6 left-6 right-6 text-[color:var(--color-bg)]">
               <p
-                class="text-[10px] uppercase tracking-[0.25em] mb-2 text-[color:var(--color-paper)]/80"
+                class="text-[10px] uppercase tracking-[0.25em] mb-2 text-[color:var(--color-bg)]/80"
               >
                 Photography placeholder
               </p>
-              <p class="text-sm leading-snug text-[color:var(--color-paper)]/90">
+              <p class="text-sm leading-snug text-[color:var(--color-bg)]/90">
                 Real Karpathos hero image lands here. Until then, navy stand-in.
               </p>
             </div>
@@ -150,11 +150,11 @@ const pillars = [
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >
         <div>
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-200 mb-3 font-semibold">
             Start here
           </p>
           <h2
-            class="font-display text-3xl sm:text-4xl leading-tight text-[color:var(--color-paper)] text-pretty"
+            class="font-display text-3xl sm:text-4xl leading-tight text-[color:var(--color-bg)] text-pretty"
           >
             Your first wing week, booked by Sunday.
           </h2>
