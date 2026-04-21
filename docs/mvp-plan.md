@@ -169,7 +169,9 @@ Headline product is **wing for beginners**. Wingfoiling is the fastest-growing w
 
 All runtime credentials live in `C:\dev\dev\WT\.env.local` (gitignored). `windtribe-env-template.env` (tracked, values empty) documents which vars exist. Vercel holds production/preview/dev copies per project. Never commit real values.
 
-Current services wired: Jira (Syndeo), GitHub (syndeogit/wt), Supabase (windtribe, EU), Vercel (team `syndeogits-projects`, 3 projects), Sentry (org `syndeo-wh`, EU region, 3 projects), Directus (shared Syndeo instance, `wt_` prefix — token TBC).
+Current services wired: Jira (Syndeo), GitHub (syndeogit/wt), Supabase (windtribe, EU), Vercel (team `syndeogits-projects`, 3 projects), Sentry (org `syndeo-wh`, EU region, 3 projects), Directus (shared Syndeo instance, `wt_` prefix — wt_centres + wt_products + wt_hotels collections live, Content - Public read permissions granted, Karpathos seeded).
+
+Full Directus design: [`docs/directus-design.md`](./directus-design.md). Stakeholder mirror: [WindTribe — Directus data design on Confluence](https://syndeo-test.atlassian.net/wiki/spaces/SD/pages/234881026/WindTribe+Directus+data+design).
 
 ## Changelog
 
@@ -177,3 +179,4 @@ Current services wired: Jira (Syndeo), GitHub (syndeogit/wt), Supabase (windtrib
 - **2026-04-21** — Added Directus + Supabase split (Path A — share existing Syndeo Directus, `wt_` collection prefix). Added wingfoil positioning — wing leads, windsurf + kitesurf supporting. UI contrast fixes triggered by review (dark-mode CSS was inverting body to navy and breaking every navy text class).
 - **2026-04-21** — Repaletted from "Open Sea" (navy + sand) to **"Aegean"** (white background + Mediterranean sky-blue + coral). Andy: "the blues are like the English Channel not the Mediterranean." New primary uses Tailwind sky family (#0ea5e9 → #0c4a6e); background is pure white with a barely-tinted elevated tone. Coral accent kept (classic Greek hotel signage combination).
 - **2026-04-21** — Shifted primary to true turquoise (Tailwind cyan family — #06b6d4 → #164e63) after sky still read as English Channel. Committed primary-900 (#164e63) as single font-primary ink. Swapped display font from Fraunces (too compact at 7xl) to **Outfit** — geometric humanist sans with generous counters, confident at display sizes.
+- **2026-04-21** — Slice A chunk A1 complete. Directus collections (`wt_centres`, `wt_products`, `wt_hotels`) provisioned on the shared Syndeo instance; Content - Public policy granted read access (published only); ION Karpathos seeded with 5 products + 2 partner hotels. Design documented at `docs/directus-design.md` and mirrored to [Confluence](https://syndeo-test.atlassian.net/wiki/spaces/SD/pages/234881026/). Provisioning script lives at `packages/database/scripts/directus-setup.js` — idempotent, re-runnable.
