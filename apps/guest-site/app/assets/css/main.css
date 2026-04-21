@@ -2,34 +2,40 @@
 @import '@nuxt/ui';
 
 /*
- * WindTribe — "Aegean" style direction.
- * Mediterranean summer, not Atlantic winter. White ground, sky-blue
- * primary, deep ocean ink for confident text, coral accent for warmth
- * (classic Greek hotel signage combination).
+ * WindTribe — "Aegean" style direction (true Mediterranean turquoise).
  *
- * LIGHT MODE ONLY for MVP. Dark theme is a separate design exercise.
+ * White ground. Turquoise primary that reads as Greek-island sea, not
+ * Atlantic navy. Deep teal (not navy) for dark sections — the colour
+ * of the open Aegean from a height, not a North Sea ferry. Coral as
+ * the warm Mediterranean accent (Greek hotel signage, bougainvillea,
+ * sunset on whitewashed walls).
+ *
+ * LIGHT MODE ONLY for live MVP. Dark variant is previewed inside the
+ * /styleguide page only (manual section using inline classes), so we
+ * can see the direction without breaking auto-theming on the rest of
+ * the site.
  */
 
 @theme static {
-  /* Primary — Mediterranean sky. Open Aegean on a sunny day. */
-  --color-primary-50: #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-200: #bae6fd;
-  --color-primary-300: #7dd3fc;
-  --color-primary-400: #38bdf8;
-  --color-primary-500: #0ea5e9;
-  --color-primary-600: #0284c7;
-  --color-primary-700: #0369a1;
-  --color-primary-800: #075985;
-  --color-primary-900: #0c4a6e;
-  --color-primary-950: #082f49;
+  /* Primary — Mediterranean turquoise (Tailwind cyan family). */
+  --color-primary-50: #ecfeff;
+  --color-primary-100: #cffafe;
+  --color-primary-200: #a5f3fc;
+  --color-primary-300: #67e8f9;
+  --color-primary-400: #22d3ee;
+  --color-primary-500: #06b6d4;
+  --color-primary-600: #0891b2;
+  --color-primary-700: #0e7490;
+  --color-primary-800: #155e75;
+  --color-primary-900: #164e63;
+  --color-primary-950: #083344;
 
-  /* Accent — coral. Classic Greek combo with sea blue. */
-  --color-accent-50: #fef2f2;
-  --color-accent-100: #fee2e2;
-  --color-accent-200: #fecaca;
-  --color-accent-300: #fca5a5;
-  --color-accent-400: #f87171;
+  /* Accent — coral, classic Greek pairing with turquoise. */
+  --color-accent-50: #fff1ef;
+  --color-accent-100: #ffe1dc;
+  --color-accent-200: #ffc4ba;
+  --color-accent-300: #ff9d8a;
+  --color-accent-400: #f7755e;
   --color-accent-500: #ef5a3e;
   --color-accent-600: #d4452f;
   --color-accent-700: #b03625;
@@ -38,9 +44,9 @@
 
   /* Surface — clean white, with a barely-tinted elevated tone. */
   --color-bg: #ffffff;
-  --color-bg-elevated: #f4f9fc;
-  --color-ink: #0c4a6e;
-  --color-ink-muted: #075985;
+  --color-bg-elevated: #f0fbff;
+  --color-ink: #155e75;
+  --color-ink-muted: #0e7490;
 }
 
 @theme {
@@ -50,7 +56,7 @@
   --font-display: 'Fraunces', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
 }
 
-/* Force light theme. Clean white background, deep ocean ink. */
+/* Force light theme. Clean white background, deep teal ink. */
 html {
   color-scheme: light;
   background-color: var(--color-bg);
@@ -61,7 +67,7 @@ body {
   color: var(--color-ink);
 }
 
-/* Display utility — Fraunces with optical sizing tuned for editorial weight. */
+/* Display utility — Fraunces with optical sizing for editorial weight. */
 .font-display {
   font-family: var(--font-display);
   font-optical-sizing: auto;

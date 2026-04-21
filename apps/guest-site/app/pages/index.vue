@@ -144,8 +144,8 @@ const pillars = [
       </div>
     </section>
 
-    <!-- Closing CTA strip -->
-    <section class="bg-primary-900">
+    <!-- Closing CTA strip — deep Mediterranean teal -->
+    <section class="bg-primary-700">
       <div
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >
