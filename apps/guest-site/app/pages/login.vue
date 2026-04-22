@@ -69,9 +69,17 @@ async function onSubmit() {
         />
       </div>
       <div>
-        <label for="login-password" class="block text-sm font-medium text-primary-900 mb-1.5">
-          Password
-        </label>
+        <div class="flex items-baseline justify-between mb-1.5">
+          <label for="login-password" class="block text-sm font-medium text-primary-900">
+            Password
+          </label>
+          <NuxtLink
+            to="/forgot-password"
+            class="text-xs text-accent-600 hover:text-accent-700 underline underline-offset-4"
+          >
+            Forgot password?
+          </NuxtLink>
+        </div>
         <input
           id="login-password"
           v-model="password"
