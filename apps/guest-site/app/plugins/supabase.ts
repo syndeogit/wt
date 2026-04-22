@@ -1,8 +1,8 @@
-import { createSupabaseClient, type SupabaseClient } from '@windtribe/shared'
+import { createBrowserSupabaseClient, type SupabaseClient } from '@windtribe/shared'
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig()
-  const client = createSupabaseClient({
+  const client = createBrowserSupabaseClient({
     url: config.public.supabaseUrl,
     anonKey: config.public.supabaseAnonKey,
   })
