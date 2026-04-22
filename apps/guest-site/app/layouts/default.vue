@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
+const { user } = useCurrentUser()
 
 const nav = [
   { label: 'Destinations', to: '/destinations' },
@@ -53,24 +54,47 @@ const footerCompany = [
           </NuxtLink>
         </nav>
         <div class="flex items-center gap-2">
-          <UButton
-            to="/login"
-            variant="ghost"
-            color="primary"
-            size="sm"
-            class="hidden sm:inline-flex text-primary-900 hover:text-primary-950 hover:bg-primary-100"
-          >
-            Sign in
-          </UButton>
-          <UButton
-            to="/book"
-            color="primary"
-            variant="solid"
-            size="sm"
-            class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-bg)]"
-          >
-            Book a week
-          </UButton>
+          <template v-if="user">
+            <UButton
+              to="/account"
+              variant="ghost"
+              color="primary"
+              size="sm"
+              class="hidden sm:inline-flex text-primary-900 hover:text-primary-950 hover:bg-primary-100 max-w-[14rem] truncate"
+              :aria-label="`Account — signed in as ${user.email}`"
+            >
+              <span class="truncate" translate="no">{{ user.email }}</span>
+            </UButton>
+            <UButton
+              to="/account"
+              color="primary"
+              variant="solid"
+              size="sm"
+              class="sm:hidden rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-bg)]"
+            >
+              Account
+            </UButton>
+          </template>
+          <template v-else>
+            <UButton
+              to="/login"
+              variant="ghost"
+              color="primary"
+              size="sm"
+              class="hidden sm:inline-flex text-primary-900 hover:text-primary-950 hover:bg-primary-100"
+            >
+              Sign in
+            </UButton>
+            <UButton
+              to="/book"
+              color="primary"
+              variant="solid"
+              size="sm"
+              class="rounded-full bg-primary-900 hover:bg-primary-800 text-[color:var(--color-bg)]"
+            >
+              Book a week
+            </UButton>
+          </template>
         </div>
       </div>
     </header>
