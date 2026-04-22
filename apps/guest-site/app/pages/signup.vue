@@ -20,6 +20,9 @@ async function onSubmit() {
     const { data, error: authError } = await $supabase.auth.signUp({
       email: email.value,
       password: password.value,
+      options: {
+        emailRedirectTo: `${window.location.origin}/login`,
+      },
     })
     if (authError) {
       error.value = authError.message
@@ -70,7 +73,7 @@ async function onSubmit() {
             autocomplete="email"
             required
             spellcheck="false"
-            class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
             placeholder="you@example.com"
           />
         </div>
@@ -86,10 +89,10 @@ async function onSubmit() {
             autocomplete="new-password"
             required
             minlength="6"
-            class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
             placeholder="At least 6 characters"
           />
-          <p class="mt-1.5 text-xs text-primary-500">Minimum 6 characters.</p>
+          <p class="mt-1.5 text-xs text-primary-700">Minimum 6 characters.</p>
         </div>
 
         <p
