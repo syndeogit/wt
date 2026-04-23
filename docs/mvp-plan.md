@@ -164,8 +164,9 @@ Headline product is **wing for beginners**. Wingfoiling is the fastest-growing w
 - **Epic 1 Done.** Monorepo, Nuxt 4, TS strict, lint + Prettier, Vitest, Playwright, GitHub Actions CI, Supabase live (project `windtribe` / ref `wrasfpjetwewvmjawqxs`), Vercel live (3 projects deploying from main), Sentry live (3 projects, EU region, default email alerts).
 - **Slice 0** effectively done (Aegean tokens, Outfit + Inter, Pinia + checkout store, mock `/api`, `/styleguide`, layout shell all live).
 - **Slice A — Browse** in flight: A1 (Directus collections + Karpathos seed) ✓, A2 (server routes wired to Directus) ✓, A3 (`/[slug]` destination page live) ✓. Stories WT-43 / WT-44 / WT-45 have their first visible cut; polish + booking CTA wiring comes with later slices.
-- **Slice B — Identify** complete: B1 (cookie-based Supabase auth plumbing + `/api/me`) ✓, B2 (signup/login/account pages + nav state + route-middleware auth) ✓, B3 (forgot-password + reset-password flow) ✓. Slice B delivers the minimum lovable auth experience. Email confirmation stays on the default Supabase setting; real SMTP lands in Slice G.
-- **Next action:** pick Slice C (Pick — dates + products + URL state) or polish lingering Slice A items (`/destinations` listing, `/wing` landing, `/book` CTA).
+- **Slice B — Identify** complete: B1 (cookie-based Supabase auth plumbing + `/api/me`) ✓, B2 (signup/login/account pages + nav state + route-middleware auth) ✓, B3 (forgot-password + reset-password flow) ✓. Epic 3 (WT-4) transitioned to Done. Email confirmation stays on the default Supabase setting; real SMTP lands in Slice G.
+- **Slice A polish** complete: `/destinations` listing (data-driven), `/wing` landing page (aggregates wingfoil products across centres), `/book` bridge page (destination picker + email fallback until Slice C ships real checkout). No more dead links from the nav or homepage CTAs.
+- **Next action:** Slice C (Pick — dates + products + URL state).
 
 ## Credentials and environments
 
