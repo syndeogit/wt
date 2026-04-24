@@ -90,5 +90,38 @@ export default defineEventHandler(async (event) => {
       .eq('id', inserted.id)
   }
 
+  // Best-effort booking confirmation email. Never fails the booking.
+  try {
+    const { data: profileRow } = await supabase
+      .from('rider_profiles')
+      .select('first_name, last_name')
+      .eq('user_id', user.id)
+      .maybeSingle()
+
+    const emailResult = await sendBookingConfirmation({
+      to: user.email ?? '',
+      bookingRef,
+      centreName: centre.name,
+      centreRegion: centre.region || null,
+      centreCountry: centre.country || null,
+      productName: product.name,
+      productDurationLabel: product.durationLabel || null,
+      arrival: body.arrival,
+      departure: body.departure,
+      amountCents: product.priceCents,
+      currency: product.currency,
+      firstName: profileRow?.first_name ?? null,
+      lastName: profileRow?.last_name ?? null,
+    })
+    if (emailResult.sent) {
+      await supabase
+        .from('bookings')
+        .update({ confirmation_email_sent_at: new Date().toISOString() })
+        .eq('id', inserted.id)
+    }
+  } catch (err) {
+    console.error('[bookings/create] email send threw', err)
+  }
+
   return { url: checkout.url, bookingRef }
 })

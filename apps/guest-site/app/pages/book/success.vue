@@ -14,6 +14,7 @@ interface BookingRow {
   currency: string
   status: string
   created_at: string
+  confirmation_email_sent_at: string | null
 }
 
 const route = useRoute()
@@ -81,6 +82,32 @@ const nightCount = computed(() => {
 })
 
 const statusLabel = computed(() => booking.value.status.replace(/_/g, ' '))
+
+// Re-send confirmation email
+const resending = ref(false)
+const resendMessage = ref<string | null>(null)
+const resendError = ref<string | null>(null)
+
+async function resendEmail() {
+  resending.value = true
+  resendMessage.value = null
+  resendError.value = null
+  try {
+    const res = await $fetch<{ sent: boolean; reason: string | null }>(
+      `/api/bookings/${booking.value.booking_ref}/resend`,
+      { method: 'POST' },
+    )
+    resendMessage.value = res.sent
+      ? 'Sent — check your inbox.'
+      : 'Queued — email delivery is not yet configured on this environment; we still have your booking.'
+  } catch (e: unknown) {
+    const err = e as { data?: { statusMessage?: string }; message?: string }
+    resendError.value =
+      err?.data?.statusMessage || err?.message || 'Could not re-send. Please try again in a moment.'
+  } finally {
+    resending.value = false
+  }
+}
 
 useHead({
   title: 'Booking received — WindTribe',
@@ -157,6 +184,44 @@ useHead({
             Status: <span class="text-primary-900">{{ statusLabel }}</span>
           </p>
         </div>
+      </div>
+    </section>
+
+    <section class="mt-10" aria-label="Email confirmation">
+      <p class="text-sm text-primary-700 leading-relaxed max-w-2xl">
+        <template v-if="booking.confirmation_email_sent_at">
+          We’ve sent a confirmation to your inbox with a calendar invite attached.
+        </template>
+        <template v-else>
+          Didn’t receive the confirmation? Re-send it below.
+        </template>
+      </p>
+      <div class="mt-3 flex flex-wrap items-center gap-3">
+        <UButton
+          size="sm"
+          variant="outline"
+          color="primary"
+          :loading="resending"
+          :disabled="resending"
+          class="rounded-full border-primary-900 text-primary-900 hover:bg-primary-100"
+          @click="resendEmail"
+        >
+          {{ resending ? 'Sending…' : 'Re-send confirmation email' }}
+        </UButton>
+        <p
+          v-if="resendMessage"
+          aria-live="polite"
+          class="text-sm text-primary-700"
+        >
+          {{ resendMessage }}
+        </p>
+        <p
+          v-if="resendError"
+          aria-live="polite"
+          class="text-sm text-red-700"
+        >
+          {{ resendError }}
+        </p>
       </div>
     </section>
 
