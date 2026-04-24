@@ -1,0 +1,94 @@
+// POST /api/bookings/create — guest-initiated booking creation.
+//
+// Must run as the signed-in user (RLS enforces user_id = auth.uid() on insert).
+// Price is read server-side from Directus so a client cannot manipulate it.
+
+function generateBookingRef(centreSlug: string, now: Date): string {
+  const yyyymmdd = now.toISOString().slice(0, 10).replace(/-/g, '')
+  const initials = centreSlug.slice(0, 2).toUpperCase()
+  const rand = Math.random().toString(36).slice(2, 6).toUpperCase()
+  return `WT-${initials}-${yyyymmdd}-${rand}`
+}
+
+const dateOnly = /^\d{4}-\d{2}-\d{2}$/
+
+export default defineEventHandler(async (event) => {
+  const user = event.context.user
+  if (!user) {
+    throw createError({ statusCode: 401, statusMessage: 'Sign-in required' })
+  }
+
+  const body = await readBody<{
+    centreSlug?: string
+    productId?: string
+    arrival?: string
+    departure?: string
+  }>(event)
+
+  if (!body?.centreSlug || !body.productId || !body.arrival || !body.departure) {
+    throw createError({ statusCode: 400, statusMessage: 'Missing required fields' })
+  }
+  if (!dateOnly.test(body.arrival) || !dateOnly.test(body.departure)) {
+    throw createError({ statusCode: 400, statusMessage: 'Dates must be YYYY-MM-DD' })
+  }
+  if (body.departure <= body.arrival) {
+    throw createError({ statusCode: 400, statusMessage: 'Departure must be after arrival' })
+  }
+
+  const centre = await fetchCentreBySlug(event, body.centreSlug)
+  if (!centre) {
+    throw createError({ statusCode: 400, statusMessage: 'Unknown centre' })
+  }
+  const products = await fetchProductsByCentreId(event, centre.id)
+  const product = products.find((p) => p.id === body.productId)
+  if (!product) {
+    throw createError({ statusCode: 400, statusMessage: 'Unknown product for this centre' })
+  }
+
+  const supabase = event.context.supabase
+  const bookingRef = generateBookingRef(body.centreSlug, new Date())
+
+  const { data: inserted, error: insertError } = await supabase
+    .from('bookings')
+    .insert({
+      booking_ref: bookingRef,
+      user_id: user.id,
+      centre_slug: body.centreSlug,
+      product_id: body.productId,
+      arrival: body.arrival,
+      departure: body.departure,
+      amount_cents: product.priceCents,
+      currency: product.currency,
+    })
+    .select('id')
+    .single()
+
+  if (insertError || !inserted) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: `Booking insert failed: ${insertError?.message ?? 'unknown'}`,
+    })
+  }
+
+  const origin = getRequestURL(event).origin
+  const successUrl = `${origin}/book/success?ref=${encodeURIComponent(bookingRef)}`
+  const cancelUrl = `${origin}/book/${encodeURIComponent(body.centreSlug)}/confirm?products=${encodeURIComponent(body.productId)}&from=${body.arrival}&to=${body.departure}`
+
+  const checkout = await createCheckoutSession({
+    bookingRef,
+    amountCents: product.priceCents,
+    currency: product.currency,
+    productName: product.name,
+    successUrl,
+    cancelUrl,
+  })
+
+  if (checkout.sessionId) {
+    await supabase
+      .from('bookings')
+      .update({ stripe_session_id: checkout.sessionId })
+      .eq('id', inserted.id)
+  }
+
+  return { url: checkout.url, bookingRef }
+})

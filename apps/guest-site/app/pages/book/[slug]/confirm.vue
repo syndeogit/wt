@@ -4,6 +4,10 @@ import type { Centre, Product } from '~/fixtures/types'
 
 const route = useRoute()
 const slug = computed(() => route.params.slug as string)
+const { user } = useCurrentUser()
+
+const placing = ref(false)
+const placeError = ref<string | null>(null)
 
 const { data: centreRes, error: centreErr } = await useFetch<{ data: Centre }>(
   () => `/api/centres/${slug.value}`,
@@ -102,6 +106,33 @@ useHead(() => ({
   title: `Review booking — WindTribe`,
   meta: [{ name: 'robots', content: 'noindex,nofollow' }],
 }))
+
+async function placeBooking() {
+  if (!product.value || !arrival.value || !departure.value) return
+  if (!user.value) {
+    await navigateTo(`/login?redirect=${encodeURIComponent(route.fullPath)}`)
+    return
+  }
+  placeError.value = null
+  placing.value = true
+  try {
+    const res = await $fetch<{ url: string; bookingRef: string }>('/api/bookings/create', {
+      method: 'POST',
+      body: {
+        centreSlug: slug.value,
+        productId: productId.value,
+        arrival: route.query.from,
+        departure: route.query.to,
+      },
+    })
+    await navigateTo(res.url, { external: true })
+  } catch (e: unknown) {
+    const err = e as { data?: { statusMessage?: string }; message?: string }
+    placeError.value = err?.data?.statusMessage || err?.message || 'Booking failed. Please try again.'
+  } finally {
+    placing.value = false
+  }
+}
 </script>
 
 <template>
@@ -195,23 +226,34 @@ useHead(() => ({
 
       <section class="mt-10 bg-primary-900 text-[color:var(--color-bg)] rounded-2xl p-6 sm:p-8">
         <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
-          Next step
+          Place booking
         </p>
         <h2 class="font-display text-2xl sm:text-3xl leading-tight text-pretty">
-          Email to confirm.
+          Hold these dates.
         </h2>
         <p class="mt-4 text-[color:var(--color-bg)]/90 leading-relaxed max-w-xl">
-          Real online payment is coming in the next release. For now, your click below opens an
-          email pre-filled with this booking — we’ll reply within the day to confirm availability
-          and take payment.
+          Placing the booking saves it to your account. Online payment opens in a future release —
+          for now we’ll email within the day to confirm availability and take payment.
         </p>
+
+        <p
+          v-if="placeError"
+          aria-live="polite"
+          class="mt-5 inline-block text-sm bg-red-100 text-red-900 border border-red-300 rounded-lg px-3 py-2"
+        >
+          {{ placeError }}
+        </p>
+
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a
-            :href="mailHref"
-            class="inline-flex items-center justify-center rounded-full bg-accent-500 hover:bg-accent-600 text-white px-7 py-3 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-200 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
+          <UButton
+            size="lg"
+            :loading="placing"
+            :disabled="placing"
+            class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-200 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
+            @click="placeBooking"
           >
-            Email this booking →
-          </a>
+            {{ placing ? 'Placing…' : user ? 'Place booking →' : 'Sign in to place booking →' }}
+          </UButton>
           <NuxtLink
             :to="{ path: `/book/${slug}`, query: route.query }"
             class="inline-flex items-center justify-center rounded-full border border-[color:var(--color-bg)]/40 hover:bg-[color:var(--color-bg)]/10 text-[color:var(--color-bg)] px-7 py-3 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-bg)] focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
@@ -219,6 +261,17 @@ useHead(() => ({
             Change dates
           </NuxtLink>
         </div>
+
+        <p class="mt-6 text-sm text-[color:var(--color-bg)]/80">
+          Prefer email?
+          <a
+            :href="mailHref"
+            class="underline underline-offset-4 hover:text-accent-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-bg)] focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900 rounded-sm"
+          >
+            Send the same details as a pre-filled message
+          </a>
+          and we’ll take it from there.
+        </p>
       </section>
     </template>
   </div>
