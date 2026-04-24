@@ -2,12 +2,23 @@
 import { getLocalTimeZone, parseDate } from '@internationalized/date'
 import type { Centre, Product } from '~/fixtures/types'
 
+definePageMeta({ middleware: 'auth' })
+
+interface RiderProfileRow {
+  first_name: string
+  last_name: string
+  phone: string | null
+  primary_discipline: string | null
+  level: string | null
+  notes: string | null
+}
+
 const route = useRoute()
 const slug = computed(() => route.params.slug as string)
-const { user } = useCurrentUser()
 
 const placing = ref(false)
 const placeError = ref<string | null>(null)
+const profileError = ref<string | null>(null)
 
 const { data: centreRes, error: centreErr } = await useFetch<{ data: Centre }>(
   () => `/api/centres/${slug.value}`,
@@ -24,6 +35,20 @@ const { data: productsRes } = await useFetch<{ data: Product[] }>(
 )
 const products = computed(() => productsRes.value?.data ?? [])
 
+const { data: profileRes } = await useFetch<{ profile: RiderProfileRow | null }>(
+  '/api/profile',
+  { key: 'confirm-profile', default: () => ({ profile: null }) },
+)
+
+const profileForm = reactive({
+  firstName: profileRes.value?.profile?.first_name ?? '',
+  lastName: profileRes.value?.profile?.last_name ?? '',
+  phone: profileRes.value?.profile?.phone ?? '',
+  primaryDiscipline: profileRes.value?.profile?.primary_discipline ?? '',
+  level: profileRes.value?.profile?.level ?? '',
+  notes: profileRes.value?.profile?.notes ?? '',
+})
+
 const productId = computed(() => {
   const raw = route.query.products
   if (typeof raw !== 'string') return null
@@ -31,6 +56,17 @@ const productId = computed(() => {
 })
 const product = computed(() =>
   productId.value ? products.value.find((p) => p.id === productId.value) ?? null : null,
+)
+
+// Pre-fill discipline + level from selected product if the profile hasn't set them yet.
+watch(
+  product,
+  (p) => {
+    if (!p) return
+    if (!profileForm.primaryDiscipline) profileForm.primaryDiscipline = p.discipline
+    if (!profileForm.level) profileForm.level = p.minLevel
+  },
+  { immediate: true },
 )
 
 const tz = getLocalTimeZone()
@@ -107,15 +143,33 @@ useHead(() => ({
   meta: [{ name: 'robots', content: 'noindex,nofollow' }],
 }))
 
+const firstNameInput = useTemplateRef<HTMLInputElement>('firstNameInput')
+
 async function placeBooking() {
   if (!product.value || !arrival.value || !departure.value) return
-  if (!user.value) {
-    await navigateTo(`/login?redirect=${encodeURIComponent(route.fullPath)}`)
+  placeError.value = null
+  profileError.value = null
+
+  if (!profileForm.firstName.trim() || !profileForm.lastName.trim()) {
+    profileError.value = 'Please enter your first and last name.'
+    await nextTick(() => firstNameInput.value?.focus())
     return
   }
-  placeError.value = null
+
   placing.value = true
   try {
+    await $fetch('/api/profile', {
+      method: 'PUT',
+      body: {
+        firstName: profileForm.firstName,
+        lastName: profileForm.lastName,
+        phone: profileForm.phone,
+        primaryDiscipline: profileForm.primaryDiscipline || null,
+        level: profileForm.level || null,
+        notes: profileForm.notes,
+      },
+    })
+
     const res = await $fetch<{ url: string; bookingRef: string }>('/api/bookings/create', {
       method: 'POST',
       body: {
@@ -128,7 +182,8 @@ async function placeBooking() {
     await navigateTo(res.url, { external: true })
   } catch (e: unknown) {
     const err = e as { data?: { statusMessage?: string }; message?: string }
-    placeError.value = err?.data?.statusMessage || err?.message || 'Booking failed. Please try again.'
+    placeError.value =
+      err?.data?.statusMessage || err?.message || 'Booking failed. Please try again.'
   } finally {
     placing.value = false
   }
@@ -224,6 +279,156 @@ async function placeBooking() {
         </div>
       </section>
 
+      <!-- Rider profile — collected AFTER product selection per the MVP plan (reverses the ION anti-pattern). -->
+      <form
+        class="mt-10 bg-[color:var(--color-bg-elevated)] rounded-2xl border border-primary-200/60 p-6 sm:p-8"
+        aria-labelledby="rider-profile-heading"
+        novalidate
+        @submit.prevent="placeBooking"
+      >
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+          Rider profile
+        </p>
+        <h2
+          id="rider-profile-heading"
+          class="font-display text-2xl sm:text-3xl text-primary-900 leading-tight text-pretty"
+        >
+          Who is riding?
+        </h2>
+        <p class="mt-3 text-sm text-primary-700 max-w-xl">
+          Saved to your account — next booking won’t ask again. Edit anytime from
+          <NuxtLink
+            to="/account"
+            class="text-accent-600 hover:text-accent-700 underline underline-offset-4"
+            >your account</NuxtLink
+          >.
+        </p>
+
+        <div class="mt-8 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label
+              for="profile-first-name"
+              class="block text-sm font-medium text-primary-900 mb-1.5"
+            >
+              First name <span aria-hidden="true" class="text-accent-600">*</span>
+            </label>
+            <input
+              id="profile-first-name"
+              ref="firstNameInput"
+              v-model="profileForm.firstName"
+              type="text"
+              name="given-name"
+              autocomplete="given-name"
+              required
+              class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            />
+          </div>
+          <div>
+            <label
+              for="profile-last-name"
+              class="block text-sm font-medium text-primary-900 mb-1.5"
+            >
+              Last name <span aria-hidden="true" class="text-accent-600">*</span>
+            </label>
+            <input
+              id="profile-last-name"
+              v-model="profileForm.lastName"
+              type="text"
+              name="family-name"
+              autocomplete="family-name"
+              required
+              class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            />
+          </div>
+          <div>
+            <label
+              for="profile-phone"
+              class="block text-sm font-medium text-primary-900 mb-1.5"
+            >
+              Phone
+            </label>
+            <input
+              id="profile-phone"
+              v-model="profileForm.phone"
+              type="tel"
+              name="tel"
+              autocomplete="tel"
+              inputmode="tel"
+              spellcheck="false"
+              placeholder="For urgent changes only"
+              class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            />
+          </div>
+          <div>
+            <label
+              for="profile-discipline"
+              class="block text-sm font-medium text-primary-900 mb-1.5"
+            >
+              Main discipline
+            </label>
+            <select
+              id="profile-discipline"
+              v-model="profileForm.primaryDiscipline"
+              class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            >
+              <option value="">—</option>
+              <option value="wingfoil">Wingfoil</option>
+              <option value="windsurf">Windsurf</option>
+              <option value="kitesurf">Kitesurf</option>
+            </select>
+          </div>
+          <div>
+            <label
+              for="profile-level"
+              class="block text-sm font-medium text-primary-900 mb-1.5"
+            >
+              Level
+            </label>
+            <select
+              id="profile-level"
+              v-model="profileForm.level"
+              class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            >
+              <option value="">—</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label
+              for="profile-notes"
+              class="block text-sm font-medium text-primary-900 mb-1.5"
+            >
+              Anything we should know?
+            </label>
+            <textarea
+              id="profile-notes"
+              v-model="profileForm.notes"
+              name="notes"
+              rows="3"
+              placeholder="Injuries, dietary needs, anything else."
+              class="w-full rounded-lg border border-primary-200 bg-white px-4 py-2.5 text-primary-900 placeholder-primary-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:border-primary-500"
+            />
+          </div>
+        </div>
+
+        <p
+          v-if="profileError"
+          aria-live="polite"
+          class="mt-5 inline-block text-sm bg-red-50 text-red-900 border border-red-200 rounded-lg px-3 py-2"
+        >
+          {{ profileError }}
+        </p>
+
+        <!-- Hidden submit anchor so Enter inside any input fires placeBooking;
+             visible Place-booking UButton lives in the section below and still
+             calls placeBooking via its @click. -->
+        <button type="submit" class="sr-only" aria-hidden="true" tabindex="-1">
+          Place booking
+        </button>
+      </form>
+
       <section class="mt-10 bg-primary-900 text-[color:var(--color-bg)] rounded-2xl p-6 sm:p-8">
         <p class="text-xs uppercase tracking-[0.22em] text-accent-300 mb-3 font-semibold">
           Place booking
@@ -252,7 +457,7 @@ async function placeBooking() {
             class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-200 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
             @click="placeBooking"
           >
-            {{ placing ? 'Placing…' : user ? 'Place booking →' : 'Sign in to place booking →' }}
+            {{ placing ? 'Placing…' : 'Place booking →' }}
           </UButton>
           <NuxtLink
             :to="{ path: `/book/${slug}`, query: route.query }"
