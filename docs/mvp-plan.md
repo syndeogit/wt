@@ -166,7 +166,8 @@ Headline product is **wing for beginners**. Wingfoiling is the fastest-growing w
 - **Slice A — Browse** in flight: A1 (Directus collections + Karpathos seed) ✓, A2 (server routes wired to Directus) ✓, A3 (`/[slug]` destination page live) ✓. Stories WT-43 / WT-44 / WT-45 have their first visible cut; polish + booking CTA wiring comes with later slices.
 - **Slice B — Identify** complete: B1 (cookie-based Supabase auth plumbing + `/api/me`) ✓, B2 (signup/login/account pages + nav state + route-middleware auth) ✓, B3 (forgot-password + reset-password flow) ✓. Epic 3 (WT-4) transitioned to Done. Email confirmation stays on the default Supabase setting; real SMTP lands in Slice G.
 - **Slice A polish** complete: `/destinations` listing (data-driven), `/wing` landing page (aggregates wingfoil products across centres), `/book` bridge page (destination picker + email fallback until Slice C ships real checkout). No more dead links from the nav or homepage CTAs.
-- **Next action:** Slice C (Pick — dates + products + URL state).
+- **Slice C — Pick** in flight: C1–C3 shipped together. `/book/[slug]` date picker (Nuxt UI UCalendar range, URL-synced `from`/`to`/`products`), `/book/[slug]/confirm` review + prefilled mailto fallback for manual checkout until Slice F. Choose CTAs on `/[slug]` and `/wing` pre-populate the product query. Epic 2 (WT-3) transitioned to In Progress. Real payment, availability, and persistence land in later slices (F, D).
+- **Next action:** decide. Slice D (gear + accommodation bundling), Slice E (rider profile at checkout), Slice F (Stripe payment) — these can come in any order relative to one another. Slice F may be the highest-leverage next cut because it replaces the email fallback with real money.
 
 ## Credentials and environments
 

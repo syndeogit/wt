@@ -215,7 +215,7 @@ useHead(() => ({
                   size="sm"
                   class="rounded-full bg-primary-900 hover:bg-primary-800 text-white border-0"
                   :aria-label="`Choose ${product.name}`"
-                  to="/book"
+                  :to="{ path: `/book/${centre.slug}`, query: { products: product.id } }"
                 >
                   Choose
                 </UButton>
@@ -296,7 +296,7 @@ useHead(() => ({
           </h2>
         </div>
         <UButton
-          to="/book"
+          :to="`/book/${centre.slug}`"
           size="xl"
           class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8 shrink-0"
         >

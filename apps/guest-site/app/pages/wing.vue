@@ -197,11 +197,12 @@ useHead({
                 {{ formatPrice(product.priceCents, product.currency) }}
               </p>
               <UButton
-                :to="`/${centre.slug}`"
+                :to="{ path: `/book/${centre.slug}`, query: { products: product.id } }"
                 size="sm"
+                :aria-label="`Choose ${product.name}`"
                 class="rounded-full bg-primary-900 hover:bg-primary-800 text-white border-0"
               >
-                See Karpathos →
+                Choose →
               </UButton>
             </div>
           </div>
