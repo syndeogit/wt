@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Centre, Product } from '~/fixtures/types'
+import type { Centre, Hotel, Product } from '~/fixtures/types'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -15,6 +15,9 @@ interface BookingRow {
   status: string
   created_at: string
   confirmation_email_sent_at: string | null
+  hotel_id: string | null
+  hotel_nightly_cents: number | null
+  hotel_total_cents: number | null
 }
 
 const route = useRoute()
@@ -54,6 +57,22 @@ const { data: productsRes } = await useFetch<{ data: Product[] }>(
 )
 const product = computed(
   () => productsRes.value?.data.find((p) => p.id === booking.value.product_id) ?? null,
+)
+
+const { data: hotelsRes } = await useFetch<{ data: Hotel[] }>(
+  () => `/api/centres/${booking.value.centre_slug}/hotels`,
+  {
+    key: () => `success-hotels-${booking.value.centre_slug}`,
+    default: () => ({ data: [] }),
+  },
+)
+const hotel = computed(() => {
+  const id = booking.value.hotel_id
+  return id ? hotelsRes.value?.data.find((h) => h.id === id) ?? null : null
+})
+
+const grandTotalCents = computed(
+  () => booking.value.amount_cents + (booking.value.hotel_total_cents ?? 0),
 )
 
 const dateFormatter = new Intl.DateTimeFormat('en-GB', {
@@ -172,17 +191,37 @@ useHead({
         </div>
       </dl>
 
-      <div class="mt-8 pt-6 border-t border-primary-200/60 flex items-end justify-between gap-4">
-        <div>
-          <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
-            Programme total
-          </p>
-          <p class="mt-1 font-display text-3xl text-primary-900 tabular-nums">
-            {{ formatPrice(booking.amount_cents, booking.currency) }}
-          </p>
-          <p class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
-            Status: <span class="text-primary-900">{{ statusLabel }}</span>
-          </p>
+      <div class="mt-8 pt-6 border-t border-primary-200/60">
+        <dl class="space-y-2 text-sm tabular-nums">
+          <div class="flex items-baseline justify-between gap-4">
+            <dt class="text-primary-700">Programme</dt>
+            <dd class="text-primary-900 font-medium">
+              {{ formatPrice(booking.amount_cents, booking.currency) }}
+            </dd>
+          </div>
+          <div
+            v-if="hotel && booking.hotel_total_cents !== null"
+            class="flex items-baseline justify-between gap-4"
+          >
+            <dt class="text-primary-700">
+              <span translate="no">{{ hotel.name }}</span> ·
+              {{ nightCount }} night{{ nightCount === 1 ? '' : 's' }}
+            </dt>
+            <dd class="text-primary-900 font-medium">
+              {{ formatPrice(booking.hotel_total_cents, booking.currency) }}
+            </dd>
+          </div>
+        </dl>
+        <div class="mt-4 pt-4 border-t border-primary-200/60 flex items-end justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Total</p>
+            <p class="mt-1 font-display text-3xl text-primary-900 tabular-nums">
+              {{ formatPrice(grandTotalCents, booking.currency) }}
+            </p>
+            <p class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+              Status: <span class="text-primary-900">{{ statusLabel }}</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>

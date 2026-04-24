@@ -20,6 +20,9 @@ export interface BookingEmailInput {
   currency: string
   firstName: string | null
   lastName: string | null
+  hotelName: string | null
+  hotelNightlyCents: number | null
+  hotelTotalCents: number | null
 }
 
 export interface EmailSendResult {
@@ -67,10 +70,14 @@ function location(input: BookingEmailInput): string {
   return [input.centreName, input.centreRegion, input.centreCountry].filter(Boolean).join(', ')
 }
 
+function grandTotalCents(input: BookingEmailInput): number {
+  return input.amountCents + (input.hotelTotalCents ?? 0)
+}
+
 export function renderTextBody(input: BookingEmailInput): string {
   const nights = nightCount(input.arrival, input.departure)
   const greeting = input.firstName ? `Hi ${input.firstName},` : 'Hi,'
-  return [
+  const lines = [
     greeting,
     '',
     `We've received your booking for ${input.productName} at ${input.centreName}.`,
@@ -80,7 +87,15 @@ export function renderTextBody(input: BookingEmailInput): string {
     `Programme:   ${input.productName}${input.productDurationLabel ? ' (' + input.productDurationLabel + ')' : ''}`,
     `Arrival:     ${formatHumanDate(input.arrival)}`,
     `Departure:   ${formatHumanDate(input.departure)}  (${nights} night${nights === 1 ? '' : 's'})`,
-    `Total:       ${formatPrice(input.amountCents, input.currency)}`,
+    `Programme:   ${formatPrice(input.amountCents, input.currency)}`,
+  ]
+  if (input.hotelName && input.hotelTotalCents !== null && input.hotelNightlyCents !== null) {
+    lines.push(
+      `Hotel:       ${input.hotelName} — ${formatPrice(input.hotelNightlyCents, input.currency)}/night x ${nights} = ${formatPrice(input.hotelTotalCents, input.currency)}`,
+    )
+    lines.push(`Total:       ${formatPrice(grandTotalCents(input), input.currency)}`)
+  }
+  lines.push(
     '',
     'Real online payment is coming soon. For now we\'ll reply within the day to',
     'confirm availability and take payment by card.',
@@ -89,7 +104,8 @@ export function renderTextBody(input: BookingEmailInput): string {
     '',
     'Thanks for riding with us.',
     'WindTribe',
-  ].join('\n')
+  )
+  return lines.join('\n')
 }
 
 export function renderHtmlBody(input: BookingEmailInput): string {
@@ -116,7 +132,21 @@ export function renderHtmlBody(input: BookingEmailInput): string {
           ${row('Programme', input.productName + (input.productDurationLabel ? ' (' + input.productDurationLabel + ')' : ''))}
           ${row('Arrival', formatHumanDate(input.arrival))}
           ${row('Departure', formatHumanDate(input.departure) + '  (' + nights + ' night' + (nights === 1 ? '' : 's') + ')')}
-          ${row('Total', formatPrice(input.amountCents, input.currency))}
+          ${row('Programme', formatPrice(input.amountCents, input.currency))}
+          ${
+            input.hotelName && input.hotelTotalCents !== null && input.hotelNightlyCents !== null
+              ? row(
+                  'Hotel',
+                  esc(input.hotelName) +
+                    ' — ' +
+                    formatPrice(input.hotelNightlyCents, input.currency) +
+                    '/night × ' +
+                    nights +
+                    ' = ' +
+                    formatPrice(input.hotelTotalCents, input.currency),
+                ) + row('Total', formatPrice(grandTotalCents(input), input.currency))
+              : ''
+          }
         </table>
         <p style="margin:0 0 16px;color:#164e63;font-size:15px;line-height:1.6;">Real online payment is coming soon. For now we'll reply within the day to confirm availability and take payment by card.</p>
         <p style="margin:0 0 16px;color:#0e7490;font-size:13px;line-height:1.6;">The attached calendar invite blocks out the week on your calendar.</p>

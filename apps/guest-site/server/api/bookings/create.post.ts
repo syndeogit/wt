@@ -12,6 +12,11 @@ function generateBookingRef(centreSlug: string, now: Date): string {
 
 const dateOnly = /^\d{4}-\d{2}-\d{2}$/
 
+function nightsBetween(arrivalISO: string, departureISO: string): number {
+  const ms = new Date(departureISO).getTime() - new Date(arrivalISO).getTime()
+  return Math.max(0, Math.round(ms / (1000 * 60 * 60 * 24)))
+}
+
 export default defineEventHandler(async (event) => {
   const user = event.context.user
   if (!user) {
@@ -23,6 +28,7 @@ export default defineEventHandler(async (event) => {
     productId?: string
     arrival?: string
     departure?: string
+    hotelId?: string | null
   }>(event)
 
   if (!body?.centreSlug || !body.productId || !body.arrival || !body.departure) {
@@ -45,6 +51,21 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Unknown product for this centre' })
   }
 
+  // Optional partner hotel
+  let hotelId: string | null = null
+  let hotelNightlyCents: number | null = null
+  let hotelTotalCents: number | null = null
+  if (body.hotelId) {
+    const hotels = await fetchHotelsByCentreId(event, centre.id)
+    const hotel = hotels.find((h) => h.id === body.hotelId)
+    if (!hotel) {
+      throw createError({ statusCode: 400, statusMessage: 'Unknown hotel for this centre' })
+    }
+    hotelId = hotel.id
+    hotelNightlyCents = hotel.nightlyFromCents
+    hotelTotalCents = hotelNightlyCents * nightsBetween(body.arrival, body.departure)
+  }
+
   const supabase = event.context.supabase
   const bookingRef = generateBookingRef(body.centreSlug, new Date())
 
@@ -59,6 +80,9 @@ export default defineEventHandler(async (event) => {
       departure: body.departure,
       amount_cents: product.priceCents,
       currency: product.currency,
+      hotel_id: hotelId,
+      hotel_nightly_cents: hotelNightlyCents,
+      hotel_total_cents: hotelTotalCents,
     })
     .select('id')
     .single()
@@ -98,6 +122,10 @@ export default defineEventHandler(async (event) => {
       .eq('user_id', user.id)
       .maybeSingle()
 
+    const hotelName = hotelId
+      ? (await fetchHotelsByCentreId(event, centre.id)).find((h) => h.id === hotelId)?.name ?? null
+      : null
+
     const emailResult = await sendBookingConfirmation({
       to: user.email ?? '',
       bookingRef,
@@ -112,6 +140,9 @@ export default defineEventHandler(async (event) => {
       currency: product.currency,
       firstName: profileRow?.first_name ?? null,
       lastName: profileRow?.last_name ?? null,
+      hotelName,
+      hotelNightlyCents,
+      hotelTotalCents,
     })
     if (emailResult.sent) {
       await supabase

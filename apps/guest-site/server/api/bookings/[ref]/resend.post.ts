@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const { data: booking, error: fetchError } = await supabase
     .from('bookings')
     .select(
-      'id, booking_ref, centre_slug, product_id, arrival, departure, amount_cents, currency, confirmation_email_sent_at',
+      'id, booking_ref, centre_slug, product_id, arrival, departure, amount_cents, currency, confirmation_email_sent_at, hotel_id, hotel_nightly_cents, hotel_total_cents',
     )
     .eq('booking_ref', ref)
     .maybeSingle()
@@ -57,6 +57,12 @@ export default defineEventHandler(async (event) => {
     .eq('user_id', user.id)
     .maybeSingle()
 
+  let hotelName: string | null = null
+  if (booking.hotel_id) {
+    const hotels = await fetchHotelsByCentreId(event, centre.id)
+    hotelName = hotels.find((h) => h.id === booking.hotel_id)?.name ?? null
+  }
+
   const result = await sendBookingConfirmation({
     to: user.email ?? '',
     bookingRef: booking.booking_ref,
@@ -71,6 +77,9 @@ export default defineEventHandler(async (event) => {
     currency: booking.currency,
     firstName: profileRow?.first_name ?? null,
     lastName: profileRow?.last_name ?? null,
+    hotelName,
+    hotelNightlyCents: booking.hotel_nightly_cents,
+    hotelTotalCents: booking.hotel_total_cents,
   })
 
   // Only stamp confirmation_email_sent_at on real sends — in stub mode no email
