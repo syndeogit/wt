@@ -31,6 +31,7 @@ export default defineNuxtConfig({
       supabaseUrl: process.env.SUPABASE_URL,
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
       directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL,
+      facebookPageUrl: process.env.NUXT_PUBLIC_FACEBOOK_PAGE_URL,
       sentryDsn: process.env.SENTRY_DSN,
       sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? 'development',
     },
