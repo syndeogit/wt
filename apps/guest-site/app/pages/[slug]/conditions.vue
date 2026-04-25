@@ -406,14 +406,16 @@ useHead(() => ({
             <span class="font-semibold tabular-nums">{{ summary.thisYear }} kn</span>.
           </template>
         </p>
-        <p
-          class="mt-6 text-sm text-primary-700 italic max-w-xl"
-          aria-live="polite"
-        >
-          Year-over-year chart lands here next — for now the headline above tells the same story
-          numerically.
-        </p>
-        <p class="mt-4 text-xs text-primary-700">
+
+        <div class="mt-8">
+          <ConditionsChart
+            :aggregate="history.aggregate"
+            :forecast="forecast?.days ?? []"
+            :years="history.series.map((s) => s.year)"
+          />
+        </div>
+
+        <p class="mt-6 text-xs text-primary-700">
           Source: Open-Meteo archive, years
           <span class="tabular-nums">{{ history.series.map((s) => s.year).join(' / ') }}</span>.
           Override the window via
