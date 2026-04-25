@@ -3,6 +3,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@sentry/nuxt/module'],
+  app: {
+    head: {
+      htmlAttrs: { lang: 'en' },
+      meta: [{ name: 'theme-color', content: '#ffffff' }],
+    },
+  },
   css: ['~/assets/css/main.css'],
   // Force light theme for MVP — dark theme is a separate design task.
   colorMode: { preference: 'light', fallback: 'light' },
@@ -32,6 +38,7 @@ export default defineNuxtConfig({
       supabaseAnonKey: process.env.SUPABASE_ANON_KEY,
       directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL,
       facebookPageUrl: process.env.NUXT_PUBLIC_FACEBOOK_PAGE_URL,
+      openMeteoBase: process.env.OPEN_METEO_BASE_URL || 'https://api.open-meteo.com/v1',
       sentryDsn: process.env.SENTRY_DSN,
       sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? 'development',
     },
