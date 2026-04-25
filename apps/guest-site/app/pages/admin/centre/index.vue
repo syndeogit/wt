@@ -26,7 +26,7 @@ useHead({
 
 <template>
   <div class="max-w-2xl mx-auto px-6 py-20">
-    <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+    <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
       Centre admin
     </p>
     <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">

@@ -122,7 +122,7 @@ const levelLabels: Record<string, string> = {
 
 <template>
   <div class="max-w-2xl mx-auto px-6 py-20">
-    <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">Signed in</p>
+    <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">Signed in</p>
     <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
       Your account.
     </h1>
@@ -133,11 +133,11 @@ const levelLabels: Record<string, string> = {
     >
       <dl class="space-y-4">
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Email</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Email</dt>
           <dd class="mt-1 text-primary-900 break-all" translate="no">{{ user?.email ?? '—' }}</dd>
         </div>
         <div v-if="memberSince">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Member since
           </dt>
           <dd class="mt-1 text-primary-900">{{ memberSince }}</dd>
@@ -152,7 +152,7 @@ const levelLabels: Record<string, string> = {
     >
       <div class="flex items-start justify-between gap-4">
         <div>
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-1 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-1 font-semibold">
             Rider profile
           </p>
           <h2
@@ -181,19 +181,19 @@ const levelLabels: Record<string, string> = {
         </p>
         <dl v-else class="mt-6 grid gap-5 sm:grid-cols-2">
           <div>
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Name</dt>
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Name</dt>
             <dd class="mt-1 text-primary-900" translate="no">
               {{ profile.first_name }} {{ profile.last_name }}
             </dd>
           </div>
           <div v-if="profile.phone">
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Phone
             </dt>
             <dd class="mt-1 text-primary-900 tabular-nums" translate="no">{{ profile.phone }}</dd>
           </div>
           <div v-if="profile.primary_discipline">
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Main discipline
             </dt>
             <dd class="mt-1 text-primary-900">
@@ -201,7 +201,7 @@ const levelLabels: Record<string, string> = {
             </dd>
           </div>
           <div v-if="profile.level">
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Level
             </dt>
             <dd class="mt-1 text-primary-900">
@@ -209,7 +209,7 @@ const levelLabels: Record<string, string> = {
             </dd>
           </div>
           <div v-if="profile.notes" class="sm:col-span-2">
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Notes
             </dt>
             <dd class="mt-1 text-primary-900 whitespace-pre-line">{{ profile.notes }}</dd>
@@ -226,7 +226,7 @@ const levelLabels: Record<string, string> = {
               for="account-first-name"
               class="block text-sm font-medium text-primary-900 mb-1.5"
             >
-              First name <span aria-hidden="true" class="text-accent-600">*</span>
+              First name <span aria-hidden="true" class="text-accent-700">*</span>
             </label>
             <input
               id="account-first-name"
@@ -243,7 +243,7 @@ const levelLabels: Record<string, string> = {
               for="account-last-name"
               class="block text-sm font-medium text-primary-900 mb-1.5"
             >
-              Last name <span aria-hidden="true" class="text-accent-600">*</span>
+              Last name <span aria-hidden="true" class="text-accent-700">*</span>
             </label>
             <input
               id="account-last-name"

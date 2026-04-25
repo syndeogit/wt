@@ -48,7 +48,7 @@ const footerCompany = [
             v-for="item in nav"
             :key="item.to"
             :to="item.to"
-            class="text-primary-900 hover:text-accent-600 transition-colors"
+            class="text-primary-900 hover:text-accent-800 transition-colors"
           >
             {{ item.label }}
           </NuxtLink>
@@ -122,7 +122,7 @@ const footerCompany = [
             <li v-for="item in footerExplore" :key="item.to">
               <NuxtLink
                 :to="item.to"
-                class="text-primary-900 hover:text-accent-600 transition-colors"
+                class="text-primary-900 hover:text-accent-800 transition-colors"
               >
                 {{ item.label }}
               </NuxtLink>
@@ -137,7 +137,7 @@ const footerCompany = [
             <li v-for="item in footerCompany" :key="item.to">
               <NuxtLink
                 :to="item.to"
-                class="text-primary-900 hover:text-accent-600 transition-colors"
+                class="text-primary-900 hover:text-accent-800 transition-colors"
               >
                 {{ item.label }}
               </NuxtLink>

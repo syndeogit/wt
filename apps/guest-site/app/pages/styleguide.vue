@@ -34,7 +34,7 @@ const neutralSwatches = [
 <template>
   <div class="max-w-5xl mx-auto px-6 py-20 space-y-20">
     <header>
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-4">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-4">
         Internal · not for production
       </p>
       <h1 class="font-display text-5xl text-primary-900 leading-[1.05]">Styleguide</h1>
@@ -46,7 +46,7 @@ const neutralSwatches = [
 
     <!-- Direction -->
     <section>
-      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">Direction</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3 font-semibold">Direction</p>
       <h2 class="font-display text-3xl text-primary-900 mb-4">Aegean</h2>
       <p class="text-primary-900 max-w-3xl leading-relaxed">
         Mediterranean summer, not Atlantic winter. Clean white ground, turquoise primary that reads
@@ -58,7 +58,7 @@ const neutralSwatches = [
 
     <!-- Typography scale reference -->
     <section>
-      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3 font-semibold">
         Typography
       </p>
       <h2 class="font-display text-3xl text-primary-900 mb-6">Outfit + Inter</h2>
@@ -72,7 +72,7 @@ const neutralSwatches = [
         <p class="font-display text-6xl text-primary-900 leading-[1.02] tracking-tight">
           The wind belongs to everyone.
         </p>
-        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700">
           Display / 6xl / font-display
         </p>
       </div>
@@ -80,7 +80,7 @@ const neutralSwatches = [
         <p class="font-display text-4xl text-primary-900 leading-tight">
           Three reasons to book with us.
         </p>
-        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700">
           Display / 4xl / section heading
         </p>
       </div>
@@ -89,7 +89,7 @@ const neutralSwatches = [
           Body large — for intro paragraphs, featured quotes, occasional emphasis inside editorial
           sections.
         </p>
-        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700">
           Inter / 2xl / lead paragraph
         </p>
       </div>
@@ -99,7 +99,7 @@ const neutralSwatches = [
           ~70 characters for comfortable reading; line height sits around 1.65 so the eye can rest
           between lines even on longer blocks.
         </p>
-        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700">
           Inter / base / default paragraph
         </p>
       </div>
@@ -107,13 +107,13 @@ const neutralSwatches = [
         <p class="text-sm text-primary-700">
           Body small — captions, helper text, metadata under product cards.
         </p>
-        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">Inter / sm / caption</p>
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700">Inter / sm / caption</p>
       </div>
       <div class="space-y-3 border-t border-primary-900/10 pt-8 mt-8">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700">
           Eyebrow · categorisation · prefixes a heading
         </p>
-        <p class="text-xs uppercase tracking-[0.22em] text-primary-500">
+        <p class="text-xs uppercase tracking-[0.22em] text-primary-700">
           Inter / xs uppercase / accent coloured · pre-heading label
         </p>
       </div>
@@ -121,7 +121,7 @@ const neutralSwatches = [
 
     <!-- Primary palette -->
     <section>
-      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Palette</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3">Palette</p>
       <h2 class="font-display text-3xl text-primary-900 mb-2">Primary — Mediterranean turquoise</h2>
       <p class="text-primary-700 mb-6 max-w-2xl">
         Carries text, primary surfaces, most ink on the page. 700–900 for headings and strong text,
@@ -134,7 +134,7 @@ const neutralSwatches = [
             :style="{ background: s.hex }"
           />
           <div class="mt-2 font-mono text-primary-900">{{ s.name }}</div>
-          <div class="font-mono text-primary-500">{{ s.hex }}</div>
+          <div class="font-mono text-primary-700">{{ s.hex }}</div>
         </div>
       </div>
     </section>
@@ -153,7 +153,7 @@ const neutralSwatches = [
             :style="{ background: s.hex }"
           />
           <div class="mt-2 font-mono text-primary-900">{{ s.name }}</div>
-          <div class="font-mono text-primary-500">{{ s.hex }}</div>
+          <div class="font-mono text-primary-700">{{ s.hex }}</div>
         </div>
       </div>
     </section>
@@ -173,14 +173,14 @@ const neutralSwatches = [
             :style="{ background: s.hex }"
           />
           <div class="mt-2 font-mono text-primary-900">{{ s.name }}</div>
-          <div class="font-mono text-primary-500">{{ s.hex }}</div>
+          <div class="font-mono text-primary-700">{{ s.hex }}</div>
         </div>
       </div>
     </section>
 
     <!-- Buttons -->
     <section>
-      <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3">Components</p>
+      <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3">Components</p>
       <h2 class="font-display text-3xl text-primary-900 mb-6">Buttons</h2>
       <div class="space-y-4">
         <div class="flex flex-wrap gap-3">
@@ -202,7 +202,7 @@ const neutralSwatches = [
           <UButton loading color="primary" class="rounded-full">Loading</UButton>
           <UButton
             color="primary"
-            class="rounded-full bg-accent-500 hover:bg-accent-600 border-accent-500 hover:border-accent-600 text-white"
+            class="rounded-full bg-accent-700 hover:bg-accent-800 border-accent-500 hover:border-accent-600 text-white"
           >
             Warm CTA
           </UButton>
@@ -228,7 +228,7 @@ const neutralSwatches = [
         <UCard>
           <template #header>
             <p class="font-display text-xl text-primary-900">Beginner windsurfing — 3 days</p>
-            <p class="text-sm text-primary-500 mt-1">3 afternoons · 3 hrs each</p>
+            <p class="text-sm text-primary-700 mt-1">3 afternoons · 3 hrs each</p>
           </template>
           <p class="text-primary-700 leading-relaxed">
             Three consecutive afternoons on the flats, small groups, all gear included. You will
@@ -302,7 +302,7 @@ const neutralSwatches = [
           <div class="mt-8 flex flex-wrap gap-3">
             <a
               href="#"
-              class="inline-flex items-center rounded-full bg-accent-500 hover:bg-accent-600 text-white px-7 py-3 text-base font-medium transition-colors"
+              class="inline-flex items-center rounded-full bg-accent-700 hover:bg-accent-800 text-white px-7 py-3 text-base font-medium transition-colors"
             >
               Try wing in Karpathos →
             </a>
@@ -334,7 +334,7 @@ const neutralSwatches = [
               <span class="font-display text-2xl text-primary-50">€890</span>
               <a
                 href="#"
-                class="inline-flex items-center rounded-full bg-accent-500 hover:bg-accent-600 text-white px-5 py-2 text-sm font-medium transition-colors"
+                class="inline-flex items-center rounded-full bg-accent-700 hover:bg-accent-800 text-white px-5 py-2 text-sm font-medium transition-colors"
               >
                 Choose
               </a>

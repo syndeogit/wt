@@ -91,7 +91,7 @@ useHead(() => ({
           aria-hidden="true"
         />
         <div class="relative max-w-6xl mx-auto px-6 h-full flex flex-col justify-end pb-14 sm:pb-20">
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-200 mb-4 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-50 mb-4 font-semibold">
             <span v-if="centre.region">{{ centre.region }} · </span>{{ centre.country }}
           </p>
           <h1
@@ -114,7 +114,7 @@ useHead(() => ({
     <section v-if="centre.description" class="max-w-6xl mx-auto px-6 py-20">
       <div class="grid gap-10 md:grid-cols-5 md:gap-16">
         <div class="md:col-span-2">
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
             The destination
           </p>
           <h2 class="font-display text-3xl sm:text-4xl text-primary-900 leading-[1.1] text-pretty">
@@ -134,7 +134,7 @@ useHead(() => ({
       <div class="max-w-6xl mx-auto px-6 py-20">
         <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
           <div>
-            <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+            <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
               Lessons, rentals, packages
             </p>
             <h2 class="font-display text-3xl sm:text-4xl text-primary-900 leading-tight text-pretty">
@@ -162,7 +162,7 @@ useHead(() => ({
                 v-if="product.image"
                 :src="product.image"
                 :alt="`${product.name} — photo`"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="w-full h-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105"
                 width="1200"
                 height="900"
                 sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
@@ -180,7 +180,7 @@ useHead(() => ({
               </h3>
               <p
                 v-if="product.durationLabel"
-                class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold"
+                class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold"
               >
                 {{ product.durationLabel }}
               </p>
@@ -207,7 +207,7 @@ useHead(() => ({
                   <p class="font-display text-2xl text-primary-900 tabular-nums">
                     {{ formatPrice(product.priceCents, product.currency) }}
                   </p>
-                  <p class="text-xs text-primary-500 uppercase tracking-wide">
+                  <p class="text-xs text-primary-700 uppercase tracking-wide">
                     {{ levelLabel[product.minLevel] }}
                   </p>
                 </div>
@@ -229,7 +229,7 @@ useHead(() => ({
     <!-- Hotels -->
     <section v-if="hotels.length" class="max-w-6xl mx-auto px-6 py-20">
       <div class="mb-10">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
           Where to stay
         </p>
         <h2 class="font-display text-3xl sm:text-4xl text-primary-900 leading-tight text-pretty">
@@ -266,7 +266,7 @@ useHead(() => ({
               {{ hotel.summary }}
             </p>
             <div class="mt-auto pt-5">
-              <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+              <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
                 From
               </p>
               <p class="font-display text-2xl text-primary-900 tabular-nums">
@@ -286,7 +286,7 @@ useHead(() => ({
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >
         <div>
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-200 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-50 mb-3 font-semibold">
             Ready to book
           </p>
           <h2
@@ -298,7 +298,7 @@ useHead(() => ({
         <UButton
           :to="`/book/${centre.slug}`"
           size="xl"
-          class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8 shrink-0"
+          class="rounded-full bg-accent-700 hover:bg-accent-800 text-white border-0 px-8 shrink-0"
         >
           Start booking →
         </UButton>

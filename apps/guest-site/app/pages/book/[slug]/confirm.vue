@@ -232,14 +232,14 @@ async function placeBooking() {
     >
       <NuxtLink
         :to="{ path: `/book/${slug}`, query: route.query }"
-        class="hover:text-accent-600"
+        class="hover:text-accent-800"
       >
         ← Back to dates
       </NuxtLink>
     </nav>
 
     <template v-if="!ready">
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Missing information
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -247,7 +247,7 @@ async function placeBooking() {
       </h1>
       <p class="mt-6 text-primary-900 leading-relaxed">
         We’re missing either the programme, the arrival, or the departure date. Head back to
-        <NuxtLink :to="`/${slug}`" class="text-accent-600 hover:text-accent-700 underline underline-offset-4">
+        <NuxtLink :to="`/${slug}`" class="text-accent-700 hover:text-accent-800 underline underline-offset-4">
           {{ centre.name }}
         </NuxtLink>
         and pick a programme to start again.
@@ -255,7 +255,7 @@ async function placeBooking() {
     </template>
 
     <template v-else>
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Review your booking
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -267,7 +267,7 @@ async function placeBooking() {
       >
         <dl class="grid gap-6 sm:grid-cols-2">
           <div>
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Destination
             </dt>
             <dd class="mt-1 text-primary-900" translate="no">{{ centre.name }}</dd>
@@ -276,7 +276,7 @@ async function placeBooking() {
             </dd>
           </div>
           <div>
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Programme
             </dt>
             <dd class="mt-1 text-primary-900">{{ product!.name }}</dd>
@@ -285,13 +285,13 @@ async function placeBooking() {
             </dd>
           </div>
           <div>
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Arrival
             </dt>
             <dd class="mt-1 text-primary-900 tabular-nums">{{ arrivalLabel }}</dd>
           </div>
           <div>
-            <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Departure
             </dt>
             <dd class="mt-1 text-primary-900 tabular-nums">
@@ -323,7 +323,7 @@ async function placeBooking() {
             </div>
           </dl>
           <div class="mt-4 pt-4 border-t border-primary-200/60 flex items-end justify-between gap-4">
-            <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Total
             </p>
             <p class="font-display text-3xl text-primary-900 tabular-nums">
@@ -339,7 +339,7 @@ async function placeBooking() {
         class="mt-10 bg-[color:var(--color-bg-elevated)] rounded-2xl border border-primary-200/60 p-6 sm:p-8"
         aria-labelledby="hotel-picker-heading"
       >
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
           Where to stay
         </p>
         <h2
@@ -431,7 +431,7 @@ async function placeBooking() {
         novalidate
         @submit.prevent="placeBooking"
       >
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
           Rider profile
         </p>
         <h2
@@ -444,7 +444,7 @@ async function placeBooking() {
           Saved to your account — next booking won’t ask again. Edit anytime from
           <NuxtLink
             to="/account"
-            class="text-accent-600 hover:text-accent-700 underline underline-offset-4"
+            class="text-accent-700 hover:text-accent-800 underline underline-offset-4"
             >your account</NuxtLink
           >.
         </p>
@@ -455,7 +455,7 @@ async function placeBooking() {
               for="profile-first-name"
               class="block text-sm font-medium text-primary-900 mb-1.5"
             >
-              First name <span aria-hidden="true" class="text-accent-600">*</span>
+              First name <span aria-hidden="true" class="text-accent-700">*</span>
             </label>
             <input
               id="profile-first-name"
@@ -473,7 +473,7 @@ async function placeBooking() {
               for="profile-last-name"
               class="block text-sm font-medium text-primary-900 mb-1.5"
             >
-              Last name <span aria-hidden="true" class="text-accent-600">*</span>
+              Last name <span aria-hidden="true" class="text-accent-700">*</span>
             </label>
             <input
               id="profile-last-name"
@@ -599,7 +599,7 @@ async function placeBooking() {
             size="lg"
             :loading="placing"
             :disabled="placing"
-            class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-200 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
+            class="rounded-full bg-accent-700 hover:bg-accent-800 text-white border-0 px-7 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-50 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
             @click="placeBooking"
           >
             {{ placing ? 'Placing…' : 'Place booking →' }}

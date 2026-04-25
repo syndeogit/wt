@@ -27,6 +27,6 @@ export default defineConfig({
     command: 'pnpm --filter guest-site dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    timeout: 240_000,
   },
 })

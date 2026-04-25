@@ -34,7 +34,7 @@ const pillars = [
     <!-- Hero -->
     <section class="relative overflow-hidden">
       <div class="relative max-w-6xl mx-auto px-6 pt-24 pb-28 sm:pt-36 sm:pb-40">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-6 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-6 font-semibold">
           Wingfoil · Windsurf · Kitesurf · Karpathos, Greece
         </p>
         <h1
@@ -49,7 +49,7 @@ const pillars = [
           <UButton
             to="/wing"
             size="xl"
-            class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8"
+            class="rounded-full bg-accent-700 hover:bg-accent-800 text-white border-0 px-8"
           >
             Try wing in Karpathos →
           </UButton>
@@ -70,7 +70,7 @@ const pillars = [
     <section class="border-y border-primary-200/60 bg-[color:var(--color-bg-elevated)]">
       <div class="max-w-6xl mx-auto px-6 py-20 grid gap-12 md:grid-cols-3">
         <div v-for="p in pillars" :key="p.title">
-          <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3 font-semibold">
             {{ p.eyebrow }}
           </p>
           <h2 class="font-display text-2xl text-primary-900 mb-3 leading-tight text-pretty">
@@ -88,7 +88,7 @@ const pillars = [
           class="md:col-span-2 bg-[color:var(--color-bg-elevated)] rounded-2xl p-8 sm:p-10 border border-primary-200/60 flex flex-col justify-between"
         >
           <div>
-            <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+            <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
               Featured destination
             </p>
             <h2
@@ -150,7 +150,7 @@ const pillars = [
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >
         <div>
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-200 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-50 mb-3 font-semibold">
             Start here
           </p>
           <h2
@@ -162,7 +162,7 @@ const pillars = [
         <UButton
           to="/wing"
           size="xl"
-          class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8 shrink-0"
+          class="rounded-full bg-accent-700 hover:bg-accent-800 text-white border-0 px-8 shrink-0"
         >
           Plan a week →
         </UButton>

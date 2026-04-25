@@ -138,13 +138,13 @@ useHead(() => ({
 <template>
   <div class="max-w-5xl mx-auto px-6 py-14">
     <nav aria-label="Booking" class="mb-8 text-xs uppercase tracking-[0.22em] text-primary-700 font-semibold">
-      <NuxtLink :to="`/${centre.slug}`" class="hover:text-accent-600">
+      <NuxtLink :to="`/${centre.slug}`" class="hover:text-accent-800">
         ← Back to <span translate="no">{{ centre.name }}</span>
       </NuxtLink>
     </nav>
 
     <template v-if="!product">
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Pick a programme
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -166,7 +166,7 @@ useHead(() => ({
     </template>
 
     <template v-else>
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Book a week
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -199,7 +199,7 @@ useHead(() => ({
         <!-- Summary -->
         <aside class="lg:col-span-2">
           <div class="bg-[color:var(--color-bg-elevated)] rounded-2xl border border-primary-200/60 p-6 sm:p-7">
-            <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold mb-2">
+            <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold mb-2">
               Programme
             </p>
             <h2 class="font-display text-xl text-primary-900 leading-tight text-pretty">
@@ -207,32 +207,32 @@ useHead(() => ({
             </h2>
             <p
               v-if="product.durationLabel"
-              class="mt-1 text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold"
+              class="mt-1 text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold"
             >
               {{ product.durationLabel }}
             </p>
 
             <dl class="mt-6 space-y-4 text-sm">
               <div>
-                <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+                <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
                   Destination
                 </dt>
                 <dd class="mt-1 text-primary-900" translate="no">{{ centre.name }}</dd>
               </div>
               <div>
-                <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+                <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
                   Arrival
                 </dt>
                 <dd class="mt-1 text-primary-900 tabular-nums">{{ arrivalLabel ?? '—' }}</dd>
               </div>
               <div>
-                <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+                <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
                   Departure
                 </dt>
                 <dd class="mt-1 text-primary-900 tabular-nums">{{ departureLabel ?? '—' }}</dd>
               </div>
               <div>
-                <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+                <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
                   Nights
                 </dt>
                 <dd class="mt-1 text-primary-900 tabular-nums">{{ nightCount || '—' }}</dd>
@@ -240,7 +240,7 @@ useHead(() => ({
             </dl>
 
             <div class="mt-6 pt-5 border-t border-primary-200/60">
-              <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+              <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
                 Programme total
               </p>
               <p class="mt-1 font-display text-3xl text-primary-900 tabular-nums">

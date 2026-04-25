@@ -136,13 +136,13 @@ useHead(() => ({
     >
       <NuxtLink
         :to="`/admin/centre/bookings${centreQuery ? '?centre=' + centreQuery : ''}`"
-        class="hover:text-accent-600"
+        class="hover:text-accent-800"
       >
         ← Back to bookings
       </NuxtLink>
     </nav>
 
-    <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+    <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
       Booking
     </p>
     <h1
@@ -166,7 +166,7 @@ useHead(() => ({
       </h2>
       <dl class="grid gap-5 sm:grid-cols-2">
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Name</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Name</dt>
           <dd class="mt-1 text-primary-900" translate="no">
             <template v-if="profile">
               {{ profile.firstName }} {{ profile.lastName }}
@@ -177,15 +177,15 @@ useHead(() => ({
           </dd>
         </div>
         <div v-if="booking.guestEmail">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Email</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Email</dt>
           <dd class="mt-1 text-primary-900 break-all" translate="no">{{ booking.guestEmail }}</dd>
         </div>
         <div v-if="profile?.phone">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Phone</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Phone</dt>
           <dd class="mt-1 text-primary-900 tabular-nums" translate="no">{{ profile.phone }}</dd>
         </div>
         <div v-if="profile?.primaryDiscipline">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Main discipline
           </dt>
           <dd class="mt-1 text-primary-900">
@@ -193,13 +193,13 @@ useHead(() => ({
           </dd>
         </div>
         <div v-if="profile?.level">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Level</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Level</dt>
           <dd class="mt-1 text-primary-900">
             {{ levelLabels[profile.level] ?? profile.level }}
           </dd>
         </div>
         <div v-if="profile?.notes" class="sm:col-span-2">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Notes</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Notes</dt>
           <dd class="mt-1 text-primary-900 whitespace-pre-line">{{ profile.notes }}</dd>
         </div>
       </dl>
@@ -214,13 +214,13 @@ useHead(() => ({
       </h2>
       <dl class="grid gap-5 sm:grid-cols-2">
         <div v-if="centre">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Destination
           </dt>
           <dd class="mt-1 text-primary-900" translate="no">{{ centre.name }}</dd>
         </div>
         <div v-if="product">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Programme
           </dt>
           <dd class="mt-1 text-primary-900">{{ product.name }}</dd>
@@ -229,13 +229,13 @@ useHead(() => ({
           </dd>
         </div>
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Arrival
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">{{ fmtDate(booking.arrival) }}</dd>
         </div>
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Departure
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">
@@ -246,7 +246,7 @@ useHead(() => ({
           </dd>
         </div>
         <div v-if="hotel" class="sm:col-span-2">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Hotel</dt>
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Hotel</dt>
           <dd class="mt-1 text-primary-900" translate="no">{{ hotel.name }}</dd>
           <dd
             v-if="booking.hotelNightlyCents !== null && booking.hotelTotalCents !== null"
@@ -277,7 +277,7 @@ useHead(() => ({
           </div>
         </dl>
         <div class="mt-4 pt-4 border-t border-primary-200/60 flex items-end justify-between gap-4">
-          <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Total</p>
+          <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Total</p>
           <p class="font-display text-3xl text-primary-900 tabular-nums">
             {{ formatPrice(grandTotalCents, booking.currency) }}
           </p>
@@ -294,19 +294,19 @@ useHead(() => ({
       </h2>
       <dl class="grid gap-5 sm:grid-cols-2 text-sm">
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Created
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">{{ fmtDateTime(booking.createdAt) }}</dd>
         </div>
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Updated
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">{{ fmtDateTime(booking.updatedAt) }}</dd>
         </div>
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Confirmation email
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">
@@ -314,7 +314,7 @@ useHead(() => ({
           </dd>
         </div>
         <div v-if="booking.stripeSessionId">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Stripe session
           </dt>
           <dd class="mt-1 text-primary-900 font-mono text-xs break-all" translate="no">

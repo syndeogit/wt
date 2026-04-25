@@ -45,7 +45,7 @@ async function onSubmit() {
 <template>
   <div class="max-w-md mx-auto px-6 py-20">
     <template v-if="!submitted">
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Start here
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -53,7 +53,7 @@ async function onSubmit() {
       </h1>
       <p class="mt-4 text-primary-700 leading-relaxed">
         Already have one?
-        <NuxtLink to="/login" class="text-accent-600 hover:text-accent-700 underline underline-offset-4">
+        <NuxtLink to="/login" class="text-accent-700 hover:text-accent-800 underline underline-offset-4">
           Sign in
         </NuxtLink>
         instead.
@@ -117,7 +117,7 @@ async function onSubmit() {
 
     <template v-else>
       <div role="status" aria-live="polite">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
           Almost there
         </p>
         <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -131,7 +131,7 @@ async function onSubmit() {
       </p>
       <p class="mt-4 text-sm text-primary-700 leading-relaxed">
         If nothing arrives in a minute or two, check spam — or
-        <NuxtLink to="/login" class="text-accent-600 hover:text-accent-700 underline underline-offset-4">
+        <NuxtLink to="/login" class="text-accent-700 hover:text-accent-800 underline underline-offset-4">
           sign in
         </NuxtLink>
         if you already confirmed.

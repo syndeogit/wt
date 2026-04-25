@@ -55,7 +55,7 @@ useHead({
     <!-- Hero -->
     <section class="relative overflow-hidden">
       <div class="relative max-w-6xl mx-auto px-6 pt-24 pb-20 sm:pt-32 sm:pb-28">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-6 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-6 font-semibold">
           For first-timers · Karpathos, Greece
         </p>
         <h1
@@ -72,7 +72,7 @@ useHead({
           <UButton
             to="/karpathos"
             size="xl"
-            class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8"
+            class="rounded-full bg-accent-700 hover:bg-accent-800 text-white border-0 px-8"
           >
             See the week in Karpathos →
           </UButton>
@@ -84,7 +84,7 @@ useHead({
     <section class="border-t border-primary-200/60 bg-[color:var(--color-bg-elevated)]">
       <div class="max-w-6xl mx-auto px-6 py-20 grid gap-10 md:grid-cols-3">
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3 font-semibold">
             Soft start
           </p>
           <h2 class="font-display text-2xl text-primary-900 leading-tight mb-3 text-pretty">
@@ -96,7 +96,7 @@ useHead({
           </p>
         </div>
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3 font-semibold">
             Smooth water
           </p>
           <h2 class="font-display text-2xl text-primary-900 leading-tight mb-3 text-pretty">
@@ -108,7 +108,7 @@ useHead({
           </p>
         </div>
         <div>
-          <p class="text-xs uppercase tracking-[0.2em] text-accent-600 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.2em] text-accent-700 mb-3 font-semibold">
             Coach in the water
           </p>
           <h2 class="font-display text-2xl text-primary-900 leading-tight mb-3 text-pretty">
@@ -125,7 +125,7 @@ useHead({
     <!-- The programme(s) -->
     <section class="max-w-6xl mx-auto px-6 py-20">
       <div class="mb-10">
-        <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+        <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
           The programme
         </p>
         <h2 class="font-display text-3xl sm:text-4xl text-primary-900 leading-tight text-pretty">
@@ -148,7 +148,7 @@ useHead({
               v-if="product.image"
               :src="product.image"
               :alt="`${product.name} — photo`"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              class="w-full h-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-105"
               width="1200"
               height="675"
               sizes="(min-width: 768px) 50vw, 100vw"
@@ -161,7 +161,7 @@ useHead({
             </span>
           </div>
           <div class="p-6 flex flex-col flex-1">
-            <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold mb-2">
+            <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold mb-2">
               <span translate="no">{{ centre.name }}</span>
               <span v-if="centre.region"> · {{ centre.region }}</span>
             </p>
@@ -170,7 +170,7 @@ useHead({
             </h3>
             <p
               v-if="product.durationLabel"
-              class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold"
+              class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold"
             >
               {{ product.durationLabel }}
             </p>
@@ -216,7 +216,7 @@ useHead({
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >
         <div>
-          <p class="text-xs uppercase tracking-[0.22em] text-accent-200 mb-3 font-semibold">
+          <p class="text-xs uppercase tracking-[0.22em] text-accent-50 mb-3 font-semibold">
             Start here
           </p>
           <h2
@@ -228,7 +228,7 @@ useHead({
         <UButton
           to="/karpathos"
           size="xl"
-          class="rounded-full bg-accent-500 hover:bg-accent-600 text-white border-0 px-8 shrink-0"
+          class="rounded-full bg-accent-700 hover:bg-accent-800 text-white border-0 px-8 shrink-0"
         >
           See the week →
         </UButton>

@@ -57,7 +57,7 @@ async function onSubmit() {
 <template>
   <div class="max-w-md mx-auto px-6 py-20">
     <template v-if="!ready">
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Reset password
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -68,7 +68,7 @@ async function onSubmit() {
         a fresh
         <NuxtLink
           to="/forgot-password"
-          class="text-accent-600 hover:text-accent-700 underline underline-offset-4"
+          class="text-accent-700 hover:text-accent-800 underline underline-offset-4"
         >
           reset link
         </NuxtLink>.
@@ -76,7 +76,7 @@ async function onSubmit() {
     </template>
 
     <template v-else>
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Almost there
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">

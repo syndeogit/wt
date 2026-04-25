@@ -137,7 +137,7 @@ useHead({
 <template>
   <div class="max-w-3xl mx-auto px-6 py-14">
     <div role="status" aria-live="polite" class="mb-10">
-      <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+      <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
         Booking request received
       </p>
       <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -155,7 +155,7 @@ useHead({
     >
       <dl class="grid gap-6 sm:grid-cols-2">
         <div v-if="centre">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Destination
           </dt>
           <dd class="mt-1 text-primary-900" translate="no">{{ centre.name }}</dd>
@@ -164,7 +164,7 @@ useHead({
           </dd>
         </div>
         <div v-if="product">
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Programme
           </dt>
           <dd class="mt-1 text-primary-900">{{ product.name }}</dd>
@@ -173,13 +173,13 @@ useHead({
           </dd>
         </div>
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Arrival
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">{{ fmtDate(booking.arrival) }}</dd>
         </div>
         <div>
-          <dt class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+          <dt class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
             Departure
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">
@@ -214,11 +214,11 @@ useHead({
         </dl>
         <div class="mt-4 pt-4 border-t border-primary-200/60 flex items-end justify-between gap-4">
           <div>
-            <p class="text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">Total</p>
+            <p class="text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">Total</p>
             <p class="mt-1 font-display text-3xl text-primary-900 tabular-nums">
               {{ formatPrice(grandTotalCents, booking.currency) }}
             </p>
-            <p class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-500 font-semibold">
+            <p class="mt-2 text-xs uppercase tracking-[0.18em] text-primary-700 font-semibold">
               Status: <span class="text-primary-900">{{ statusLabel }}</span>
             </p>
           </div>

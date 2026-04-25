@@ -36,7 +36,7 @@ async function onSubmit() {
 
 <template>
   <div class="max-w-md mx-auto px-6 py-20">
-    <p class="text-xs uppercase tracking-[0.22em] text-accent-600 mb-3 font-semibold">
+    <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
       Welcome back
     </p>
     <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
@@ -44,7 +44,7 @@ async function onSubmit() {
     </h1>
     <p class="mt-4 text-primary-700 leading-relaxed">
       New to WindTribe?
-      <NuxtLink to="/signup" class="text-accent-600 hover:text-accent-700 underline underline-offset-4">
+      <NuxtLink to="/signup" class="text-accent-700 hover:text-accent-800 underline underline-offset-4">
         Create an account
       </NuxtLink>
       instead.
@@ -75,7 +75,7 @@ async function onSubmit() {
           </label>
           <NuxtLink
             to="/forgot-password"
-            class="text-xs text-accent-600 hover:text-accent-700 underline underline-offset-4"
+            class="text-xs text-accent-700 hover:text-accent-800 underline underline-offset-4"
           >
             Forgot password?
           </NuxtLink>
