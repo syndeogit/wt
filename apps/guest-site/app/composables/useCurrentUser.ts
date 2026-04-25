@@ -2,6 +2,7 @@ export interface CurrentUser {
   id: string
   email: string | null
   createdAt: string | null
+  adminCentres: string[]
 }
 
 export function useCurrentUser() {

@@ -74,6 +74,7 @@ export default defineEventHandler(async (event) => {
     .insert({
       booking_ref: bookingRef,
       user_id: user.id,
+      guest_email: user.email ?? null,
       centre_slug: body.centreSlug,
       product_id: body.productId,
       arrival: body.arrival,
