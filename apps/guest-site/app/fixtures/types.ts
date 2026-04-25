@@ -15,6 +15,9 @@ export interface Centre {
   region: string
   heroImage: string
   gallery: string[]
+  latitude: number | null
+  longitude: number | null
+  timezone: string | null
 }
 
 export type ProductKind = 'lesson' | 'rental' | 'package'

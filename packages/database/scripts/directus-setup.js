@@ -219,6 +219,36 @@ const centresCol = col(
     stringField('region', false, 'Region or island.'),
     stringField('hero_image', false, 'URL of the hero image. Swap to file relationship later.'),
     jsonField('gallery', 'Array of image URLs for the gallery.'),
+    {
+      field: 'latitude',
+      type: 'float',
+      meta: {
+        interface: 'input',
+        note: 'Decimal degrees, e.g. 35.61 for Karpathos. Used by /api/conditions to fetch weather.',
+        width: 'half',
+      },
+      schema: { is_nullable: true, numeric_precision: 10, numeric_scale: 6 },
+    },
+    {
+      field: 'longitude',
+      type: 'float',
+      meta: {
+        interface: 'input',
+        note: 'Decimal degrees, e.g. 27.10 for Karpathos.',
+        width: 'half',
+      },
+      schema: { is_nullable: true, numeric_precision: 10, numeric_scale: 6 },
+    },
+    {
+      field: 'timezone',
+      type: 'string',
+      meta: {
+        interface: 'input',
+        note: 'IANA timezone, e.g. Europe/Athens. Used to localise forecast hours.',
+        width: 'full',
+      },
+      schema: { is_nullable: true },
+    },
   ],
 )
 

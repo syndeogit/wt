@@ -1,19 +1,8 @@
 // GET /api/conditions/[slug] — current + next-6h conditions for a centre.
 // Backed by Open-Meteo (free, no key, rate-limited). Cached 10 minutes.
 //
-// Coordinates are hardcoded per slug for now; when a real "lat/lng on
-// wt_centres" arrives we'll read from Directus instead.
-
-interface CentreCoords {
-  lat: number
-  lon: number
-  tz: string
-}
-
-const CENTRE_COORDS: Record<string, CentreCoords> = {
-  // ION Karpathos — Devil's Bay / Anemos beach
-  karpathos: { lat: 35.61, lon: 27.1, tz: 'Europe/Athens' },
-}
+// Coordinates and timezone are read from the Directus wt_centres row,
+// so adding a new centre is a Directus admin action — no code change.
 
 interface OpenMeteoResponse {
   current: {
@@ -37,14 +26,22 @@ export default defineCachedEventHandler(
   async (event) => {
     const slug = getRouterParam(event, 'slug')
     if (!slug) throw createError({ statusCode: 400, statusMessage: 'Missing slug' })
-    const coords = CENTRE_COORDS[slug]
-    if (!coords) throw createError({ statusCode: 404, statusMessage: 'No coordinates for this centre' })
+
+    const centre = await fetchCentreBySlug(event, slug)
+    if (!centre) throw createError({ statusCode: 404, statusMessage: 'Centre not found' })
+    if (centre.latitude === null || centre.longitude === null) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: `Coordinates not configured for centre "${slug}"`,
+      })
+    }
+    const tz = centre.timezone || 'UTC'
 
     const base = useRuntimeConfig(event).public.openMeteoBase as string
     const params = new URLSearchParams({
-      latitude: String(coords.lat),
-      longitude: String(coords.lon),
-      timezone: coords.tz,
+      latitude: String(centre.latitude),
+      longitude: String(centre.longitude),
+      timezone: tz,
       wind_speed_unit: 'kn',
       current: 'temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code',
       hourly: 'wind_speed_10m,wind_direction_10m,wind_gusts_10m,weather_code',
@@ -76,7 +73,12 @@ export default defineCachedEventHandler(
     }
 
     return {
-      centre: { slug, lat: coords.lat, lon: coords.lon, tz: coords.tz },
+      centre: {
+        slug,
+        lat: centre.latitude,
+        lon: centre.longitude,
+        tz,
+      },
       current: {
         tempC: data.current.temperature_2m,
         windKn: data.current.wind_speed_10m,

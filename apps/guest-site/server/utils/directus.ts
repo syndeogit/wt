@@ -11,6 +11,9 @@ interface DirectusCentre {
   region: string | null
   hero_image: string | null
   gallery: string[] | null
+  latitude: number | null
+  longitude: number | null
+  timezone: string | null
 }
 
 interface DirectusProduct {
@@ -70,6 +73,9 @@ function mapCentre(c: DirectusCentre): Centre {
     region: c.region ?? '',
     heroImage: c.hero_image ?? '',
     gallery: c.gallery ?? [],
+    latitude: c.latitude ?? null,
+    longitude: c.longitude ?? null,
+    timezone: c.timezone ?? null,
   }
 }
 
