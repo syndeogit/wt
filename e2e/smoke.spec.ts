@@ -14,6 +14,7 @@ const publicPaths = [
   { path: '/', name: 'home' },
   { path: '/destinations', name: 'destinations' },
   { path: '/karpathos', name: 'karpathos' },
+  { path: '/karpathos/conditions', name: 'karpathos/conditions' },
   { path: '/wing', name: 'wing' },
   { path: '/journal', name: 'journal' },
   { path: '/book', name: 'book picker' },
