@@ -24,6 +24,24 @@ const { data: hotelsRes } = await useFetch<{ data: Hotel[] }>(
   { key: () => `hotels-${slug.value}`, default: () => ({ data: [] }) },
 )
 
+interface ConditionsLite {
+  current: { windKn: number; directionDeg: number }
+}
+// Best-effort live wind chip on the hero. 404s when coords aren't configured;
+// we just hide the chip in that case so the page still renders.
+const { data: conditions } = await useFetch<ConditionsLite | null>(
+  () => `/api/conditions/${slug.value}`,
+  {
+    key: () => `hero-conditions-${slug.value}`,
+    default: () => null,
+    onResponseError: () => {},
+  },
+)
+function compass(deg: number): string {
+  const points = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW']
+  return points[Math.round((deg % 360) / 45) % 8]!
+}
+
 const products = computed(() => productsRes.value?.data ?? [])
 const hotels = computed(() => hotelsRes.value?.data ?? [])
 
@@ -106,6 +124,20 @@ useHead(() => ({
           >
             {{ centre.tagline }}
           </p>
+          <NuxtLink
+            v-if="conditions?.current"
+            :to="`/${slug}/conditions`"
+            class="mt-6 inline-flex items-center gap-2 self-start rounded-full bg-white/95 backdrop-blur px-4 py-2 text-sm font-medium text-primary-900 hover:bg-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            :aria-label="`Live conditions: ${Math.round(conditions.current.windKn)} knots ${compass(conditions.current.directionDeg)}. Open the conditions page.`"
+          >
+            <span class="text-accent-700 uppercase tracking-[0.14em] text-xs font-semibold">
+              Wind now
+            </span>
+            <span class="tabular-nums">{{ Math.round(conditions.current.windKn) }} kn</span>
+            <span class="text-primary-700">·</span>
+            <span>{{ compass(conditions.current.directionDeg) }}</span>
+            <span aria-hidden="true" class="ml-1">→</span>
+          </NuxtLink>
         </div>
       </div>
     </section>
