@@ -101,7 +101,10 @@ useHead(() => ({
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
       <div>
         <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
-          Hotel admin · <span translate="no">{{ hotelName }}</span>
+          Hotel admin<template v-if="hotelName">
+            ·
+            <span translate="no">{{ hotelName }}</span>
+          </template>
         </p>
         <h1 class="font-display text-4xl sm:text-5xl text-primary-900 leading-tight text-pretty">
           Bookings.
@@ -118,7 +121,7 @@ useHead(() => ({
         class="rounded-full border-primary-900 text-primary-900 hover:bg-primary-100"
         @click="() => refresh()"
       >
-        Refresh
+        {{ pending ? 'Refreshing…' : 'Refresh' }}
       </UButton>
     </div>
 
@@ -166,7 +169,7 @@ useHead(() => ({
               scope="col"
               class="px-4 sm:px-6 py-3 text-xs uppercase tracking-[0.14em] text-primary-700 font-semibold"
             >
-              Hotel
+              Revenue
             </th>
             <th
               scope="col"
@@ -181,7 +184,7 @@ useHead(() => ({
             <td class="px-4 sm:px-6 py-4 align-top">
               <NuxtLink
                 :to="`/admin/hotel/bookings/${b.bookingRef}?hotel=${hotelId}`"
-                class="font-mono text-primary-900 hover:text-accent-800 underline underline-offset-4 tabular-nums"
+                class="font-mono text-primary-900 hover:text-accent-800 underline underline-offset-4 tabular-nums rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                 translate="no"
               >
                 {{ b.bookingRef }}

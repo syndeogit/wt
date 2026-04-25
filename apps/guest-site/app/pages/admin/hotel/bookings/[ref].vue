@@ -122,7 +122,7 @@ useHead(() => ({
     >
       <NuxtLink
         :to="`/admin/hotel/bookings${hotelQuery ? '?hotel=' + hotelQuery : ''}`"
-        class="hover:text-accent-800"
+        class="rounded hover:text-accent-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
       >
         ← Back to bookings
       </NuxtLink>
@@ -167,8 +167,8 @@ useHead(() => ({
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">
             {{ fmtDate(booking.departure) }}
-            <span class="text-primary-700"
-              >· {{ nightCount }} night{{ nightCount === 1 ? '' : 's' }}</span
+            <span class="text-primary-700 whitespace-nowrap"
+              >·&nbsp;{{ nightCount }} night{{ nightCount === 1 ? '' : 's' }}</span
             >
           </dd>
         </div>
@@ -180,8 +180,13 @@ useHead(() => ({
             Hotel total
           </dt>
           <dd class="mt-1 text-primary-900 tabular-nums">
-            {{ formatPrice(booking.hotelNightlyCents, booking.currency) }}/night × {{ nightCount }}
-            = {{ formatPrice(booking.hotelTotalCents, booking.currency) }}
+            <span class="whitespace-nowrap"
+              >{{ formatPrice(booking.hotelNightlyCents, booking.currency) }}/night</span
+            >
+            <span class="whitespace-nowrap">×&nbsp;{{ nightCount }}</span>
+            <span class="whitespace-nowrap"
+              >=&nbsp;{{ formatPrice(booking.hotelTotalCents, booking.currency) }}</span
+            >
           </dd>
         </div>
       </dl>
