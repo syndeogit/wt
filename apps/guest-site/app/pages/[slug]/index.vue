@@ -85,6 +85,16 @@ useHead(() => ({
     },
     { property: 'og:image', content: centre.value.heroImage },
   ],
+  link: centre.value.heroImage
+    ? [
+        {
+          rel: 'preload',
+          as: 'image',
+          href: centre.value.heroImage,
+          fetchpriority: 'high',
+        },
+      ]
+    : [],
 }))
 </script>
 
@@ -143,7 +153,10 @@ useHead(() => ({
     </section>
 
     <!-- Overview -->
-    <section v-if="centre.description" class="max-w-6xl mx-auto px-6 py-20">
+    <section
+      v-if="centre.description"
+      class="max-w-6xl mx-auto px-6 py-20 [content-visibility:auto] [contain-intrinsic-size:0_400px]"
+    >
       <div class="grid gap-10 md:grid-cols-5 md:gap-16">
         <div class="md:col-span-2">
           <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
@@ -162,7 +175,9 @@ useHead(() => ({
     </section>
 
     <!-- Products -->
-    <section class="border-t border-primary-200/60 bg-[color:var(--color-bg-elevated)]">
+    <section
+      class="border-t border-primary-200/60 bg-[color:var(--color-bg-elevated)] [content-visibility:auto] [contain-intrinsic-size:0_1200px]"
+    >
       <div class="max-w-6xl mx-auto px-6 py-20">
         <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
           <div>
@@ -259,7 +274,10 @@ useHead(() => ({
     </section>
 
     <!-- Hotels -->
-    <section v-if="hotels.length" class="max-w-6xl mx-auto px-6 py-20">
+    <section
+      v-if="hotels.length"
+      class="max-w-6xl mx-auto px-6 py-20 [content-visibility:auto] [contain-intrinsic-size:0_600px]"
+    >
       <div class="mb-10">
         <p class="text-xs uppercase tracking-[0.22em] text-accent-700 mb-3 font-semibold">
           Where to stay
@@ -313,7 +331,7 @@ useHead(() => ({
     </section>
 
     <!-- Closing CTA -->
-    <section class="bg-primary-700">
+    <section class="bg-primary-700 [content-visibility:auto] [contain-intrinsic-size:0_200px]">
       <div
         class="max-w-6xl mx-auto px-6 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8"
       >

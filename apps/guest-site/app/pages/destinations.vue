@@ -38,7 +38,7 @@ useHead({
 
     <ul v-else class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <li
-        v-for="c in centres"
+        v-for="(c, i) in centres"
         :key="c.id"
         class="group bg-[color:var(--color-bg-elevated)] rounded-2xl border border-primary-200/60 overflow-hidden flex flex-col"
       >
@@ -55,7 +55,8 @@ useHead({
               width="1200"
               height="900"
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              loading="lazy"
+              :loading="i === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="i === 0 ? 'high' : undefined"
             />
           </div>
           <div class="p-6">
