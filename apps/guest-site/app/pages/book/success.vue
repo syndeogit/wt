@@ -273,11 +273,23 @@ useHead({
         Back to account
       </UButton>
       <UButton
-        :to="`/${booking.centre_slug}`"
+        :to="{
+          path: `/${booking.centre_slug}/conditions`,
+          query: { from: booking.arrival, to: booking.departure },
+        }"
         size="lg"
         variant="outline"
         color="primary"
         class="rounded-full border-primary-900 text-primary-900 hover:bg-primary-100"
+      >
+        See the wind for your dates →
+      </UButton>
+      <UButton
+        :to="`/${booking.centre_slug}`"
+        size="lg"
+        variant="ghost"
+        color="primary"
+        class="rounded-full text-primary-900 hover:bg-primary-100"
       >
         Back to <span translate="no">{{ centre?.name ?? 'destination' }}</span>
       </UButton>

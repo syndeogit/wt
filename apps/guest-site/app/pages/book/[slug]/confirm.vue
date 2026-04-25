@@ -301,6 +301,18 @@ async function placeBooking() {
           </div>
         </dl>
 
+        <p class="mt-6 text-sm">
+          <NuxtLink
+            :to="{
+              path: `/${slug}/conditions`,
+              query: { from: route.query.from, to: route.query.to },
+            }"
+            class="text-accent-700 hover:text-accent-800 underline underline-offset-4"
+          >
+            See the wind for your dates →
+          </NuxtLink>
+        </p>
+
         <div class="mt-8 pt-6 border-t border-primary-200/60">
           <dl class="space-y-2 text-sm tabular-nums">
             <div class="flex items-baseline justify-between gap-4">
