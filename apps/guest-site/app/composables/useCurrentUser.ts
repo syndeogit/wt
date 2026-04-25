@@ -3,6 +3,7 @@ export interface CurrentUser {
   email: string | null
   createdAt: string | null
   adminCentres: string[]
+  adminHotels: string[]
 }
 
 export function useCurrentUser() {
