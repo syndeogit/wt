@@ -221,6 +221,9 @@ useHead({
             </NuxtLink>
           </p>
         </section>
+
+        <!-- Full week of lessons — sits directly under weather, left of FB feed -->
+        <LessonsThisWeek centre-slug="karpathos" :days="7" />
       </div>
 
       <!-- Facebook feed: sidebar -->
@@ -260,11 +263,6 @@ useHead({
           <p class="text-primary-700">Feed coming soon.</p>
         </template>
       </aside>
-    </div>
-
-    <!-- Full week of lessons -->
-    <div class="mt-14">
-      <LessonsThisWeek centre-slug="karpathos" :days="7" />
     </div>
   </article>
 </template>
