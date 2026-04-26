@@ -26,3 +26,12 @@ test('anonymous-browse-allowed — public pages do not redirect to /login', asyn
     await expect(page.locator('h1').first()).toBeVisible()
   }
 })
+
+test('profile-after-selection — /book/[slug] does not ask for personal data', async ({ page }) => {
+  await page.goto('/book/karpathos')
+  await page.waitForLoadState('domcontentloaded')
+  // Should be a date picker page, not a profile form
+  await expect(page.locator('input[autocomplete="given-name"]')).toHaveCount(0)
+  await expect(page.locator('input[autocomplete="family-name"]')).toHaveCount(0)
+  await expect(page.locator('input[type="email"]')).toHaveCount(0)
+})
