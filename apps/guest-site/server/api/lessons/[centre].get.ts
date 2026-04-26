@@ -1,48 +1,28 @@
-// apps/guest-site/server/api/lessons/[centre].get.ts
-//
 // Slice O: thin proxy for ION Karpathos's public Syndion lessons feed.
 // Verbatim passthrough — no shaping. Future home for caching / Sentry beacons.
+//
+// Validation logic lives in `server/utils/syndion.parseLessonsRequest` so it
+// can be unit-tested without mocking h3 / Nitro. This handler is a thin
+// orchestrator: parse, fetch, map errors.
 
-import { createError, defineEventHandler, getQuery, getRouterParam } from 'h3'
-import { isValidSport, syndionCodeForSlug } from '../../utils/syndion'
+import { parseLessonsRequest } from '../../utils/syndion'
 import type { SyndionResponse } from '../../utils/syndion'
 
 const SYNDION_BASE = process.env.SYNDION_BASE_URL || 'https://ion-karpathos.vercel.app'
 
-function clampDays(raw: string | undefined): number {
-  const n = raw ? parseInt(raw, 10) : 7
-  if (!Number.isFinite(n)) return 7
-  return Math.min(30, Math.max(1, n))
-}
-
-const handler = defineEventHandler(async (event): Promise<SyndionResponse> => {
-  const centreSlug = getRouterParam(event, 'centre')
-  if (!centreSlug) {
-    throw createError({ statusCode: 400, statusMessage: 'Missing centre slug' })
-  }
-
-  const code = syndionCodeForSlug(centreSlug)
-  if (!code) {
-    throw createError({ statusCode: 404, statusMessage: 'Lessons unavailable for this centre' })
-  }
-
-  const query = getQuery(event) as { days?: string; sport?: string }
-  const days = clampDays(query.days)
-
-  const upstreamQuery: Record<string, string | number> = { centre: code, days }
-  if (query.sport) {
-    if (!isValidSport(query.sport)) {
-      throw createError({ statusCode: 400, statusMessage: 'Invalid sport' })
-    }
-    upstreamQuery.sport = query.sport
+export default defineEventHandler(async (event): Promise<SyndionResponse> => {
+  const parsed = parseLessonsRequest(
+    getRouterParam(event, 'centre'),
+    getQuery(event) as { days?: string; sport?: string },
+  )
+  if (!parsed.ok) {
+    throw createError({ statusCode: parsed.statusCode, statusMessage: parsed.statusMessage })
   }
 
   try {
-    const response = await $fetch<SyndionResponse>(
-      `${SYNDION_BASE}/api/public/v1/lessons`,
-      { query: upstreamQuery },
-    )
-    return response
+    return await $fetch<SyndionResponse>(`${SYNDION_BASE}/api/public/v1/lessons`, {
+      query: parsed.upstreamQuery,
+    })
   }
   catch (err: unknown) {
     const e = err as { statusCode?: number; status?: number }
@@ -53,7 +33,3 @@ const handler = defineEventHandler(async (event): Promise<SyndionResponse> => {
     throw createError({ statusCode: 503, statusMessage: 'Lessons feed temporarily unavailable' })
   }
 })
-
-// Cast needed so the export satisfies (event: unknown) => Promise<unknown> in test imports;
-// h3's EventHandler callable signature uses H3Event<Request>, not unknown.
-export default handler as unknown as (event: unknown) => Promise<SyndionResponse>

@@ -45,3 +45,42 @@ const SPORTS: SyndionSport[] = ['wingfoil', 'windsurf', 'kitesurf']
 export function isValidSport(s: string): s is SyndionSport {
   return SPORTS.includes(s as SyndionSport)
 }
+
+export function clampDays(raw: string | undefined): number {
+  const n = raw ? parseInt(raw, 10) : 7
+  if (!Number.isFinite(n)) return 7
+  return Math.min(30, Math.max(1, n))
+}
+
+export type LessonsQueryResult =
+  | { ok: true; centreCode: string; upstreamQuery: Record<string, string | number> }
+  | { ok: false; statusCode: number; statusMessage: string }
+
+/**
+ * Pure validator for the proxy: takes the raw centre slug + query map and
+ * returns either the upstream query Syndion expects or an HTTP error to throw.
+ * No I/O, no Nuxt/h3 dependencies — trivially unit-testable.
+ */
+export function parseLessonsRequest(
+  centreSlug: string | undefined,
+  query: { days?: string; sport?: string },
+): LessonsQueryResult {
+  if (!centreSlug) {
+    return { ok: false, statusCode: 400, statusMessage: 'Missing centre slug' }
+  }
+  const code = syndionCodeForSlug(centreSlug)
+  if (!code) {
+    return { ok: false, statusCode: 404, statusMessage: 'Lessons unavailable for this centre' }
+  }
+  const upstreamQuery: Record<string, string | number> = {
+    centre: code,
+    days: clampDays(query.days),
+  }
+  if (query.sport) {
+    if (!isValidSport(query.sport)) {
+      return { ok: false, statusCode: 400, statusMessage: 'Invalid sport' }
+    }
+    upstreamQuery.sport = query.sport
+  }
+  return { ok: true, centreCode: code, upstreamQuery }
+}
