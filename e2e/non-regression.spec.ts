@@ -57,6 +57,21 @@ test('profile-after-selection — /book/[slug] does not ask for personal data', 
   await expect(page.locator('input[type="email"]')).toHaveCount(0)
 })
 
+test('no-auto-substitution — empty centre renders empty state, never another centre', async ({ page }) => {
+  test.skip(true, 'requires seeded "empty-test" centre fixture in Directus — file follow-up to seed')
+
+  const SLUG = 'empty-test'
+  const response = await page.goto(`/${SLUG}`)
+  if (response && response.status() === 404) return
+  await page.waitForLoadState('domcontentloaded')
+
+  // Page should NOT silently show another centre's content
+  const headingText = (await page.locator('h1').first().textContent()) ?? ''
+  expect(headingText.toLowerCase()).not.toContain('karpathos')
+  // Should show some empty-state copy
+  await expect(page.locator('text=/no products|coming soon|nothing to book/i')).toBeVisible()
+})
+
 test('url-state-survives-refresh — selections persist on /confirm', async ({ page, context }) => {
   test.skip(!AUTH_AVAILABLE, 'requires E2E_TEST_EMAIL + E2E_TEST_PASSWORD + E2E_FIXTURE_PRODUCT_ID')
 
