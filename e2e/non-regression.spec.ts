@@ -2,8 +2,29 @@
 // docs/mvp-plan.md:114-123 as a Playwright test. Tests are file-anchored to
 // stable Directus fixtures or Supabase seed bookings so content drift doesn't
 // false-positive.
+//
+// Some tests require:
+//   E2E_TEST_EMAIL + E2E_TEST_PASSWORD env vars (seeded Supabase test user)
+//   FIXTURE_PRODUCT_ID below (a Karpathos lesson product UUID from Directus)
+//
+// To resolve FIXTURE_PRODUCT_ID:
+//   curl -s "$NUXT_PUBLIC_DIRECTUS_URL/items/wt_products?filter[centre][slug][_eq]=karpathos&filter[kind][_eq]=lesson&fields=id&limit=1" | jq -r '.data[0].id'
 
+import type { BrowserContext, Page } from '@playwright/test'
 import { expect, test } from '@playwright/test'
+
+const FIXTURE_PRODUCT_ID = process.env.E2E_FIXTURE_PRODUCT_ID ?? ''
+const TEST_EMAIL = process.env.E2E_TEST_EMAIL ?? ''
+const TEST_PASSWORD = process.env.E2E_TEST_PASSWORD ?? ''
+const AUTH_AVAILABLE = Boolean(TEST_EMAIL && TEST_PASSWORD && FIXTURE_PRODUCT_ID)
+
+async function signInTestUser(page: Page, _context: BrowserContext) {
+  await page.goto('/login')
+  await page.fill('input[type="email"]', TEST_EMAIL)
+  await page.fill('input[type="password"]', TEST_PASSWORD)
+  await page.click('button[type="submit"]')
+  await page.waitForURL((url) => !url.pathname.startsWith('/login'))
+}
 
 test('real-prices-shown — destination page never shows "From €" on product cards', async ({ page }) => {
   await page.goto('/karpathos')
@@ -34,4 +55,28 @@ test('profile-after-selection — /book/[slug] does not ask for personal data', 
   await expect(page.locator('input[autocomplete="given-name"]')).toHaveCount(0)
   await expect(page.locator('input[autocomplete="family-name"]')).toHaveCount(0)
   await expect(page.locator('input[type="email"]')).toHaveCount(0)
+})
+
+test('no-pre-selected-upsells — /confirm has no auto-selected hotel/add-on/badge', async ({ page, context }) => {
+  test.skip(!AUTH_AVAILABLE, 'requires E2E_TEST_EMAIL + E2E_TEST_PASSWORD + E2E_FIXTURE_PRODUCT_ID')
+
+  await signInTestUser(page, context)
+  await page.goto(`/book/karpathos/confirm?products=${FIXTURE_PRODUCT_ID}&from=2026-06-01&to=2026-06-06`)
+  await page.waitForLoadState('domcontentloaded')
+
+  // The "I'll sort my own" empty radio is checked by default — that's fine, it's the no-op option.
+  // No PAID hotel should be checked.
+  const checkedHotelValue = await page.locator('input[name="hotel"]:checked').getAttribute('value')
+  expect(checkedHotelValue, 'expected no paid hotel pre-selected').toBe('')
+
+  // No add-on checkbox is checked
+  const checkedAddOns = await page
+    .locator('section[aria-labelledby="addons-heading"] input[type="checkbox"]:checked')
+    .count()
+  expect(checkedAddOns).toBe(0)
+
+  // No "For your level" badge auto-renders before profile is set (anonymous test
+  // user has no soft profile in this fresh context)
+  const badgeCount = await page.locator('[data-testid="badge-level-match"]').count()
+  expect(badgeCount).toBe(0)
 })
