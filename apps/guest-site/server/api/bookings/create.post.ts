@@ -149,6 +149,16 @@ export default defineEventHandler(async (event) => {
       ? (await fetchHotelsByCentreId(event, centre.id)).find((h) => h.id === hotelId)?.name ?? null
       : null
 
+    const addOnsForEmail = resolvedAddOnIds.map((id) => {
+      const p = products.find((pp) => pp.id === id)!
+      return {
+        name: p.name,
+        perDayCents: p.priceCents,
+        nights,
+        totalCents: p.priceCents * nights,
+      }
+    })
+
     const emailResult = await sendBookingConfirmation({
       to: user.email ?? '',
       bookingRef,
@@ -166,6 +176,7 @@ export default defineEventHandler(async (event) => {
       hotelName,
       hotelNightlyCents,
       hotelTotalCents,
+      addOns: addOnsForEmail,
     })
     if (emailResult.sent) {
       await supabase

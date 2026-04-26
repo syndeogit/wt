@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const { data: booking, error: fetchError } = await supabase
     .from('bookings')
     .select(
-      'id, booking_ref, centre_slug, product_id, arrival, departure, amount_cents, currency, confirmation_email_sent_at, hotel_id, hotel_nightly_cents, hotel_total_cents',
+      'id, booking_ref, centre_slug, product_id, arrival, departure, amount_cents, currency, confirmation_email_sent_at, hotel_id, hotel_nightly_cents, hotel_total_cents, add_on_ids',
     )
     .eq('booking_ref', ref)
     .maybeSingle()
@@ -63,6 +63,24 @@ export default defineEventHandler(async (event) => {
     hotelName = hotels.find((h) => h.id === booking.hotel_id)?.name ?? null
   }
 
+  const nights = Math.max(
+    0,
+    Math.round(
+      (new Date(booking.departure).getTime() - new Date(booking.arrival).getTime())
+        / (1000 * 60 * 60 * 24),
+    ),
+  )
+  const addOnIds: string[] = booking.add_on_ids ?? []
+  const addOnsForEmail = addOnIds
+    .map((id) => products.find((p) => p.id === id))
+    .filter((p): p is NonNullable<typeof p> => p !== undefined)
+    .map((p) => ({
+      name: p.name,
+      perDayCents: p.priceCents,
+      nights,
+      totalCents: p.priceCents * nights,
+    }))
+
   const result = await sendBookingConfirmation({
     to: user.email ?? '',
     bookingRef: booking.booking_ref,
@@ -80,6 +98,7 @@ export default defineEventHandler(async (event) => {
     hotelName,
     hotelNightlyCents: booking.hotel_nightly_cents,
     hotelTotalCents: booking.hotel_total_cents,
+    addOns: addOnsForEmail,
   })
 
   // Only stamp confirmation_email_sent_at on real sends — in stub mode no email

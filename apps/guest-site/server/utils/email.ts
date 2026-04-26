@@ -23,6 +23,7 @@ export interface BookingEmailInput {
   hotelName: string | null
   hotelNightlyCents: number | null
   hotelTotalCents: number | null
+  addOns: Array<{ name: string; perDayCents: number; nights: number; totalCents: number }>
 }
 
 export interface EmailSendResult {
@@ -71,7 +72,9 @@ function location(input: BookingEmailInput): string {
 }
 
 function grandTotalCents(input: BookingEmailInput): number {
-  return input.amountCents + (input.hotelTotalCents ?? 0)
+  return input.amountCents
+    + (input.hotelTotalCents ?? 0)
+    + input.addOns.reduce((sum, a) => sum + a.totalCents, 0)
 }
 
 export function renderTextBody(input: BookingEmailInput): string {
@@ -87,12 +90,19 @@ export function renderTextBody(input: BookingEmailInput): string {
     `Programme:   ${input.productName}${input.productDurationLabel ? ' (' + input.productDurationLabel + ')' : ''}`,
     `Arrival:     ${formatHumanDate(input.arrival)}`,
     `Departure:   ${formatHumanDate(input.departure)}  (${nights} night${nights === 1 ? '' : 's'})`,
-    `Programme:   ${formatPrice(input.amountCents, input.currency)}`,
+    `Price:       ${formatPrice(input.amountCents, input.currency)}`,
   ]
+  input.addOns.forEach((a) => {
+    lines.push(
+      `Gear:        ${a.name} — ${formatPrice(a.perDayCents, input.currency)}/day x ${a.nights} = ${formatPrice(a.totalCents, input.currency)}`,
+    )
+  })
   if (input.hotelName && input.hotelTotalCents !== null && input.hotelNightlyCents !== null) {
     lines.push(
       `Hotel:       ${input.hotelName} — ${formatPrice(input.hotelNightlyCents, input.currency)}/night x ${nights} = ${formatPrice(input.hotelTotalCents, input.currency)}`,
     )
+  }
+  if (input.addOns.length > 0 || input.hotelName) {
     lines.push(`Total:       ${formatPrice(grandTotalCents(input), input.currency)}`)
   }
   lines.push(
@@ -115,9 +125,37 @@ export function renderHtmlBody(input: BookingEmailInput): string {
     s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   const row = (label: string, value: string) =>
     `<tr><td style="padding:6px 16px 6px 0;color:#0e7490;font-size:12px;text-transform:uppercase;letter-spacing:0.12em;white-space:nowrap;vertical-align:top;">${esc(label)}</td><td style="padding:6px 0;color:#164e63;font-size:15px;vertical-align:top;">${esc(value)}</td></tr>`
+  const hasHotel = Boolean(
+    input.hotelName && input.hotelTotalCents !== null && input.hotelNightlyCents !== null,
+  )
+  const hotelRow = hasHotel
+    ? row(
+        'Hotel',
+        esc(input.hotelName!) + ' — '
+          + formatPrice(input.hotelNightlyCents!, input.currency) + '/night × '
+          + nights + ' = '
+          + formatPrice(input.hotelTotalCents!, input.currency),
+      )
+    : ''
+  const addOnRows = input.addOns
+    .map((a) =>
+      row(
+        'Gear',
+        esc(a.name) + ' — '
+          + formatPrice(a.perDayCents, input.currency) + '/day × '
+          + a.nights + ' = '
+          + formatPrice(a.totalCents, input.currency),
+      ),
+    )
+    .join('')
+  const totalRow = (input.addOns.length > 0 || hasHotel)
+    ? row('Total', formatPrice(grandTotalCents(input), input.currency))
+    : ''
+  const preheader = `Booking ${input.bookingRef} · ${formatHumanDate(input.arrival)} → ${formatHumanDate(input.departure)} · ${input.centreName}`
   return `<!DOCTYPE html>
 <html><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#f0fbff;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;color:#164e63;">
+<div style="display:none;font-size:1px;color:transparent;line-height:0;max-height:0;max-width:0;opacity:0;overflow:hidden">${esc(preheader)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f0fbff;padding:32px 16px;">
   <tr><td align="center">
     <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border:1px solid #a5f3fc;border-radius:16px;padding:32px;">
@@ -132,21 +170,10 @@ export function renderHtmlBody(input: BookingEmailInput): string {
           ${row('Programme', input.productName + (input.productDurationLabel ? ' (' + input.productDurationLabel + ')' : ''))}
           ${row('Arrival', formatHumanDate(input.arrival))}
           ${row('Departure', formatHumanDate(input.departure) + '  (' + nights + ' night' + (nights === 1 ? '' : 's') + ')')}
-          ${row('Programme', formatPrice(input.amountCents, input.currency))}
-          ${
-            input.hotelName && input.hotelTotalCents !== null && input.hotelNightlyCents !== null
-              ? row(
-                  'Hotel',
-                  esc(input.hotelName) +
-                    ' — ' +
-                    formatPrice(input.hotelNightlyCents, input.currency) +
-                    '/night × ' +
-                    nights +
-                    ' = ' +
-                    formatPrice(input.hotelTotalCents, input.currency),
-                ) + row('Total', formatPrice(grandTotalCents(input), input.currency))
-              : ''
-          }
+          ${row('Price', formatPrice(input.amountCents, input.currency))}
+          ${addOnRows}
+          ${hotelRow}
+          ${totalRow}
         </table>
         <p style="margin:0 0 16px;color:#164e63;font-size:15px;line-height:1.6;">Real online payment is coming soon. For now we'll reply within the day to confirm availability and take payment by card.</p>
         <p style="margin:0 0 16px;color:#0e7490;font-size:13px;line-height:1.6;">The attached calendar invite blocks out the week on your calendar.</p>
@@ -194,7 +221,7 @@ export async function sendBookingConfirmation(
   input: BookingEmailInput,
 ): Promise<EmailSendResult> {
   const key = process.env.RESEND_API_KEY
-  const subject = `Booking received — ${input.productName} at ${input.centreName} (${input.bookingRef})`
+  const subject = `Booking received — ${input.productName} at ${input.centreName} [${input.bookingRef}]`
 
   if (!key) {
     // Scaffold mode: log the would-be email and return gracefully.
