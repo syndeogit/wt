@@ -212,6 +212,14 @@ useHead({
             Source: Open-Meteo, refreshed every 10 minutes. Local time
             <span class="tabular-nums">(Europe/Athens)</span>.
           </p>
+          <p class="mt-3 text-xs">
+            <NuxtLink
+              to="/karpathos/conditions"
+              class="text-accent-700 hover:text-accent-800 underline underline-offset-4 font-semibold"
+            >
+              See the full Karpathos forecast →
+            </NuxtLink>
+          </p>
         </section>
       </div>
 
