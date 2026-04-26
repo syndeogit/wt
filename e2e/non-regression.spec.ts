@@ -17,3 +17,12 @@ test('real-prices-shown — destination page never shows "From €" on product c
     expect(t.toLowerCase().trim()).not.toMatch(/^from\s*€/)
   }
 })
+
+test('anonymous-browse-allowed — public pages do not redirect to /login', async ({ page }) => {
+  for (const path of ['/karpathos', '/karpathos/conditions', '/wing']) {
+    await page.goto(path)
+    await page.waitForLoadState('domcontentloaded')
+    expect(page.url(), `expected ${path} to render anonymously, not redirect`).not.toContain('/login')
+    await expect(page.locator('h1').first()).toBeVisible()
+  }
+})
