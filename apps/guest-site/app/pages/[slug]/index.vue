@@ -177,14 +177,6 @@ useHead(() => ({
 
     <RiderProfileSoft />
 
-    <!-- Live lessons (Karpathos only — gated by Syndion centre map) -->
-    <section
-      v-if="syndionCodeForSlug(slug)"
-      class="max-w-6xl mx-auto px-6 py-20 [content-visibility:auto] [contain-intrinsic-size:0_800px]"
-    >
-      <LessonsThisWeek :centre-slug="slug" />
-    </section>
-
     <!-- Products -->
     <section
       class="border-t border-primary-200/60 bg-[color:var(--color-bg-elevated)] [content-visibility:auto] [contain-intrinsic-size:0_1200px]"
@@ -342,6 +334,14 @@ useHead(() => ({
           </div>
         </li>
       </ul>
+    </section>
+
+    <!-- Live lessons teaser (Karpathos only — gated by Syndion centre map) -->
+    <section
+      v-if="syndionCodeForSlug(slug)"
+      class="max-w-6xl mx-auto px-6 py-16 [content-visibility:auto] [contain-intrinsic-size:0_400px]"
+    >
+      <LessonsThisWeek :centre-slug="slug" :days="2" />
     </section>
 
     <!-- Closing CTA -->

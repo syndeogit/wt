@@ -253,5 +253,10 @@ useHead({
         </template>
       </aside>
     </div>
+
+    <!-- Full week of lessons -->
+    <div class="mt-14">
+      <LessonsThisWeek centre-slug="karpathos" :days="7" />
+    </div>
   </article>
 </template>

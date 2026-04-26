@@ -1,17 +1,24 @@
-<!-- apps/guest-site/app/components/LessonsThisWeek.vue -->
 <script setup lang="ts">
 import type { SyndionLesson, SyndionResponse } from '~~/server/utils/syndion'
 
-const props = defineProps<{ centreSlug: string }>()
+const props = withDefaults(
+  defineProps<{
+    centreSlug: string
+    /** Number of days to fetch from the proxy. Use a small value (e.g. 2) for
+     * teaser placements, omit / pass 7 for the full weekly view. */
+    days?: number
+  }>(),
+  { days: 7 },
+)
 
 const { profile } = useRiderProfile()
 
 // lazy: true — page hero/TTFB never blocks on Syndion latency. Lessons hydrate
 // in after first paint. State is { data, pending, error }.
 const { data, pending, error } = await useFetch<SyndionResponse | null>(
-  () => `/api/lessons/${props.centreSlug}`,
+  () => `/api/lessons/${props.centreSlug}?days=${props.days}`,
   {
-    key: () => `lessons-${props.centreSlug}`,
+    key: () => `lessons-${props.centreSlug}-${props.days}`,
     lazy: true,
     default: () => null,
   },
@@ -52,6 +59,14 @@ function formatDayHeader(iso: string): string {
 function isMatch(l: SyndionLesson): boolean {
   return profile.value?.discipline === l.type.sport
 }
+
+const isTeaser = computed(() => props.days < 7)
+const headingCopy = computed(() => (isTeaser.value ? 'Coming up.' : 'Lessons this week.'))
+const subheadCopy = computed(() =>
+  isTeaser.value
+    ? `What's on the board over the next ${props.days} day${props.days === 1 ? '' : 's'}. Live from ION Karpathos.`
+    : 'What\'s on the board at the centre over the next 7 days. Live from ION Karpathos.',
+)
 </script>
 
 <template>
@@ -66,10 +81,10 @@ function isMatch(l: SyndionLesson): boolean {
       id="lessons-week-heading"
       class="font-display text-2xl sm:text-3xl text-primary-900 leading-tight text-pretty"
     >
-      Lessons this week.
+      {{ headingCopy }}
     </h2>
     <p class="mt-3 text-sm text-primary-700 max-w-xl">
-      What's on the board at the centre over the next 7 days. Live from ION Karpathos.
+      {{ subheadCopy }}
     </p>
 
     <div v-if="pending" class="mt-8 text-sm text-primary-700" aria-live="polite">
@@ -81,7 +96,7 @@ function isMatch(l: SyndionLesson): boolean {
     </div>
 
     <div v-else-if="!groupedLessons.length" class="mt-8 text-sm text-primary-700">
-      No lessons scheduled in the next 7 days.
+      No lessons scheduled in the next {{ props.days }} day{{ props.days === 1 ? '' : 's' }}.
     </div>
 
     <div v-else class="mt-8 space-y-6">
@@ -113,8 +128,21 @@ function isMatch(l: SyndionLesson): boolean {
       </div>
     </div>
 
-    <p class="mt-6 text-xs text-primary-700">
-      Source: ION Karpathos · refreshes on page load
-    </p>
+    <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
+      <NuxtLink
+        v-if="isTeaser"
+        to="/journal"
+        class="text-accent-700 hover:text-accent-800 underline underline-offset-4 font-semibold"
+      >
+        See the full week on the journal →
+      </NuxtLink>
+      <NuxtLink
+        :to="`/${centreSlug}/conditions`"
+        class="text-accent-700 hover:text-accent-800 underline underline-offset-4 font-semibold"
+      >
+        See the wind →
+      </NuxtLink>
+      <span class="text-primary-700">Source: ION Karpathos</span>
+    </div>
   </section>
 </template>
