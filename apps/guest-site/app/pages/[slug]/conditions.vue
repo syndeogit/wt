@@ -176,6 +176,39 @@ const fmtShortDate = (iso: string) => dateFormatter.format(new Date(iso))
 const fmtLongDate = (iso: string) => longDateFormatter.format(new Date(iso))
 const fmtHour = (iso: string) => hourFormatter.format(new Date(iso))
 
+// Windguru-style wind-strength colour bands. Tuned to render as soft tints
+// behind the day card (not the saturated bars Windguru uses on a black bg).
+function windguruTint(kn: number): string {
+  if (kn < 3) return '#f1f5f9' // calm — slate-100
+  if (kn < 8) return '#dbeafe' // 3–7  — blue-100
+  if (kn < 13) return '#bfdbfe' // 8–12 — blue-200
+  if (kn < 17) return '#bbf7d0' // 13–16 — green-200
+  if (kn < 22) return '#86efac' // 17–21 — green-300
+  if (kn < 27) return '#d9f99d' // 22–26 — lime-200
+  if (kn < 32) return '#fef08a' // 27–31 — yellow-200
+  if (kn < 37) return '#fdba74' // 32–36 — orange-300
+  if (kn < 42) return '#fca5a5' // 37–41 — red-300
+  return '#f9a8d4' // 42+   — pink-300
+}
+
+// Wing kit for the wind. Bigger wing for lighter wind — the joke and the
+// physical reality. Returns m² label + a render scale (24..72 px) inverse
+// to wind strength. ~75kg rider, intermediate-ish; pure flavour, not advice.
+interface WingPick { size: string; scalePx: number; usable: boolean }
+function wingPick(kn: number): WingPick {
+  if (kn < 6) return { size: '—', scalePx: 28, usable: false } // not enough wind
+  if (kn < 9) return { size: '7m', scalePx: 72, usable: true }
+  if (kn < 12) return { size: '6m', scalePx: 64, usable: true }
+  if (kn < 15) return { size: '5m', scalePx: 56, usable: true }
+  if (kn < 19) return { size: '4.5m', scalePx: 50, usable: true }
+  if (kn < 23) return { size: '4m', scalePx: 44, usable: true }
+  if (kn < 27) return { size: '3.5m', scalePx: 38, usable: true }
+  if (kn < 32) return { size: '3m', scalePx: 32, usable: true }
+  if (kn < 37) return { size: '2.8m', scalePx: 28, usable: true }
+  if (kn < 42) return { size: '2.5m', scalePx: 24, usable: true }
+  return { size: '2.2m', scalePx: 22, usable: true }
+}
+
 const observedAtRelative = computed(() => {
   const c = conditions.value?.current
   if (!c) return ''
@@ -347,27 +380,56 @@ useHead(() => ({
             <li
               v-for="day in forecast.days"
               :key="day.date"
-              class="bg-[color:var(--color-bg)] rounded-xl border border-primary-200/60 p-3"
+              :style="{ backgroundColor: windguruTint(day.windMaxKn) }"
+              class="rounded-xl border border-primary-200/60 p-3 flex flex-col"
             >
-              <p class="text-xs uppercase tracking-[0.14em] text-primary-700 font-semibold">
+              <p class="text-xs uppercase tracking-[0.14em] text-primary-900/80 font-semibold">
                 {{ fmtShortDate(day.date) }}
               </p>
               <p class="mt-2 font-display text-3xl text-primary-900 tabular-nums leading-none">
                 {{ Math.round(day.windMaxKn) }}
               </p>
-              <p class="mt-1 text-[11px] uppercase tracking-wide text-primary-700">
+              <p class="mt-1 text-[11px] uppercase tracking-wide text-primary-900/70">
                 kn · {{ compass(day.directionDeg) }}
               </p>
-              <p class="mt-1 text-[11px] text-primary-700 tabular-nums">
+              <p class="mt-1 text-[11px] text-primary-900/70 tabular-nums">
                 gust {{ Math.round(day.gustMaxKn) }}
               </p>
-              <p class="mt-3 text-xs text-primary-700">
+
+              <!-- Wing pick. Bigger icon = bigger wing = lighter wind. -->
+              <div class="mt-3 flex items-end gap-2 min-h-[76px]" aria-hidden="true">
+                <svg
+                  :width="wingPick(day.windMaxKn).scalePx"
+                  :height="wingPick(day.windMaxKn).scalePx * 0.6"
+                  viewBox="0 0 100 60"
+                  :class="[
+                    'transition-all',
+                    wingPick(day.windMaxKn).usable ? 'text-primary-900' : 'text-primary-900/30',
+                  ]"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                >
+                  <!-- Stylised wingfoil wing: leading-edge arc + trailing edge + struts -->
+                  <path d="M5 40 Q30 5, 95 30 Q60 50, 5 40 Z" fill="currentColor" fill-opacity="0.18" />
+                  <line x1="5" y1="40" x2="55" y2="22" />
+                  <line x1="5" y1="40" x2="35" y2="46" />
+                </svg>
+              </div>
+              <p class="text-[11px] uppercase tracking-wide text-primary-900/80 font-semibold tabular-nums">
+                <span v-if="wingPick(day.windMaxKn).usable">{{ wingPick(day.windMaxKn).size }} wing</span>
+                <span v-else>too light</span>
+              </p>
+
+              <p class="mt-3 text-xs text-primary-900/70">
                 {{ weatherText(day.weatherCode) }}
               </p>
-              <p class="mt-1 text-xs text-primary-700 tabular-nums">
+              <p class="mt-1 text-xs text-primary-900/70 tabular-nums">
                 {{ Math.round(day.tempMinC) }}–{{ Math.round(day.tempMaxC) }}°
               </p>
-              <p class="mt-2 text-[11px] text-primary-700 tabular-nums">
+              <p class="mt-2 text-[11px] text-primary-900/70 tabular-nums">
                 ☀ {{ fmtHour(day.sunrise) }}–{{ fmtHour(day.sunset) }}
               </p>
             </li>
