@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Centre, Hotel, Product } from '~/fixtures/types'
+import { syndionCodeForSlug } from '~/utils/syndion'
 
 const route = useRoute()
 const slug = computed(() => route.params.slug as string)
@@ -175,6 +176,14 @@ useHead(() => ({
     </section>
 
     <RiderProfileSoft />
+
+    <!-- Live lessons (Karpathos only — gated by Syndion centre map) -->
+    <section
+      v-if="syndionCodeForSlug(slug)"
+      class="max-w-6xl mx-auto px-6 py-20 [content-visibility:auto] [contain-intrinsic-size:0_800px]"
+    >
+      <LessonsThisWeek :centre-slug="slug" />
+    </section>
 
     <!-- Products -->
     <section
