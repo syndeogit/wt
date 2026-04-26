@@ -76,6 +76,29 @@
 3. Run the manual mobile sweep on 14 pages, log findings in the spec, fix high-severity, transition WT-52 → Done.
 4. Decide next slice: Slice O (Syndion widget) or Slice F live (when WT-102 unblocks).
 
+## Slice O — also shipped this session (post-Slice-N)
+
+After closing Slice N, started + shipped Slice O (live lessons widget on /karpathos).
+
+**What shipped:**
+- Spec at `docs/specs/2026-04-26-slice-o-design.md` (commit `148811a`), plan at `docs/plans/2026-04-26-slice-o-implementation.md` (`57e9ac4`)
+- `apps/guest-site/server/utils/syndion.ts` — types + `syndionCodeForSlug` map (currently hardcodes `karpathos -> KAR`) + `parseLessonsRequest` pure validator + `clampDays`
+- `apps/guest-site/app/utils/syndion.ts` — client re-export of `syndionCodeForSlug` for the page-template gate
+- `apps/guest-site/server/api/lessons/[centre].get.ts` — thin proxy passing through to `https://ion-karpathos.vercel.app/api/public/v1/lessons`
+- `apps/guest-site/server/api/lessons/[centre].test.ts` — 6 vitest tests on `parseLessonsRequest` (pure-function tests, no h3 mocking)
+- `apps/guest-site/app/components/LessonsThisWeek.vue` — widget with `useFetch({ lazy: true })`, group-by-date, journal-card chrome, loading/error/empty/content states, soft-profile discipline highlight
+- `apps/guest-site/app/pages/[slug]/index.vue` — mount between `<RiderProfileSoft />` and Products, gated to centres with a Syndion code
+
+**Jira:** WT-114 → Done. WT-7 epic comment posted.
+
+**Open follow-ups (Slice O):**
+- Multi-centre support: when a second Syndion-integrated centre lands, replace the hardcoded `SYNDION_CENTRES` map with a Directus field on `wt_centres`.
+- Manual preview: Andy hasn't clicked through `/karpathos` end-to-end with the widget yet. Needs `pnpm dev:guest` + verify loading→content state, day groupings, highlight when soft profile is set, error state when proxy is broken.
+- Booking deep-link from a lesson to a `wt_product` — requires a mapping table or operational integration (Slice L territory).
+
+**Lessons learned mid-Slice-O (added to memory):**
+- The original Task 2 commit (89f2c1f) added a hardcoded `h3@1.15.11` alias to root `vitest.config.ts` so vitest could intercept h3 helpers. Restructured (`c2a7da8`) by extracting validation into a pure `parseLessonsRequest` function — h3 mocking unnecessary, alias hack reverted, test count went 7→6 with no contract loss. Memory updated to flag this pattern: "if a unit test requires mocking a Nitro/h3 helper, extract the inner logic into a pure function instead."
+
 ## Key conventions reinforced this session
 
 - Subagent-driven development was lightened: implementer per task, controller-driven inline review (read diff against plan + lint + typecheck), no separate spec/code-quality reviewer subagents per task. Saved ~50 subagent dispatches across 26 tasks.
