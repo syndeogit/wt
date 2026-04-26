@@ -16,6 +16,7 @@ export interface CheckoutState {
   checkIn: ISODate | null
   checkOut: ISODate | null
   selectedProducts: Product[]
+  selectedAddOnIds: string[]
   selectedHotel: Hotel | null
   riderProfile: {
     firstName: string
@@ -33,6 +34,7 @@ const emptyState = (): CheckoutState => ({
   checkIn: null,
   checkOut: null,
   selectedProducts: [],
+  selectedAddOnIds: [],
   selectedHotel: null,
   riderProfile: null,
   paymentStatus: 'idle',
@@ -67,6 +69,12 @@ export const useCheckoutStore = defineStore('checkout', {
       this.selectedHotel = hotel
     },
 
+    toggleAddOn(id: string) {
+      const i = this.selectedAddOnIds.indexOf(id)
+      if (i >= 0) this.selectedAddOnIds.splice(i, 1)
+      else this.selectedAddOnIds.push(id)
+    },
+
     setRiderProfile(profile: CheckoutState['riderProfile']) {
       this.riderProfile = profile
     },
@@ -89,6 +97,7 @@ export const useCheckoutStore = defineStore('checkout', {
       if (this.checkIn) q.from = this.checkIn
       if (this.checkOut) q.to = this.checkOut
       if (this.selectedProducts.length) q.products = this.productIds.join(',')
+      if (this.selectedAddOnIds.length) q.addons = this.selectedAddOnIds.join(',')
       if (this.step !== 'browsing') q.step = this.step
       return q
     },
@@ -102,6 +111,9 @@ export const useCheckoutStore = defineStore('checkout', {
       if (typeof query.centre === 'string') this.centreSlug = query.centre
       if (typeof query.from === 'string') this.checkIn = query.from
       if (typeof query.to === 'string') this.checkOut = query.to
+      if (typeof query.addons === 'string') {
+        this.selectedAddOnIds = query.addons.split(',').filter(Boolean)
+      }
       if (typeof query.step === 'string') {
         const step = query.step as CheckoutStep
         const valid: CheckoutStep[] = [
