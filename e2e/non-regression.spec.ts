@@ -57,6 +57,36 @@ test('profile-after-selection — /book/[slug] does not ask for personal data', 
   await expect(page.locator('input[type="email"]')).toHaveCount(0)
 })
 
+test('gear-soft-guidance-only — mismatched gear is selectable, not disabled', async ({ page, context }) => {
+  test.skip(!AUTH_AVAILABLE, 'requires E2E_TEST_EMAIL + E2E_TEST_PASSWORD + E2E_FIXTURE_PRODUCT_ID')
+
+  await signInTestUser(page, context)
+
+  // Set the soft profile to wingfoil-beginner via localStorage before navigating
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'wt:rider-profile-soft',
+      JSON.stringify({
+        v: 1,
+        discipline: 'wingfoil',
+        level: 'beginner',
+        savedAt: new Date().toISOString(),
+      }),
+    )
+  })
+
+  await page.goto(`/book/karpathos/confirm?products=${FIXTURE_PRODUCT_ID}&from=2026-06-01&to=2026-06-06`)
+  await page.waitForLoadState('domcontentloaded')
+
+  const cards = page.locator('section[aria-labelledby="addons-heading"] li')
+  const count = await cards.count()
+  for (let i = 0; i < count; i++) {
+    const checkbox = cards.nth(i).locator('input[type="checkbox"]')
+    expect(await checkbox.isDisabled()).toBe(false)
+    expect(await checkbox.getAttribute('aria-disabled')).not.toBe('true')
+  }
+})
+
 test('lazy-loaded-images — non-LCP images opt in to lazy or auto fetchpriority', async ({ page }) => {
   await page.goto('/karpathos')
   await page.waitForLoadState('domcontentloaded')
