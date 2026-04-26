@@ -49,3 +49,4 @@ blob-report/
 # Claude Code local state
 .claude/
 .lighthouse/
+.superpowers/
