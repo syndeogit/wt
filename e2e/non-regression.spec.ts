@@ -57,6 +57,23 @@ test('profile-after-selection — /book/[slug] does not ask for personal data', 
   await expect(page.locator('input[type="email"]')).toHaveCount(0)
 })
 
+test('lazy-loaded-images — non-LCP images opt in to lazy or auto fetchpriority', async ({ page }) => {
+  await page.goto('/karpathos')
+  await page.waitForLoadState('domcontentloaded')
+
+  // The hero image is the LCP — exclude it (assume it has fetchpriority="high").
+  const offendingCount = await page.evaluate(() => {
+    const imgs = Array.from(document.querySelectorAll('img'))
+    return imgs.filter((img) => {
+      if (img.fetchPriority === 'high') return false
+      const lazy = img.loading === 'lazy'
+      const auto = img.fetchPriority === 'auto' || img.fetchPriority === ''
+      return !(lazy || auto)
+    }).length
+  })
+  expect(offendingCount).toBe(0)
+})
+
 test('no-auto-substitution — empty centre renders empty state, never another centre', async ({ page }) => {
   test.skip(true, 'requires seeded "empty-test" centre fixture in Directus — file follow-up to seed')
 
