@@ -12,7 +12,7 @@ const emit = defineEmits<{ 'update:modelValue': [value: string[]] }>()
 
 const { profile } = useRiderProfile()
 
-const levelOrder: Record<string, number> = { beginner: 0, intermediate: 1, advanced: 2 }
+const levelOrder = { beginner: 0, intermediate: 1, advanced: 2 } as const
 
 function isLevelMatch(p: Product): boolean {
   const profLvl = profile.value?.level
