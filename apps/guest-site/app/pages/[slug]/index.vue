@@ -253,7 +253,10 @@ useHead(() => ({
                 class="mt-6 pt-5 border-t border-primary-200/60 flex items-center justify-between gap-4"
               >
                 <div>
-                  <p class="font-display text-2xl text-primary-900 tabular-nums">
+                  <p
+                    :data-testid="`product-price-${product.id}`"
+                    class="font-display text-2xl text-primary-900 tabular-nums"
+                  >
                     {{ formatPrice(product.priceCents, product.currency) }}
                   </p>
                   <p class="text-xs text-primary-700 uppercase tracking-wide">
