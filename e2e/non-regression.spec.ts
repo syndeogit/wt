@@ -57,6 +57,46 @@ test('profile-after-selection — /book/[slug] does not ask for personal data', 
   await expect(page.locator('input[type="email"]')).toHaveCount(0)
 })
 
+test('url-state-survives-refresh — selections persist on /confirm', async ({ page, context }) => {
+  test.skip(!AUTH_AVAILABLE, 'requires E2E_TEST_EMAIL + E2E_TEST_PASSWORD + E2E_FIXTURE_PRODUCT_ID')
+
+  await signInTestUser(page, context)
+  await page.goto(`/book/karpathos/confirm?products=${FIXTURE_PRODUCT_ID}&from=2026-06-01&to=2026-06-06`)
+  await page.waitForLoadState('domcontentloaded')
+
+  // Pick first non-empty hotel (if any are present)
+  const hotelRadios = page.locator('input[name="hotel"]')
+  const hotelCount = await hotelRadios.count()
+  const targetHotel = hotelCount > 1 ? hotelRadios.nth(1) : null
+  if (targetHotel) {
+    await targetHotel.check()
+  }
+
+  // Pick first add-on (if any are present)
+  const addOnCheckbox = page
+    .locator('section[aria-labelledby="addons-heading"] input[type="checkbox"]')
+    .first()
+  const addOnCount = await addOnCheckbox.count()
+  if (addOnCount) {
+    await addOnCheckbox.check()
+  }
+
+  await page.reload()
+  await page.waitForLoadState('domcontentloaded')
+
+  if (targetHotel) {
+    expect(await page.locator('input[name="hotel"]').nth(1).isChecked()).toBe(true)
+  }
+  if (addOnCount) {
+    expect(
+      await page
+        .locator('section[aria-labelledby="addons-heading"] input[type="checkbox"]')
+        .first()
+        .isChecked(),
+    ).toBe(true)
+  }
+})
+
 test('no-pre-selected-upsells — /confirm has no auto-selected hotel/add-on/badge', async ({ page, context }) => {
   test.skip(!AUTH_AVAILABLE, 'requires E2E_TEST_EMAIL + E2E_TEST_PASSWORD + E2E_FIXTURE_PRODUCT_ID')
 
