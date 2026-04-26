@@ -79,6 +79,18 @@ defineProps<{
           </dd>
         </div>
         <div
+          v-for="a in addOns"
+          :key="a.name"
+          class="flex items-baseline justify-between gap-4"
+        >
+          <dt class="text-primary-700">
+            {{ a.name }} · {{ nightCount }} day{{ nightCount === 1 ? '' : 's' }}
+          </dt>
+          <dd class="text-primary-900 font-medium">
+            {{ formatPrice(a.totalCents, a.currency) }}
+          </dd>
+        </div>
+        <div
           v-if="selectedHotel"
           class="flex items-baseline justify-between gap-4"
         >

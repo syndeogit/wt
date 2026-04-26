@@ -118,8 +118,45 @@ watch(hotels, (list) => {
 const hotelTotalCents = computed(() =>
   selectedHotel.value ? selectedHotel.value.nightlyFromCents * nightCount.value : 0,
 )
+
+const rentals = computed(() => products.value.filter((p) => p.kind === 'rental'))
+
+const selectedAddOnIds = ref<string[]>(
+  typeof route.query.addons === 'string' && route.query.addons.length
+    ? route.query.addons.split(',').filter(Boolean)
+    : [],
+)
+watch(selectedAddOnIds, (ids) => {
+  const query = { ...route.query }
+  if (ids.length) query.addons = ids.join(',')
+  else delete query.addons
+  router.replace({ query })
+}, { deep: true })
+
+// Drop any URL'd ids that don't actually exist as rentals at this centre
+watch(rentals, (list) => {
+  selectedAddOnIds.value = selectedAddOnIds.value.filter((id) => list.some((r) => r.id === id))
+})
+
+const selectedAddOns = computed(() =>
+  selectedAddOnIds.value
+    .map((id) => rentals.value.find((r) => r.id === id))
+    .filter((p): p is Product => p !== undefined),
+)
+const addOnTotalCents = computed(() =>
+  selectedAddOns.value.reduce((sum, p) => sum + p.priceCents * nightCount.value, 0),
+)
+const addOnsForSummary = computed(() =>
+  selectedAddOns.value.map((p) => ({
+    name: p.name,
+    perDayCents: p.priceCents,
+    totalCents: p.priceCents * nightCount.value,
+    currency: p.currency,
+  })),
+)
+
 const grandTotalCents = computed(
-  () => (product.value ? product.value.priceCents : 0) + hotelTotalCents.value,
+  () => (product.value ? product.value.priceCents : 0) + hotelTotalCents.value + addOnTotalCents.value,
 )
 
 const dateFormatter = new Intl.DateTimeFormat('en-GB', {
@@ -212,6 +249,7 @@ async function placeBooking() {
         arrival: route.query.from,
         departure: route.query.to,
         hotelId: selectedHotelId.value || null,
+        addOnIds: selectedAddOnIds.value,
       },
     })
     await navigateTo(res.url, { external: true })
@@ -271,11 +309,20 @@ async function placeBooking() {
         :night-count="nightCount"
         :selected-hotel="selectedHotel"
         :hotel-total-cents="hotelTotalCents"
-        :add-ons="[]"
-        :add-on-total-cents="0"
+        :add-ons="addOnsForSummary"
+        :add-on-total-cents="addOnTotalCents"
         :grand-total-cents="grandTotalCents"
         :slug="slug"
         :route-query="routeQuery"
+        :format-price="formatPrice"
+      />
+
+      <!-- Gear and rentals -->
+      <AddOnsSection
+        v-if="rentals.length"
+        v-model="selectedAddOnIds"
+        :products="rentals"
+        :night-count="nightCount"
         :format-price="formatPrice"
       />
 
