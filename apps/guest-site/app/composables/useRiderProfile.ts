@@ -1,3 +1,5 @@
+import type { CurrentUser } from './useCurrentUser'
+
 export type Discipline = 'wingfoil' | 'windsurf' | 'kitesurf'
 export type RiderLevel = 'beginner' | 'intermediate' | 'advanced'
 
@@ -60,8 +62,6 @@ export function useRiderProfileStorage() {
 
   return { read, write, skip, clear }
 }
-
-import type { CurrentUser } from './useCurrentUser'
 
 interface RiderProfileServerRow {
   primary_discipline: Discipline | null
