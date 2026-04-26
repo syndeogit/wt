@@ -174,6 +174,8 @@ useHead(() => ({
       </div>
     </section>
 
+    <RiderProfileSoft />
+
     <!-- Products -->
     <section
       class="border-t border-primary-200/60 bg-[color:var(--color-bg-elevated)] [content-visibility:auto] [contain-intrinsic-size:0_1200px]"
