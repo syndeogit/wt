@@ -4,8 +4,12 @@
 // Solid coral line: this year's forecast windMaxKn.
 // Shaded primary band: historical p25-p75 across past N years.
 // Dotted primary line: historical mean.
+// Background: horizontal Windguru-coloured wind-strength bands so the reader
+// can see "this is in the green / yellow / red zone" without reading the axis.
 // A tabular breakdown is rendered below the chart for screen-reader users
 // (and as a useful at-a-glance table for everyone).
+
+import { WIND_BANDS } from '~/utils/windguru'
 
 interface AggregateDay {
   dayOffset: number
@@ -149,8 +153,36 @@ const bandPath = computed(() => {
 
 const chartTitle = computed(
   () =>
-    `Wind in knots, day by day. Solid coral line: this year's forecast. Shaded band: 25th-75th percentile from ${props.years.join(', ')}. Dotted line: mean across those years.`,
+    `Wind in knots, day by day. Solid coral line: this year's forecast. Shaded band: 25th-75th percentile from ${props.years.join(', ')}. Dotted line: mean across those years. Background tinted with Windguru wind-strength colours.`,
 )
+
+// Visible Windguru bands, each clipped to the chart's y-range. Drawn as
+// horizontal rects behind everything else so the lines/area still read.
+interface VisibleBand {
+  y: number
+  height: number
+  hex: string
+  key: string
+}
+const visibleBands = computed<VisibleBand[]>(() => {
+  const out: VisibleBand[] = []
+  for (const b of WIND_BANDS) {
+    const lo = Math.max(0, b.from)
+    const hi = Math.min(yMax.value, b.to === Infinity ? yMax.value : b.to)
+    if (hi <= lo) continue
+    const yTop = y(hi) // higher value -> smaller y in screen coords
+    const yBot = y(lo)
+    const height = yBot - yTop
+    if (height <= 0) continue
+    out.push({
+      y: yTop,
+      height,
+      hex: b.hex,
+      key: `${b.from}-${b.to === Infinity ? 'inf' : b.to}`,
+    })
+  }
+  return out
+})
 </script>
 
 <template>
@@ -161,6 +193,20 @@ const chartTitle = computed(
       role="img"
       :aria-label="chartTitle"
     >
+      <!-- Windguru wind-strength background bands -->
+      <g aria-hidden="true">
+        <rect
+          v-for="b in visibleBands"
+          :key="b.key"
+          :x="PAD.left"
+          :y="b.y"
+          :width="innerW"
+          :height="b.height"
+          :fill="b.hex"
+          fill-opacity="0.32"
+        />
+      </g>
+
       <!-- Y gridlines + tick labels -->
       <g class="text-primary-500" font-size="11">
         <g v-for="t in yTicks" :key="t">

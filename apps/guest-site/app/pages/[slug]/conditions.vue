@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Centre } from '~/fixtures/types'
+import { windguruTint, wingPick } from '~/utils/windguru'
 
 interface Conditions {
   centre: { slug: string; lat: number; lon: number; tz: string }
@@ -175,39 +176,6 @@ const hourFormatter = new Intl.DateTimeFormat('en-GB', {
 const fmtShortDate = (iso: string) => dateFormatter.format(new Date(iso))
 const fmtLongDate = (iso: string) => longDateFormatter.format(new Date(iso))
 const fmtHour = (iso: string) => hourFormatter.format(new Date(iso))
-
-// Windguru-style wind-strength colour bands. Tuned to render as soft tints
-// behind the day card (not the saturated bars Windguru uses on a black bg).
-function windguruTint(kn: number): string {
-  if (kn < 3) return '#f1f5f9' // calm — slate-100
-  if (kn < 8) return '#dbeafe' // 3–7  — blue-100
-  if (kn < 13) return '#bfdbfe' // 8–12 — blue-200
-  if (kn < 17) return '#bbf7d0' // 13–16 — green-200
-  if (kn < 22) return '#86efac' // 17–21 — green-300
-  if (kn < 27) return '#d9f99d' // 22–26 — lime-200
-  if (kn < 32) return '#fef08a' // 27–31 — yellow-200
-  if (kn < 37) return '#fdba74' // 32–36 — orange-300
-  if (kn < 42) return '#fca5a5' // 37–41 — red-300
-  return '#f9a8d4' // 42+   — pink-300
-}
-
-// Wing kit for the wind. Bigger wing for lighter wind — the joke and the
-// physical reality. Returns m² label + a render scale (24..72 px) inverse
-// to wind strength. ~75kg rider, intermediate-ish; pure flavour, not advice.
-interface WingPick { size: string; scalePx: number; usable: boolean }
-function wingPick(kn: number): WingPick {
-  if (kn < 6) return { size: '—', scalePx: 28, usable: false } // not enough wind
-  if (kn < 9) return { size: '7m', scalePx: 72, usable: true }
-  if (kn < 12) return { size: '6m', scalePx: 64, usable: true }
-  if (kn < 15) return { size: '5m', scalePx: 56, usable: true }
-  if (kn < 19) return { size: '4.5m', scalePx: 50, usable: true }
-  if (kn < 23) return { size: '4m', scalePx: 44, usable: true }
-  if (kn < 27) return { size: '3.5m', scalePx: 38, usable: true }
-  if (kn < 32) return { size: '3m', scalePx: 32, usable: true }
-  if (kn < 37) return { size: '2.8m', scalePx: 28, usable: true }
-  if (kn < 42) return { size: '2.5m', scalePx: 24, usable: true }
-  return { size: '2.2m', scalePx: 22, usable: true }
-}
 
 const observedAtRelative = computed(() => {
   const c = conditions.value?.current
