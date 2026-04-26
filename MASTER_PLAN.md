@@ -145,12 +145,12 @@ E2E tests:   Playwright (critical paths only)
 Unit tests:  Vitest
 UI dev:      Storybook
 CI:          GitHub Actions
-Issues:      Jira (syndeo-test, EV/WT projects)
+Issues:      Jira (CO for centre ops, WT for platform — see Section 8)
 ```
 
 ## 6. Multi-Tenancy & Data
 
-**Tenant model:** tenant-per-database. Each centre/operator gets its own Supabase project. The apps resolve which Supabase to talk to via the tenant config in `tenants/<name>/`.
+**Tenant model:** tenant-per-database. Each centre/operator gets its own Supabase project. The apps resolve which Supabase to talk to via the tenant config in `tenants/<n>/`.
 
 **Why not row-level multi-tenancy:** for ION Karpathos, the IP and data arrangement is specific — Syndeo owns the code, Radko/the centre owns the guest data, only Radko or his nominated representative can request access, export, or deletion. Physical separation makes that arrangement enforceable. For future hundreds of small operators, the cost of running a Supabase project per tenant is low enough that the simplicity wins.
 
@@ -162,7 +162,7 @@ Issues:      Jira (syndeo-test, EV/WT projects)
 
 ## 7. Naming & IP
 
-**SYNDION** is the working codename for the platform. It is used in the codebase, in package names (`@syndion/core`), in Confluence, and in internal communication.
+**SYNDION** is the working codename for the platform. It is used in the codebase, in package names (`@syndion/core`), in internal communication, and in this document.
 
 **The public product name is deferred.** SYNDION as a public-facing brand has potential trademark exposure with ION (the substring overlap, plus the etymological origin from "Syndeo + ION"). Before SYNDION is marketed externally or used as a customer-facing brand outside ION, a 30-minute trademark consultation should resolve the question.
 
@@ -170,7 +170,44 @@ Issues:      Jira (syndeo-test, EV/WT projects)
 
 **For ION Karpathos in 2026:** Radko knows the system as SYNDION today. As marketplace and ops apps deploy under the Windtribe brand, the surface name will shift to Windtribe. Worth a soft heads-up to Radko at an appropriate point.
 
-## 8. Migration Sequence
+## 8. Workstream Topology — Repos, Boards, Spaces
+
+The work splits into three independent workstreams. They share an organisation but not a backlog.
+
+| Workstream | Jira | Confluence | Repo | Cadence | Audience |
+| --- | --- | --- | --- | --- | --- |
+| **EVOLVE intelligence** | EV | EV09 | (separate) | own | Internal — methodology, intelligence pipeline |
+| **Centre Ops** (ION Karpathos & future tenants) | *CO — to create* | CO | this monorepo | season-operational | Tenant-facing — running centres, data quality, season support |
+| **Platform & Marketplace** (SYNDION + Windtribe) | WT | *TBD — under WT or new platform space* | this monorepo | build-cycle | Internal — architecture, migration, features |
+
+### Boundaries
+
+- **EVOLVE is a separate intelligence project.** Nothing in this plan touches it. References to "EV" elsewhere mean the EVOLVE Jira project; SYNDION/Windtribe work does not file tickets there. Architecture and platform documentation does not live in EV09.
+- **CO handles operating** the platform for tenants — Bara's data quality work, Radko's centre-specific requests, season support, day-to-day issues that surface during use of the apps.
+- **WT handles building** the platform — migration tickets, new features, architectural decisions, platform-level bugs.
+
+### Where work goes — the deciding test
+
+> If it changes the codebase, it's WT. If it changes data inside a tenant's Supabase, it's CO.
+
+Examples:
+
+- A bug in the matching logic that needs a code fix → WT.
+- A specific guest record that's miscategorised → CO.
+- A feature request from Radko ("can the office app show a wind forecast?") → WT (build) with cross-link from CO (origin).
+- A Bara data-cleanup task → CO.
+
+### Multi-tenant implication
+
+When a second tenant signs, they get **their own ops project** parallel to CO (e.g. `<tenant>-OPS`). WT remains the platform's home regardless of how many tenants exist.
+
+### This document
+
+- **Canonical:** `MASTER_PLAN.md` in this repo.
+- **Readable mirror:** Centre Ops Confluence space (CO) — the home for non-engineer audiences (Radko, future centre managers).
+- Does **not** live in EV09.
+
+## 9. Migration Sequence
 
 Strangler pattern, not big bang. The existing `ion-karpathos` repo keeps running until each piece is migrated.
 
@@ -179,6 +216,8 @@ Strangler pattern, not big bang. The existing `ion-karpathos` repo keeps running
 - Finish WT-74 follow-ups (TypeScript config, lint, README) — already in Jira as Tasks 1.1.2 / 1.1.3 / 1.1.4
 - Add Turborepo, Sentry, Playwright scaffolding, Storybook
 - Rename existing `centre-admin` → `marketplace-centre`, `hotel-admin` → `marketplace-hotel`
+- Create CO Jira project
+- Decide platform Confluence space
 
 ### Phase 1 — Platform package scaffolding
 
@@ -203,11 +242,13 @@ Each app: lift the relevant route tree from `ion-karpathos`, refactor shared log
 
 **Cutover constraint:** ION Karpathos 2026 season starts May. Phase 0–2 should complete before the season ramps. Strangler approach means partial migration is safe — apps that haven't been lifted yet keep running in `ion-karpathos`.
 
-## 9. Open Decisions
+## 10. Open Decisions
 
 | Decision                                                  | Status                                            | Resolve by                                |
 | --------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------- |
 | Public product name (replace SYNDION externally)          | Open — trademark check needed                     | Before first non-ION customer             |
+| Create CO Jira project                                    | Open — Confluence space exists, Jira does not yet | Phase 0                                   |
+| Platform Confluence space (under WT, or new space)        | Open                                              | Phase 0                                   |
 | Directus rollout for ION (now or post-season)             | Open — preference is post-season                  | Phase 2                                   |
 | Billing / subscription model                              | Out of scope for 2026                             | Pre-2027 season                           |
 | Federation pattern when WT booking engine launches        | Decided in principle (webhook + reference ID)     | Implementation when WT booking engine lands |
@@ -215,7 +256,7 @@ Each app: lift the relevant route tree from `ion-karpathos`, refactor shared log
 | `tenants/` config schema                                  | Open                                              | Phase 1                                   |
 | `database` package: single multi-schema vs per-tenant pkg | Open                                              | Phase 1                                   |
 
-## 10. Out of Scope for 2026
+## 11. Out of Scope for 2026
 
 - A second vertical (snow, dive). Architecture supports it; no resourcing this season.
 - A second tenant beyond Karpathos. Architecture supports it; no go-to-market motion this season.
@@ -224,10 +265,10 @@ Each app: lift the relevant route tree from `ion-karpathos`, refactor shared log
 - Internationalisation beyond what ION needs (English + minimal localisation for guests).
 - Mobile native apps (PWAs only).
 
-## 11. How This Document Is Maintained
+## 12. How This Document Is Maintained
 
 This is the architectural source of truth. It changes when architectural decisions change.
 
 - Updates land via PR. Significant changes get a brief commit message explaining the rationale.
-- The Confluence mirror under EVOLVE space (EV09) is the readable copy for non-engineers; the repo version is canonical. If the two diverge, the repo wins.
+- The CO Confluence space is the readable mirror for non-engineers; this repo version is canonical. If the two diverge, the repo wins.
 - Claude Code reads this on every session along with `ION_CLUB_SYSTEM_PLAYBOOK.md`.
