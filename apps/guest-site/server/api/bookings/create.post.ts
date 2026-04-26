@@ -29,6 +29,7 @@ export default defineEventHandler(async (event) => {
     arrival?: string
     departure?: string
     hotelId?: string | null
+    addOnIds?: string[]
   }>(event)
 
   if (!body?.centreSlug || !body.productId || !body.arrival || !body.departure) {
@@ -51,6 +52,8 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Unknown product for this centre' })
   }
 
+  const nights = nightsBetween(body.arrival, body.departure)
+
   // Optional partner hotel
   let hotelId: string | null = null
   let hotelNightlyCents: number | null = null
@@ -63,7 +66,24 @@ export default defineEventHandler(async (event) => {
     }
     hotelId = hotel.id
     hotelNightlyCents = hotel.nightlyFromCents
-    hotelTotalCents = hotelNightlyCents * nightsBetween(body.arrival, body.departure)
+    hotelTotalCents = hotelNightlyCents * nights
+  }
+
+  // Optional rental add-ons. Each must be a kind=rental product at this centre.
+  const resolvedAddOnIds: string[] = []
+  let addOnTotalCents = 0
+  if (Array.isArray(body.addOnIds) && body.addOnIds.length) {
+    for (const id of body.addOnIds) {
+      const addOn = products.find((p) => p.id === id && p.kind === 'rental')
+      if (!addOn) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Add-on ${id} is not a rental at this centre`,
+        })
+      }
+      resolvedAddOnIds.push(addOn.id)
+      addOnTotalCents += addOn.priceCents * nights
+    }
   }
 
   const supabase = event.context.supabase
@@ -84,6 +104,8 @@ export default defineEventHandler(async (event) => {
       hotel_id: hotelId,
       hotel_nightly_cents: hotelNightlyCents,
       hotel_total_cents: hotelTotalCents,
+      add_on_ids: resolvedAddOnIds,
+      add_on_total_cents: addOnTotalCents,
     })
     .select('id')
     .single()
