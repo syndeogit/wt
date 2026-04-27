@@ -46,7 +46,8 @@ blob-report/
 .turbo/
 .vercel/
 
-# Claude Code local state
-.claude/
+# Claude Code local state — ignore everything in .claude/ except memory/
+.claude/*
+!.claude/memory/
 .lighthouse/
 .superpowers/

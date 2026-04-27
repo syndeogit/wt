@@ -1,0 +1,11 @@
+- [WT project GitHub and Jira setup](wt_infra.md) — repo location, Jira instance, token limitations
+- [WT Jira hygiene](feedback_jira_hygiene.md) — bubble status + commentary up to parent story and epic on every sub-task change
+- [WT Jira full-audit compliance](feedback_jira_audit_compliance.md) — Claude owns audit-trail accuracy; transition stories + comment with commit SHA on every ship; periodic sweep to catch misses
+- [WT solo contributor](project_team_size.md) — Andy is the only human; skip PR / branch-protection / review-ceremony tasks that assume a team
+- [WT working mode](feedback_working_mode.md) — clickable 30-60min increments with preview checkpoints; no multi-hour autonomous grinds
+- [WT UI review discipline](feedback_ui_review.md) — run web-design-guidelines skill before declaring any UI slice "done"
+- [WT Epic 12 — Conditions & wind dashboard](project_epic12_conditions.md) — WT-94 epic, WT-95..WT-101 stories, decisions made, resume playbook
+- [WT subagent-driven cadence](feedback_subagent_cadence.md) — lightened skill ceremony for multi-task plans: 1 implementer per task, controller-driven inline review, no per-task reviewer subagents
+- [WT subagents never start dev servers](feedback_no_dev_server_in_subagents.md) — implementer prompts must explicitly prohibit dev-server startup; verify via typecheck + lint + read-the-diff
+- [WT Supabase project ID](reference_supabase_project.md) — correct project ID is `wrasfpjetwewvmjawqxs` (CLAUDE.md's `relronbmenrmxxkpbyst` is the ION project)
+- [WT prefer pure-function tests over h3 mocking](feedback_pure_fn_over_h3_mocking.md) — extract Nitro-handler validation into a pure helper and test that; don't mock h3 from vitest (h3 is a transitive dep, mocking requires fragile alias hacks)
